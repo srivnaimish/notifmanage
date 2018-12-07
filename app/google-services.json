@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "624461263707",
+    "firebase_url": "https://messengernotification-7418d.firebaseio.com",
+    "project_id": "messengernotification-7418d",
+    "storage_bucket": "messengernotification-7418d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:624461263707:android:819e62cb86bfec23",
+        "android_client_info": {
+          "package_name": "messenger.notificationsaver.notification.messenger.messengernotification"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "624461263707-jjvkt8adjf7pjtc7n0qg8irqqbbjjpuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "messenger.notificationsaver.notification.messenger.messengernotification",
+            "certificate_hash": "634909a2f0b0ec60f60ea580508c766b3c921324"
+          }
+        },
+        {
+          "client_id": "624461263707-bu6ogkhb0vne2dtt7l68vjjv7elr5ed5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAEmeXgKaCoUJwZVHqtVNBJpBdXPtYNKg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "624461263707-bu6ogkhb0vne2dtt7l68vjjv7elr5ed5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

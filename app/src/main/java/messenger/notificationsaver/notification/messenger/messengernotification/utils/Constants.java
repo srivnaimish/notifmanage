@@ -1,0 +1,8 @@
+package messenger.notificationsaver.notification.messenger.messengernotification.utils;
+
+/**
+ * Created by naimish on 07/12/2018
+ */
+public class Constants {
+    public static final String SEEN_ONBOARDING = "seen_oboarding";
+}
