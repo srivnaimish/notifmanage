@@ -1,9 +1,10 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing;
 
+import android.app.AlertDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.view.View;
-import android.widget.Button;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
@@ -14,8 +15,6 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
  */
 public class LandingActivity extends BaseActivityView<LandingContract.Presenter> implements LandingContract.View {
 
-    Button notificationAccess;
-
     @Override
     protected int getLayoutId() {
         return R.layout.activity_landing;
@@ -24,19 +23,67 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        notificationAccess = findViewById(R.id.notification_access);
-        bindClick(notificationAccess.getId(), v -> startActivity(IntentFactory.getNotificationAccessSetting()));
-    }
 
-    @Override
-    public void requestNotificationAccess() {
-        notificationAccess.setVisibility(View.VISIBLE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        notificationAccess.setVisibility(View.GONE);
-        presenter.checkNotificationAccess(LandingActivity.this);
+        if (!presenter.hasNotificationAccess(LandingActivity.this)) {
+            return;
+        }
+
+        if (!presenter.isBatterySaverDisabled()) {  //For doze mode disable
+            return;
+        }
+
+        if (!presenter.isAutoStartEnabled()) {  //For mi,oppo,etc devices
+            return;
+        }
+
+    }
+
+    @Override
+    public void requestNotificationAccess() {
+        new AlertDialog.Builder(this)
+                .setTitle("Access Notifications")
+                .setMessage("Allow Access to Phone Notifications")
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                    startActivity(IntentFactory.getNotificationAccessSetting());
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                })
+                .show();
+    }
+
+    @Override
+    public void requestAutoStartPermission() {
+        for (Intent intent : IntentFactory.AUTO_START_INTENTS) {
+            if (getPackageManager().resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+                new AlertDialog.Builder(this)
+                        .setTitle("Auto Start")
+                        .setMessage("Enable Auto Start to access notifications in background")
+                        .setPositiveButton("Settings", (dialog, which) -> {
+                            sharedPrefUtil.setAutoStartEnabled();
+                            startActivity(intent);
+                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                        })
+                        .show();
+                return;
+            }
+        }
+        sharedPrefUtil.setAutoStartEnabled();
+    }
+
+    @Override
+    public void requestDisableBatteryOptimization() {
+        new AlertDialog.Builder(this)
+                .setTitle("Battery Optimization")
+                .setMessage("Turn of Battery Optimization to allow seamless notification detection")
+                .setPositiveButton("Turn off", (dialog, which) -> {
+                    sharedPrefUtil.setBatteryOptimizationDisabled();
+                    startActivity(IntentFactory.getBatteryOptimizationIntent(LandingActivity.this));
+                })
+                .show();
     }
 }

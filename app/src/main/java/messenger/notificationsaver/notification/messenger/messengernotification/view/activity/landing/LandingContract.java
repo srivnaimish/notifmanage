@@ -10,9 +10,17 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 public interface LandingContract {
     interface View extends BaseActivityContract.View {
         void requestNotificationAccess();
+
+        void requestAutoStartPermission();
+
+        void requestDisableBatteryOptimization();
     }
 
     interface Presenter extends BaseActivityContract.Presenter {
-        void checkNotificationAccess(Context context);
+        boolean hasNotificationAccess(Context context);
+
+        boolean isAutoStartEnabled();
+
+        boolean isBatterySaverDisabled();
     }
 }

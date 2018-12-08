@@ -7,13 +7,17 @@ import java.util.Set;
 
 import javax.inject.Inject;
 
-import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityPresenter;
 
 /**
  * Created by naimish on 07/12/2018
  */
 public class LandingPresenter extends BaseActivityPresenter<LandingContract.View> implements LandingContract.Presenter {
+
+    @Inject
+    SharedPrefUtil sharedPrefUtil;
 
     @Inject
     public LandingPresenter(LandingContract.View view) {
@@ -31,10 +35,37 @@ public class LandingPresenter extends BaseActivityPresenter<LandingContract.View
     }
 
     @Override
-    public void checkNotificationAccess(Context context) {
+    public boolean hasNotificationAccess(Context context) {
         Set<String> enabledPackages = NotificationManagerCompat.getEnabledListenerPackages(context);
-        if (!enabledPackages.contains(context.getPackageName())) {
-            view.requestNotificationAccess();
+        if (enabledPackages.contains(context.getPackageName())) {
+            return true;
         }
+
+        view.requestNotificationAccess();
+        return false;
+    }
+
+    @Override
+    public boolean isAutoStartEnabled() {
+        if (sharedPrefUtil.isAutoStartEnabled()) {
+            return true;
+        }
+
+        view.requestAutoStartPermission();
+        return false;
+    }
+
+    @Override
+    public boolean isBatterySaverDisabled() {
+        if (!Utilities.isMarshmallowOrHigher()) {
+            return true;
+        }
+
+        if (sharedPrefUtil.isBatteryOptimizationDisabled()) {
+            return true;
+        }
+
+        view.requestDisableBatteryOptimization();
+        return false;
     }
 }

@@ -65,4 +65,20 @@ public class SharedPrefUtil {
     public void setSeenOnBoarding(boolean value) {
         putBoolean(Constants.SEEN_ONBOARDING, value);
     }
+
+    public boolean isAutoStartEnabled() {
+        return getBoolean(Constants.AUTO_START, false);
+    }
+
+    public void setAutoStartEnabled() {
+        putBoolean(Constants.AUTO_START, true);
+    }
+
+    public boolean isBatteryOptimizationDisabled() {
+        return getBoolean(Constants.BATTERY_OPTIMIZATION, false);
+    }
+
+    public void setBatteryOptimizationDisabled() {
+        putBoolean(Constants.BATTERY_OPTIMIZATION, true);
+    }
 }
