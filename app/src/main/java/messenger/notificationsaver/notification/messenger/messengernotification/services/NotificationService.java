@@ -1,14 +1,17 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.services;
 
 import android.app.Notification;
+import android.os.AsyncTask;
+import android.os.Looper;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.util.Log;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjection;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.room.entity.NotificationEntity;
 
 /**
  * Created by naimish on 07/12/2018
@@ -21,14 +24,47 @@ public class NotificationService extends NotificationListenerService {
     NotificationDao notificationDao;
 
     @Override
+    public void onCreate() {
+        super.onCreate();
+        AndroidInjection.inject(this);
+    }
+
+    @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        Toast.makeText(this, sbn.getPackageName(), Toast.LENGTH_SHORT).show();
+
+        if (sbn.getPackageName().equalsIgnoreCase(getPackageName())) {
+            return;
+        }
+
         Notification notification = sbn.getNotification();
-        String category = notification.category;
-        Log.d(TAG, category + "\n" +
-                notification.extras + "\n" +
-                sbn.getPackageName() + "\n"
-        );
+
+        NotificationEntity notificationEntity = new NotificationEntity();
+
+        notificationEntity.setId(sbn.getId());
+        notificationEntity.setAppPackage(sbn.getPackageName());
+        notificationEntity.setTitle(notification.extras.getString("android.title"));
+        notificationEntity.setText(notification.extras.getString("android.text"));
+        notificationEntity.setTime(sbn.getPostTime());
+
+        /*Bitmap id = sbn.getNotification().largeIcon;
+        if (id != null) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            id.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+        }*/
+
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            AsyncTask.execute(()->{
+                notificationDao.insertNewNotification(notificationEntity);
+                AppNotifications.publishNewNotification(this, notificationDao);
+            });
+            return;
+        }
+
+        notificationDao.insertNewNotification(notificationEntity);
+        AppNotifications.publishNewNotification(this, notificationDao);
+
     }
 
     @Override

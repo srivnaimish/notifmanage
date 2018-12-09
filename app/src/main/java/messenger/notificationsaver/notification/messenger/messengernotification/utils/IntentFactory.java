@@ -45,9 +45,8 @@ public class IntentFactory {
     };
 
     public static Intent getBatteryOptimizationIntent(Context context) {
-        Intent intent = new Intent();
         String packageName = context.getPackageName();
-        intent.setAction(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS);
+        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + packageName));
         return intent;
     }

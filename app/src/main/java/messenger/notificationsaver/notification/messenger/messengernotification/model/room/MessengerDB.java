@@ -3,7 +3,6 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 /**
  * Created by naimish on 07/12/2018
  */
-import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 

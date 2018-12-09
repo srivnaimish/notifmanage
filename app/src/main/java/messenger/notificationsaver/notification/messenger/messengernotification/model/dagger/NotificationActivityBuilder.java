@@ -3,6 +3,8 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.inject.PerActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.inject.PerApplication;
+import messenger.notificationsaver.notification.messenger.messengernotification.services.NotificationService;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivityModule;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivity;
@@ -27,4 +29,8 @@ public abstract class NotificationActivityBuilder {
     @PerActivity
     @ContributesAndroidInjector(modules = LandingActivityModule.class)
     abstract LandingActivity bindLandingActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector()
+    abstract NotificationService providesNotificationService();
 }

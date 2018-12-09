@@ -22,5 +22,7 @@ public interface LandingContract {
         boolean isAutoStartEnabled();
 
         boolean isBatterySaverDisabled();
+
+        void updateNotification();
     }
 }

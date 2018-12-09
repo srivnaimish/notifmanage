@@ -2,6 +2,8 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 
 import android.content.Context;
 
+import com.facebook.stetho.Stetho;
+
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
 
@@ -13,6 +15,12 @@ public class NotificationApplication extends DaggerApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         //MultiDex.install(this);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Stetho.initializeWithDefaults(this);
     }
 
     @Override

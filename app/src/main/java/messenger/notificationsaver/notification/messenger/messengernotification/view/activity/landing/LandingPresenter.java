@@ -1,12 +1,16 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v4.app.NotificationManagerCompat;
 
 import java.util.Set;
 
 import javax.inject.Inject;
 
+import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityPresenter;
@@ -18,6 +22,13 @@ public class LandingPresenter extends BaseActivityPresenter<LandingContract.View
 
     @Inject
     SharedPrefUtil sharedPrefUtil;
+
+    @Inject
+    NotificationDao notificationDao;
+
+    @Inject
+    @ApplicationContext
+    protected Context context;
 
     @Inject
     public LandingPresenter(LandingContract.View view) {
@@ -67,5 +78,10 @@ public class LandingPresenter extends BaseActivityPresenter<LandingContract.View
 
         view.requestDisableBatteryOptimization();
         return false;
+    }
+
+    @Override
+    public void updateNotification() {
+        AsyncTask.execute(() -> AppNotifications.publishNewNotification(context, notificationDao));
     }
 }

@@ -3,10 +3,15 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import javax.inject.Inject;
+
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityView;
 
@@ -23,7 +28,6 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override

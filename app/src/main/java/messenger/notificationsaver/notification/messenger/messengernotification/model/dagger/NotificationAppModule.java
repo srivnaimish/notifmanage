@@ -7,11 +7,13 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.ContributesAndroidInjector;
 import messenger.notificationsaver.notification.messenger.messengernotification.application.NotificationApplication;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.inject.PerApplication;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.MessengerDB;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
+import messenger.notificationsaver.notification.messenger.messengernotification.services.NotificationService;
 
 /**
  * Created by naimish on 06/12/2018.
