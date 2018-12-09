@@ -50,5 +50,14 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <receiver android:name=".receivers.AppInstallUninstallReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_INSTALL" />
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                <data android:scheme="package"/>
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

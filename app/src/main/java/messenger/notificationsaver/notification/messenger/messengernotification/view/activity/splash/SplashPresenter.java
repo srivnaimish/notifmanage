@@ -1,7 +1,14 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash;
 
+import android.content.Context;
+
+import org.json.JSONArray;
+
 import javax.inject.Inject;
 
+import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityPresenter;
 
 /**
@@ -9,6 +16,13 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
  */
 
 public class SplashPresenter extends BaseActivityPresenter<SplashContract.View> implements SplashContract.Presenter {
+
+    @Inject
+    SharedPrefUtil sharedPrefUtil;
+
+    @Inject
+    @ApplicationContext
+    Context context;
 
     @Inject
     public SplashPresenter(SplashContract.View view) {
@@ -23,5 +37,13 @@ public class SplashPresenter extends BaseActivityPresenter<SplashContract.View> 
     @Override
     public void subscribe() {
 
+    }
+
+    @Override
+    public void saveInstalledApps() {
+        JSONArray apps = sharedPrefUtil.getInstalledApps();
+        if (Utilities.isEmpty(apps)) {
+            sharedPrefUtil.saveInstalledApps(Utilities.getInstalledAppsList(context));
+        }
     }
 }

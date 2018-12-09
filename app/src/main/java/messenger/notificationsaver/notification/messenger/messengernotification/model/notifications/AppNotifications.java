@@ -47,7 +47,7 @@ public class AppNotifications {
             notificationManager.createNotificationChannel(getChannel("New App Notifications"));
         }
 
-        notificationManager.notify(Constants.NOTIFICATION_ID, notification);
+        notificationManager.notify(Constants.MAIN_NOTIFICATION_ID, notification);
     }
 
     public static NotificationChannel getChannel(String channel_id) {

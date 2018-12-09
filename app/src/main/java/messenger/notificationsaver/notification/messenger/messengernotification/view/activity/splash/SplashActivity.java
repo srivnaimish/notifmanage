@@ -2,10 +2,13 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 
 import android.os.Bundle;
 
+import org.json.JSONArray;
+
 import javax.inject.Inject;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityView;
 
 public class SplashActivity extends BaseActivityView<SplashContract.Presenter> implements SplashContract.View {
@@ -17,6 +20,9 @@ public class SplashActivity extends BaseActivityView<SplashContract.Presenter> i
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        presenter.saveInstalledApps();
+
         if (sharedPrefUtil.hasSeenOnBoarding()) {
             startActivity(IntentFactory.getLandingActivity(SplashActivity.this));
             finish();

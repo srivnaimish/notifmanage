@@ -1,45 +1,31 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base;
 
-import android.app.KeyguardManager;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.inject.Inject;
 
 import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import messenger.notificationsaver.notification.messenger.messengernotification.R;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.IHasPermission;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragmentView;
-
-import static android.content.Intent.ACTION_USER_PRESENT;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragment;
 
 /**
  * Created by Anurag on 10/9/2017.
@@ -119,8 +105,8 @@ public abstract class BaseActivityView<T extends BaseActivityContract.Presenter>
         snackbar.show();
     }
 
-    public void open(BaseFragmentView fragment) {
-        Toast.makeText(this, "Override open(BaseFragmentView fragment) in activity.", Toast.LENGTH_SHORT).show();
+    public void open(BaseFragment fragment) {
+        Toast.makeText(this, "Override open(BaseFragment fragment) in activity.", Toast.LENGTH_SHORT).show();
     }
 
     public void checkHasPermission(String permission, int permcode, Action has, Action doesntHave) {

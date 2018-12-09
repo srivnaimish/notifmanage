@@ -1,12 +1,19 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.utils;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by naimish on 07/12/2018
@@ -43,17 +50,6 @@ public class Utilities {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
-    public static String getAppNameFromPackage(Context context, String packageName) {
-        PackageManager packageManager = context.getPackageManager();
-        String appName = null;
-        try {
-            appName = (String) packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA));
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "getAppNameFromPackage", e);
-        }
-        return appName;
-    }
-
     public static Drawable getAppIconFromPackage(Context context, String packageName) {
         PackageManager packageManager = context.getPackageManager();
         Drawable appName = null;
@@ -63,5 +59,58 @@ public class Utilities {
             Log.e(TAG, "getAppIconFromPackage", e);
         }
         return appName;
+    }
+
+    public static JSONArray getInstalledAppsList(Context context) {
+        PackageManager pm = context.getPackageManager();
+        JSONArray installedApps = new JSONArray();
+        if (pm == null) {
+            return installedApps;
+        }
+
+        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        if (isEmpty(packages)) {
+            return installedApps;
+        }
+
+        for (ApplicationInfo applicationInfo : packages) {
+            if (!isSystemPackage(applicationInfo)) {
+                installedApps.put(applicationInfo.packageName);
+            }
+        }
+        return installedApps;
+
+    }
+
+    private static boolean isSystemPackage(ApplicationInfo applicationInfo) {
+        return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1;
+    }
+
+    public static <S, T extends Iterable<S>> boolean isEmpty(T argument) {
+        return (argument == null) || !argument.iterator().hasNext();
+    }
+
+    public static <T extends Object> boolean isEmpty(T[] argument) {
+        return (argument == null) || argument.length == 0;
+    }
+
+    public static <T extends Map> boolean isEmpty(T argument) {
+        return (argument == null) || argument.size() == 0;
+    }
+
+    public static boolean isEmpty(JSONArray jsonArray) {
+        return (jsonArray == null) || (jsonArray.length() == 0);
+    }
+
+    public static boolean isEmpty(JSONObject jsonObject) {
+        return (jsonObject == null) || (jsonObject.length() == 0);
+    }
+
+    public static boolean isEmpty(CharSequence charSequence) {
+        if (TextUtils.isEmpty(charSequence)) {
+            return true;
+        }
+        return charSequence.toString().equalsIgnoreCase("null");
     }
 }

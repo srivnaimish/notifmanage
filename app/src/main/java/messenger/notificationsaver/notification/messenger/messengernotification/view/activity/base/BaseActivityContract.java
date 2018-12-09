@@ -1,6 +1,6 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base;
 
-import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragmentView;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragment;
 
 /**
  * Created by anuragdalia on 27/03/18.
@@ -12,7 +12,7 @@ public interface BaseActivityContract {
 
         void showSnackBar(String str);
 
-        void open(BaseFragmentView fragment);
+        void open(BaseFragment fragment);
 
         void showLoader(boolean b);
 

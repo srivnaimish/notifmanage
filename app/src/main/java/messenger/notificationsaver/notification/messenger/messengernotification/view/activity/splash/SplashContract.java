@@ -11,5 +11,6 @@ public interface SplashContract {
     }
 
     interface Presenter extends BaseActivityContract.Presenter {
+        void saveInstalledApps();
     }
 }
