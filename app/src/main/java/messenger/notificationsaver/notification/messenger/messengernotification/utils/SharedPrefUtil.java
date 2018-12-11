@@ -85,21 +85,4 @@ public class SharedPrefUtil {
     public void setBatteryOptimizationDisabled() {
         putBoolean(Constants.BATTERY_OPTIMIZATION, true);
     }
-
-    public void saveInstalledApps(JSONArray installedAppsList) {
-        if (Utilities.isEmpty(installedAppsList)) {
-            return;
-        }
-        putString(Constants.INSTALLED_APPS_PACKAGES, installedAppsList.toString());
-    }
-
-    public JSONArray getInstalledApps() {
-        JSONArray apps = null;
-        try {
-            apps = new JSONArray(getString(Constants.INSTALLED_APPS_PACKAGES, null));
-        } catch (JSONException e) {
-            Log.e(getClass().getSimpleName(), "getInstalledApps", e);
-        }
-        return apps;
-    }
 }

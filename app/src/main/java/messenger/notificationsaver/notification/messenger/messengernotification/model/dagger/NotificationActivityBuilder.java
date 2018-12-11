@@ -35,8 +35,4 @@ public abstract class NotificationActivityBuilder {
     @PerActivity
     @ContributesAndroidInjector()
     abstract NotificationService providesNotificationService();
-
-    @PerActivity
-    @ContributesAndroidInjector()
-    abstract AppInstallUninstallReceiver providesAppInstallUninstallReceiver();
 }

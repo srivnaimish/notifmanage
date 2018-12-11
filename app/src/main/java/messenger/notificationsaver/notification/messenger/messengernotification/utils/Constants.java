@@ -14,4 +14,24 @@ public class Constants {
     /*Notification ids*/
     public static final int MAIN_NOTIFICATION_ID = 9514;
 
+    public static final int AD_REPEAT_POSITION = 3;
+    public static final int AD_ROW = 1;
+
+    public static final long ONE_SECOND_MILLIS = 1000;
+
+    public static final long ONE_MINUTE_MILLIS = 60 * 1000;
+
+    public static final long ONE_HOUR_MILLIS = 60 * 60 * 1000;
+
+    public static final long ONE_DAY_MILLS = 24 * 60 * 60 * 1000L;
+
+    public static final long HALF_DAY_MILLS = 12 * 60 * 60 * 1000L;
+
+    public static final long ONE_YEAR_DAYS = 365L;
+
+    public static final long ONE_WEEK_DAYS = 7L;
+
+    public static final long ONE_WEEK_MILLS = ONE_WEEK_DAYS * ONE_DAY_MILLS;
+
+    public static final long ONE_YEAR_MILLS = ONE_YEAR_DAYS * ONE_DAY_MILLS;
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import javax.inject.Inject;
 
+import messenger.notificationsaver.notification.messenger.messengernotification.application.NotificationApplication;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 
@@ -14,8 +15,8 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
  */
 public class AppInstallUninstallReceiver extends BroadcastReceiver {
 
-    @Inject
-    SharedPrefUtil sharedPrefUtil;
+   /* @Inject
+    SharedPrefUtil sharedPrefUtil;*/
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -23,6 +24,6 @@ public class AppInstallUninstallReceiver extends BroadcastReceiver {
         if (action == null) {
             return;
         }
-        sharedPrefUtil.saveInstalledApps(Utilities.getInstalledAppsList(context));
+        //sharedPrefUtil.saveInstalledApps(Utilities.getInstalledAppsList(context));
     }
 }

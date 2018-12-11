@@ -31,4 +31,8 @@ public class NotificationApplication extends DaggerApplication {
         injector.inject(this);
         return injector;
     }
+
+    public AndroidInjector<? extends DaggerApplication> getInjector(){
+        return applicationInjector();
+    }
 }

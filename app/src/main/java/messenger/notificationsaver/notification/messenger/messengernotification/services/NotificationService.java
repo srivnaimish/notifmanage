@@ -39,8 +39,7 @@ public class NotificationService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
 
-        JSONArray installedPackages = sharedPrefUtil.getInstalledApps();
-        if (!Utilities.isEmpty(installedPackages) && !installedPackages.toString().contains(sbn.getPackageName())) {
+        if (!Utilities.isInstalledPackage(this, sbn.getPackageName())) {
             return;
         }
 
@@ -57,7 +56,7 @@ public class NotificationService extends NotificationListenerService {
         }
 
         NotificationEntity notificationEntity = new NotificationEntity();
-        notificationEntity.setId(sbn.getId());
+        notificationEntity.setNotificationId(sbn.getId());
         notificationEntity.setAppPackage(sbn.getPackageName());
         notificationEntity.setTitle(title);
         notificationEntity.setText(text);

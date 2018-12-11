@@ -1,37 +1,37 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.model.room.entity;
+package messenger.notificationsaver.notification.messenger.messengernotification.model.pojo;
 
 import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
 /**
- * Created by naimish on 07/12/2018
+ * Created by naimish on 11/12/2018
  */
-@Entity(primaryKeys = {"notification_id", "notification_title", "notification_text", "app_package"})
-public class NotificationEntity {
+public class AllNotificationRow extends BaseRow {
 
     @ColumnInfo(name = "notification_id")
-    @NonNull
-    int notificationId;
+    int id;
 
     @ColumnInfo(name = "notification_title")
-    @NonNull
     String title;
 
     @ColumnInfo(name = "notification_text")
-    @NonNull
     String text;
 
     @ColumnInfo(name = "app_package")
-    @NonNull
     String appPackage;
-
-    @ColumnInfo(name = "notification_read_status")
-    boolean read;
 
     @ColumnInfo(name = "notification_time")
     long time;
+
+    @ColumnInfo(name = "unread")
+    int unread;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public void setTitle(String title) {
         this.title = title;
@@ -57,12 +57,12 @@ public class NotificationEntity {
         return appPackage;
     }
 
-    public void setRead(boolean read) {
-        this.read = read;
+    public void setUnread(int unread) {
+        this.unread = unread;
     }
 
-    public boolean isRead() {
-        return read;
+    public int getUnread() {
+        return unread;
     }
 
     public void setTime(long time) {
@@ -73,11 +73,4 @@ public class NotificationEntity {
         return time;
     }
 
-    public int getNotificationId() {
-        return notificationId;
-    }
-
-    public void setNotificationId(int notificationId) {
-        this.notificationId = notificationId;
-    }
 }

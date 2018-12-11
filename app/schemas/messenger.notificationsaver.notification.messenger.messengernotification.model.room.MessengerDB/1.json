@@ -2,29 +2,29 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "eee6fa74e5e27cf3c0bb5f0bf0cc6700",
+    "identityHash": "ed5a95ba8346629c0100fc8594db3fc9",
     "entities": [
       {
         "tableName": "NotificationEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT, `text` TEXT, `app_package` TEXT NOT NULL, `read_status` INTEGER NOT NULL, `time` INTEGER NOT NULL, PRIMARY KEY(`id`, `app_package`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`notification_id` INTEGER NOT NULL, `notification_title` TEXT NOT NULL, `notification_text` TEXT NOT NULL, `app_package` TEXT NOT NULL, `notification_read_status` INTEGER NOT NULL, `notification_time` INTEGER NOT NULL, PRIMARY KEY(`notification_id`, `notification_title`, `notification_text`, `app_package`))",
         "fields": [
           {
-            "fieldPath": "id",
-            "columnName": "id",
+            "fieldPath": "notificationId",
+            "columnName": "notification_id",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "title",
-            "columnName": "title",
+            "columnName": "notification_title",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "text",
-            "columnName": "text",
+            "columnName": "notification_text",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "appPackage",
@@ -34,20 +34,22 @@
           },
           {
             "fieldPath": "read",
-            "columnName": "read_status",
+            "columnName": "notification_read_status",
             "affinity": "INTEGER",
             "notNull": true
           },
           {
             "fieldPath": "time",
-            "columnName": "time",
+            "columnName": "notification_time",
             "affinity": "INTEGER",
             "notNull": true
           }
         ],
         "primaryKey": {
           "columnNames": [
-            "id",
+            "notification_id",
+            "notification_title",
+            "notification_text",
             "app_package"
           ],
           "autoGenerate": false
@@ -58,7 +60,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"eee6fa74e5e27cf3c0bb5f0bf0cc6700\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ed5a95ba8346629c0100fc8594db3fc9\")"
     ]
   }
 }

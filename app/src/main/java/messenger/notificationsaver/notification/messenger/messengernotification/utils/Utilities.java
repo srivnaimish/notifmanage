@@ -1,12 +1,17 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -50,6 +55,17 @@ public class Utilities {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M;
     }
 
+    public static String getAppNameFromPackage(Context context, String packageName) {
+        PackageManager packageManager = context.getPackageManager();
+        String appName = null;
+        try {
+            appName = (String) packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA));
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "getAppNameFromPackage", e);
+        }
+        return appName;
+    }
+
     public static Drawable getAppIconFromPackage(Context context, String packageName) {
         PackageManager packageManager = context.getPackageManager();
         Drawable appName = null;
@@ -61,30 +77,23 @@ public class Utilities {
         return appName;
     }
 
-    public static JSONArray getInstalledAppsList(Context context) {
+    public static boolean isInstalledPackage(Context context, String packageName) {
         PackageManager pm = context.getPackageManager();
-        JSONArray installedApps = new JSONArray();
         if (pm == null) {
-            return installedApps;
+            return false;
         }
 
-        List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        Intent intent = new Intent(Intent.ACTION_MAIN, null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-        if (isEmpty(packages)) {
-            return installedApps;
-        }
+        List<ResolveInfo> allApps = pm.queryIntentActivities(intent, 0);
 
-        for (ApplicationInfo applicationInfo : packages) {
-            if (!isSystemPackage(applicationInfo)) {
-                installedApps.put(applicationInfo.packageName);
+        for (ResolveInfo ri : allApps) {
+            if (ri.activityInfo.packageName.equalsIgnoreCase(packageName)) {
+                return true;
             }
         }
-        return installedApps;
-
-    }
-
-    private static boolean isSystemPackage(ApplicationInfo applicationInfo) {
-        return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1;
+        return false;
     }
 
     public static <S, T extends Iterable<S>> boolean isEmpty(T argument) {
@@ -112,5 +121,11 @@ public class Utilities {
             return true;
         }
         return charSequence.toString().equalsIgnoreCase("null");
+    }
+
+    public static void loadImageIntoView(Context context, ImageView imageView, String url) {
+        Glide.with(context)
+                .load(url)
+                .into(imageView);
     }
 }

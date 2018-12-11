@@ -21,8 +21,6 @@ public class SplashActivity extends BaseActivityView<SplashContract.Presenter> i
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        presenter.saveInstalledApps();
-
         if (sharedPrefUtil.hasSeenOnBoarding()) {
             startActivity(IntentFactory.getLandingActivity(SplashActivity.this));
             finish();
