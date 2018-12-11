@@ -1,6 +1,5 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -9,7 +8,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.AllNotificationRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.entity.NotificationEntity;
 
 /**
@@ -27,6 +26,9 @@ public interface NotificationDao {
     @Query("SELECT COUNT(*) from NotificationEntity where notification_read_status = 0")
     int getUnreadNotificationsCount();
 
-    @Query("SELECT DISTINCT app_package,notification_time,notification_id,notification_title,notification_text,COUNT(CASE WHEN app_package = app_package AND notification_read_status = 0 THEN 1 END) as unread from NotificationEntity ORDER BY notification_time DESC")
-    DataSource.Factory<Integer, AllNotificationRow> getAppsWithNotification();
+    @Query("Select app_package,notification_time,notification_id,notification_title,notification_text,COUNT(*) AS unread from NotificationEntity GROUP BY app_package ORDER BY notification_time DESC")
+    DataSource.Factory<Integer, NotificationRow> getAppsWithNotification();
+
+    @Query("Select app_package,notification_time,notification_id,notification_title,notification_text,COUNT(*) AS unread from NotificationEntity GROUP BY app_package ORDER BY notification_time DESC")
+    DataSource.Factory<Integer, NotificationRow> getAppWiseNotifications();
 }

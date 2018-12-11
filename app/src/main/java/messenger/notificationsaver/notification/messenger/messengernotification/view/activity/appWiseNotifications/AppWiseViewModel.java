@@ -1,4 +1,4 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.appWiseNotifications;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
@@ -14,12 +14,12 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 /**
  * Created by naimish on 10/12/2018
  */
-public class AllNotificationsViewModel extends ViewModel {
+public class AppWiseViewModel extends ViewModel {
 
     NotificationDao notificationDao;
 
     @Inject
-    AllNotificationsViewModel(NotificationDao dao) {
+    AppWiseViewModel(NotificationDao dao) {
         this.notificationDao = dao;
     }
 
@@ -29,11 +29,11 @@ public class AllNotificationsViewModel extends ViewModel {
                     .setPageSize(20)
                     .build();
 
-    public LiveData<PagedList<NotificationRow>> getAppsWithNotifications() {
+    public LiveData<PagedList<NotificationRow>> getAppWiseNotifications() {
         if (notificationDao == null) {
             return null;
         }
-        DataSource.Factory<Integer, NotificationRow> dataSourceFactory = notificationDao.getAppsWithNotification();
+        DataSource.Factory<Integer, NotificationRow> dataSourceFactory = notificationDao.getAppWiseNotifications();
         return new LivePagedListBuilder<>(dataSourceFactory, pagedListConfig)
                 .build();
     }

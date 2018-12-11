@@ -5,7 +5,7 @@ import android.arch.persistence.room.ColumnInfo;
 /**
  * Created by naimish on 11/12/2018
  */
-public class AllNotificationRow extends BaseRow {
+public class NotificationRow extends BaseRow {
 
     @ColumnInfo(name = "notification_id")
     int id;

@@ -1,49 +1,48 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.appWiseNotifications;
 
 import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import javax.inject.Inject;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
-import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.appWiseNotifications.AppWiseFragment;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.ClickListener;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.RecyclerTouchListener;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragment;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.widgets.EmptyRecyclerView;
 
 /**
- * Created by naimish on 10/12/2018
+ * Created by naimish on 11/12/2018
  */
-public class AllNotificationsFragment extends BaseFragment implements ClickListener {
+public class AppWiseFragment extends BaseFragment implements ClickListener {
 
-    RecyclerView recyclerView;
-    AllNotificationsAdapter rvAdapter;
+    EmptyRecyclerView recyclerView;
+    AppWiseAdapter rvAdapter;
 
     @Inject
-    AllNotificationsViewModel viewModel;
+    AppWiseViewModel viewModel;
 
-    public static AllNotificationsFragment newInstance() {
-        return new AllNotificationsFragment();
+    public static AppWiseFragment newInstance() {
+        return new AppWiseFragment();
     }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_all_notifications;
+        return R.layout.fragment_appwise_notifications;
     }
 
     @Override
     protected void onBindView(View rootView, Bundle savedInstanceState) {
         recyclerView = rootView.findViewById(R.id.notifications_rv);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvAdapter = new AllNotificationsAdapter();
-        recyclerView.setAdapter(rvAdapter);
+        recyclerView.setEmptyView(rootView.findViewById(R.id.empty_view));
+        rvAdapter = new AppWiseAdapter();
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, this));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         observeViewModel();
     }
 
@@ -51,9 +50,7 @@ public class AllNotificationsFragment extends BaseFragment implements ClickListe
         if (getActivity() == null) {
             return;
         }
-        viewModel.getAppsWithNotifications().observe(getActivity(), list -> {
-            rvAdapter.submitList(list);
-        });
+        viewModel.getAppWiseNotifications().observe(getActivity(), rvAdapter::submitList);
     }
 
     @Override
@@ -67,7 +64,7 @@ public class AllNotificationsFragment extends BaseFragment implements ClickListe
         if (row == null)
             return;
 
-        //open(AppWiseFragment.getInstance(row.getAppPackage));
+        //open(AppWiseFragment.getInstance(row.getAppPackage, row.getTitle))
     }
 
     @Override

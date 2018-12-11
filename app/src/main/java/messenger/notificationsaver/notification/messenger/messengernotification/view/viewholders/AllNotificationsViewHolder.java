@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.AllNotificationRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.BaseRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.DateTimeUtils;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
@@ -32,7 +32,7 @@ public class AllNotificationsViewHolder extends BaseViewHolder<BaseRow> {
 
     @Override
     public void set(BaseRow baseRow) {
-        AllNotificationRow allNotificationRow = (AllNotificationRow) baseRow;
+        NotificationRow allNotificationRow = (NotificationRow) baseRow;
 
         appIcon.setImageDrawable(Utilities.getAppIconFromPackage(appIcon.getContext(), allNotificationRow.getAppPackage()));
         appName.setText(Utilities.getAppNameFromPackage(appName.getContext(), allNotificationRow.getAppPackage()));

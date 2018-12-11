@@ -1,8 +1,6 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.appWiseNotifications;
 
-import android.arch.paging.PagedList;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -20,17 +18,16 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 /**
  * Created by naimish on 10/12/2018
  */
-public class AllNotificationsAdapter extends BasePageAdapter<NotificationRow, BaseViewHolder<BaseRow>> {
+public class AppWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewHolder<BaseRow>> {
 
-    public AllNotificationsAdapter() {
+    public AppWiseAdapter() {
         super(DIFF_CALLBACK);
     }
 
     public static DiffUtil.ItemCallback<NotificationRow> DIFF_CALLBACK = new DiffUtil.ItemCallback<NotificationRow>() {
-
         @Override
         public boolean areItemsTheSame(@NonNull NotificationRow oldItem, @NonNull NotificationRow newItem) {
-            return oldItem.getAppPackage().equals(newItem.getAppPackage());
+            return oldItem.getTitle().equals(newItem.getTitle());
         }
 
         @Override
@@ -61,7 +58,7 @@ public class AllNotificationsAdapter extends BasePageAdapter<NotificationRow, Ba
         if (viewType == Constants.AD_ROW) {
             return new NativeAdViewHolder(inflater.inflate(R.layout.native_ad, parent, false));
         }
-        return new AllNotificationsViewHolder(inflater.inflate(R.layout.holder_appwise_notification, parent, false));
+        return new AllNotificationsViewHolder(inflater.inflate(R.layout.holder_app_title_wise_notification, parent, false));
     }
 
     @Override
@@ -71,11 +68,6 @@ public class AllNotificationsAdapter extends BasePageAdapter<NotificationRow, Ba
         } else {
             holder.set(null);
         }
-    }
-
-    @Override
-    public void submitList(PagedList<NotificationRow> pagedList) {
-        super.submitList(pagedList);
     }
 
     @Override
