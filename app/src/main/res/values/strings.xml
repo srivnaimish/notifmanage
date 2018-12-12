@@ -3,5 +3,5 @@
     <string name="just_now">Just Now</string>
     <string name="minutes_ago">%s minutes ago</string>
     <string name="hours_ago">%s hours ago</string>
-    <string name="unread_count">%s unread</string>
+    <string name="unread_count">%s more</string>
 </resources>

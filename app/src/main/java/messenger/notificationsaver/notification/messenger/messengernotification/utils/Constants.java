@@ -36,4 +36,6 @@ public class Constants {
     public static final long ONE_YEAR_MILLS = ONE_YEAR_DAYS * ONE_DAY_MILLS;
 
     public static final String blackList = "com.android.vending, com.android.providers.downloads, android";
+    public static final String PACKAGE_NAME = "package_name";
+    public static final String NOTIFICATION_TITLE = "title";
 }

@@ -9,6 +9,7 @@ import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.ViewModelFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ViewModelKey;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications.AllNotificationsViewModel;
 
 /**
@@ -21,6 +22,13 @@ public class ViewModelModule {
     @IntoMap
     @ViewModelKey(AllNotificationsViewModel.class)
     ViewModel bindAllNotificationsViewModel(AllNotificationsViewModel viewModel) {
+        return viewModel;
+    }
+
+    @Provides
+    @IntoMap
+    @ViewModelKey(TitleWiseViewModel.class)
+    ViewModel bindTitleWiseViewModel(TitleWiseViewModel viewModel) {
         return viewModel;
     }
 

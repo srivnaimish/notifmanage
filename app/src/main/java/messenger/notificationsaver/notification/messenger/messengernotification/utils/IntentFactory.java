@@ -10,6 +10,7 @@ import android.provider.Settings;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash.SplashActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseActivity;
 
 /**
  * Created by naimish on 07/12/2018
@@ -48,6 +49,19 @@ public class IntentFactory {
         String packageName = context.getPackageName();
         Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
         intent.setData(Uri.parse("package:" + packageName));
+        return intent;
+    }
+
+    public static Intent getTitleWiseActivity(Context context, String appPackage) {
+        Intent intent = new Intent(context, TitleWiseActivity.class);
+        intent.putExtra(Constants.PACKAGE_NAME, appPackage);
+        return intent;
+    }
+
+    public static Intent getNotificationTextActivity(Context context, String appPackage, String title) {
+        Intent intent = new Intent(context, TitleWiseActivity.class);
+        intent.putExtra(Constants.PACKAGE_NAME, appPackage);
+        intent.putExtra(Constants.NOTIFICATION_TITLE, title);
         return intent;
     }
 }

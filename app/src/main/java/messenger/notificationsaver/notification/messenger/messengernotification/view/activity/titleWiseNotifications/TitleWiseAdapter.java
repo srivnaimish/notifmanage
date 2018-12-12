@@ -1,4 +1,4 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.appWiseNotifications;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications;
 
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
@@ -11,16 +11,16 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.adapters.BasePageAdapter;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.AllNotificationsViewHolder;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.BaseViewHolder;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.NativeAdViewHolder;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.TitleNotificationsViewHolder;
 
 /**
  * Created by naimish on 10/12/2018
  */
-public class AppWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewHolder<BaseRow>> {
+public class TitleWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewHolder<BaseRow>> {
 
-    public AppWiseAdapter() {
+    public TitleWiseAdapter() {
         super(DIFF_CALLBACK);
     }
 
@@ -58,12 +58,12 @@ public class AppWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewHol
         if (viewType == Constants.AD_ROW) {
             return new NativeAdViewHolder(inflater.inflate(R.layout.native_ad, parent, false));
         }
-        return new AllNotificationsViewHolder(inflater.inflate(R.layout.holder_app_title_wise_notification, parent, false));
+        return new TitleNotificationsViewHolder(inflater.inflate(R.layout.holder_app_title_wise_notification, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<BaseRow> holder, int position) {
-        if (holder instanceof AllNotificationsViewHolder) {
+        if (holder instanceof TitleNotificationsViewHolder) {
             holder.set(getItem(getRealPosition(position)));
         } else {
             holder.set(null);

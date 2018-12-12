@@ -12,7 +12,6 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.appWiseNotifications.AppWiseFragment;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.ClickListener;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.RecyclerTouchListener;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragment;
@@ -67,7 +66,7 @@ public class AllNotificationsFragment extends BaseFragment implements ClickListe
         if (row == null)
             return;
 
-        //open(AppWiseFragment.getInstance(row.getAppPackage));
+        startActivity(IntentFactory.getTitleWiseActivity(getContext(), row.getAppPackage()));
     }
 
     @Override

@@ -6,43 +6,38 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.BaseRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.DateTimeUtils;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 
 /**
  * Created by naimish on 11/12/2018
  */
-public class AllNotificationsViewHolder extends BaseViewHolder<BaseRow> {
+public class TitleNotificationsViewHolder extends BaseViewHolder<BaseRow> {
 
-    private ImageView appIcon;
-    private TextView appName, title, text, unreadCount, time;
+    private ImageView notification_icon;
+    private TextView title, text, unreadCount;
 
-    public AllNotificationsViewHolder(@NonNull View itemView) {
+    public TitleNotificationsViewHolder(@NonNull View itemView) {
         super(itemView);
-        appIcon = itemView.findViewById(R.id.app_icon);
-        appName = itemView.findViewById(R.id.app_name);
+        notification_icon = itemView.findViewById(R.id.app_icon);
         title = itemView.findViewById(R.id.title);
         text = itemView.findViewById(R.id.text);
-        unreadCount = itemView.findViewById(R.id.unread_count);
-        time = itemView.findViewById(R.id.time);
+        unreadCount = itemView.findViewById(R.id.unread);
     }
 
     @Override
     public void set(BaseRow baseRow) {
         NotificationRow allNotificationRow = (NotificationRow) baseRow;
 
-        appIcon.setImageDrawable(Utilities.getAppIconFromPackage(appIcon.getContext(), allNotificationRow.getAppPackage()));
-        appName.setText(Utilities.getAppNameFromPackage(appName.getContext(), allNotificationRow.getAppPackage()));
         title.setText(allNotificationRow.getTitle());
         text.setText(allNotificationRow.getText());
-        time.setText(DateTimeUtils.getMaterialUpdatedTimeString(time.getContext(), allNotificationRow.getTime()));
 
         if (allNotificationRow.getUnread() == 0) {
             unreadCount.setVisibility(View.GONE);
         } else {
-            unreadCount.setText(unreadCount.getContext().getString(R.string.unread_count, String.valueOf(allNotificationRow.getUnread())));
+            unreadCount.setText(String.valueOf(allNotificationRow.getUnread()));
             unreadCount.setVisibility(View.VISIBLE);
         }
     }

@@ -12,6 +12,8 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivityModule;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash.SplashActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash.SplashActivityModule;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseModule;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragmentProvider;
 
 /**
@@ -31,6 +33,10 @@ public abstract class NotificationActivityBuilder {
     @PerActivity
     @ContributesAndroidInjector(modules = {LandingActivityModule.class, BaseFragmentProvider.class})
     abstract LandingActivity bindLandingActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = {TitleWiseModule.class})
+    abstract TitleWiseActivity bindTitleWiseActivity();
 
     @PerActivity
     @ContributesAndroidInjector()
