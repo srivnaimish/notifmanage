@@ -57,11 +57,15 @@ public class NotificationService extends NotificationListenerService {
 
         Notification notification = sbn.getNotification();
 
-        String title = notification.extras.getString("android.title");
-        String text = notification.extras.getString("android.text");
+        String title = notification.extras.getString(Notification.EXTRA_TITLE);
+        String text = notification.extras.getString(Notification.EXTRA_TEXT);
+        int icon = notification.extras.getInt(Notification.EXTRA_LARGE_ICON, 0);
+
         if (Utilities.isEmpty(title) || Utilities.isEmpty(text)) {
             return;
         }
+
+        title = title.trim();
 
         NotificationEntity notificationEntity = new NotificationEntity();
         notificationEntity.setNotificationId(sbn.getId());
@@ -69,14 +73,7 @@ public class NotificationService extends NotificationListenerService {
         notificationEntity.setTitle(title);
         notificationEntity.setText(text);
         notificationEntity.setTime(sbn.getPostTime());
-
-        /*Bitmap id = sbn.getNotification().largeIcon;
-        if (id != null) {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            id.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-
-        }*/
+        notificationEntity.setIcon(icon);
 
         if (Looper.myLooper() == Looper.getMainLooper()) {
             AsyncTask.execute(() -> {
@@ -88,7 +85,6 @@ public class NotificationService extends NotificationListenerService {
 
         notificationDao.insertNewNotification(notificationEntity);
         AppNotifications.publishNewNotification(this, notificationDao);
-
     }
 
     @Override

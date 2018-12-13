@@ -1,11 +1,15 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.BaseRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
@@ -20,8 +24,12 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
  */
 public class TitleWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewHolder<BaseRow>> {
 
-    public TitleWiseAdapter() {
+    Context context;
+
+    @Inject
+    public TitleWiseAdapter(@ApplicationContext Context context) {
         super(DIFF_CALLBACK);
+        this.context = context;
     }
 
     public static DiffUtil.ItemCallback<NotificationRow> DIFF_CALLBACK = new DiffUtil.ItemCallback<NotificationRow>() {
@@ -58,7 +66,7 @@ public class TitleWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewH
         if (viewType == Constants.AD_ROW) {
             return new NativeAdViewHolder(inflater.inflate(R.layout.native_ad, parent, false));
         }
-        return new TitleNotificationsViewHolder(inflater.inflate(R.layout.holder_app_title_wise_notification, parent, false));
+        return new TitleNotificationsViewHolder(inflater.inflate(R.layout.holder_app_title_wise_notification, parent, false), context);
     }
 
     @Override

@@ -1,14 +1,15 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.model.pojo;
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Ignore;
 
 /**
  * Created by naimish on 11/12/2018
  */
 public class NotificationRow extends BaseRow {
 
-    @ColumnInfo(name = "notification_id")
-    int id;
+    @ColumnInfo(name = "notification_icon")
+    int icon;
 
     @ColumnInfo(name = "notification_title")
     String title;
@@ -25,12 +26,12 @@ public class NotificationRow extends BaseRow {
     @ColumnInfo(name = "unread")
     int unread;
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 
-    public int getId() {
-        return id;
+    public int getIcon() {
+        return icon;
     }
 
     public void setTitle(String title) {

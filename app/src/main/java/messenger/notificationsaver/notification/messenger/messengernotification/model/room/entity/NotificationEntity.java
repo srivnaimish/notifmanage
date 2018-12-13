@@ -2,7 +2,6 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 /**
@@ -22,6 +21,9 @@ public class NotificationEntity {
     @ColumnInfo(name = "notification_text")
     @NonNull
     String text;
+
+    @ColumnInfo(name = "notification_icon")
+    int icon;
 
     @ColumnInfo(name = "app_package")
     @NonNull
@@ -79,5 +81,13 @@ public class NotificationEntity {
 
     public void setNotificationId(int notificationId) {
         this.notificationId = notificationId;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
+
+    public int getIcon() {
+        return icon;
     }
 }

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ed5a95ba8346629c0100fc8594db3fc9",
+    "identityHash": "e3b31e0320abb8dac1f79d8f0a114714",
     "entities": [
       {
         "tableName": "NotificationEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`notification_id` INTEGER NOT NULL, `notification_title` TEXT NOT NULL, `notification_text` TEXT NOT NULL, `app_package` TEXT NOT NULL, `notification_read_status` INTEGER NOT NULL, `notification_time` INTEGER NOT NULL, PRIMARY KEY(`notification_id`, `notification_title`, `notification_text`, `app_package`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`notification_id` INTEGER NOT NULL, `notification_title` TEXT NOT NULL, `notification_text` TEXT NOT NULL, `notification_icon` INTEGER NOT NULL, `app_package` TEXT NOT NULL, `notification_read_status` INTEGER NOT NULL, `notification_time` INTEGER NOT NULL, PRIMARY KEY(`notification_id`, `notification_title`, `notification_text`, `app_package`))",
         "fields": [
           {
             "fieldPath": "notificationId",
@@ -24,6 +24,12 @@
             "fieldPath": "text",
             "columnName": "notification_text",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "icon",
+            "columnName": "notification_icon",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -60,7 +66,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ed5a95ba8346629c0100fc8594db3fc9\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e3b31e0320abb8dac1f79d8f0a114714\")"
     ]
   }
 }

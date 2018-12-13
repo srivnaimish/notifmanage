@@ -8,6 +8,7 @@ import android.os.PowerManager;
 import android.provider.Settings;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash.SplashActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseActivity;
@@ -59,7 +60,7 @@ public class IntentFactory {
     }
 
     public static Intent getNotificationTextActivity(Context context, String appPackage, String title) {
-        Intent intent = new Intent(context, TitleWiseActivity.class);
+        Intent intent = new Intent(context, NotificationTextActivity.class);
         intent.putExtra(Constants.PACKAGE_NAME, appPackage);
         intent.putExtra(Constants.NOTIFICATION_TITLE, title);
         return intent;
