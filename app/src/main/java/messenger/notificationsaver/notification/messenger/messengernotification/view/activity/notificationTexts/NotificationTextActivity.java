@@ -1,6 +1,7 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts;
 
 import android.arch.paging.PagedList;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -71,6 +72,9 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
         NotificationRow row = allNotificationRows.get(rvAdapter.getRealPosition(position));
         if (row == null)
             return;
+
+        Intent launchIntent = getPackageManager().getLaunchIntentForPackage(appPackage);
+        startActivity(launchIntent);
 
     }
 

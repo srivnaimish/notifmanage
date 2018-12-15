@@ -8,14 +8,14 @@ import android.arch.persistence.room.Ignore;
  */
 public class NotificationRow extends BaseRow {
 
-    @ColumnInfo(name = "notification_icon")
-    int icon;
-
     @ColumnInfo(name = "notification_title")
     String title;
 
     @ColumnInfo(name = "notification_text")
     String text;
+
+    @ColumnInfo(name = "notification_category")
+    String category;
 
     @ColumnInfo(name = "app_package")
     String appPackage;
@@ -26,12 +26,12 @@ public class NotificationRow extends BaseRow {
     @ColumnInfo(name = "unread")
     int unread;
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public int getIcon() {
-        return icon;
+    public String getCategory() {
+        return category;
     }
 
     public void setTitle(String title) {

@@ -2,6 +2,7 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -28,7 +29,7 @@ public class TitleNotificationsViewHolder extends BaseViewHolder<BaseRow> {
     private ImageView notification_icon;
     private TextView title, text, unreadCount;
 
-    Context context;
+    private Context context;
 
     public TitleNotificationsViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
@@ -53,21 +54,11 @@ public class TitleNotificationsViewHolder extends BaseViewHolder<BaseRow> {
             unreadCount.setVisibility(View.VISIBLE);
         }
 
-        if (notificationRow.getIcon() == 0) {
-            notification_icon.setVisibility(View.GONE);
+        if (Utilities.isEmpty(notificationRow.getCategory()) || !notificationRow.getCategory().equalsIgnoreCase("android.app.Notification$MessagingStyle")) {
+            notification_icon.setImageDrawable(Utilities.getAppIconFromPackage(context, notificationRow.getAppPackage()));
         } else {
-            Bitmap bmp = null;
-            try {
-                Context remotePackageContext = context.createPackageContext(notificationRow.getAppPackage(), 0);
-                Drawable icon = remotePackageContext.getResources().getDrawable(notificationRow.getIcon());
-                if (icon != null) {
-                    bmp = ((BitmapDrawable) icon).getBitmap();
-                }
-                notification_icon.setImageBitmap(bmp);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            notification_icon.setVisibility(View.VISIBLE);
+            notification_icon.setImageResource(R.color.grey);
         }
+
     }
 }

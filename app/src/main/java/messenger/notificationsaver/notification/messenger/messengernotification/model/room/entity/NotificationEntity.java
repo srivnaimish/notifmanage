@@ -22,8 +22,8 @@ public class NotificationEntity {
     @NonNull
     String text;
 
-    @ColumnInfo(name = "notification_icon")
-    int icon;
+    @ColumnInfo(name = "notification_category")
+    String category;
 
     @ColumnInfo(name = "app_package")
     @NonNull
@@ -39,6 +39,7 @@ public class NotificationEntity {
         this.title = title;
     }
 
+    @NonNull
     public String getTitle() {
         return title;
     }
@@ -47,6 +48,7 @@ public class NotificationEntity {
         this.text = text;
     }
 
+    @NonNull
     public String getText() {
         return text;
     }
@@ -55,6 +57,7 @@ public class NotificationEntity {
         this.appPackage = appPackage;
     }
 
+    @NonNull
     public String getAppPackage() {
         return appPackage;
     }
@@ -83,11 +86,11 @@ public class NotificationEntity {
         this.notificationId = notificationId;
     }
 
-    public void setIcon(int icon) {
-        this.icon = icon;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public int getIcon() {
-        return icon;
+    public String getCategory() {
+        return category;
     }
 }

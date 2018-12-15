@@ -2,6 +2,7 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -43,11 +44,5 @@ public class TextNotificationsViewHolder extends BaseViewHolder<BaseRow> {
 
         text.setText(notificationRow.getText());
         time.setText(DateTimeUtils.getTimeStampAsDate(notificationRow.getTime()));
-        /*try {
-            Context c = context.createPackageContext(notificationRow.getAppPackage(), 0);
-            c.getResources().getDrawable(notificationRow.getIcon());
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(getClass().getSimpleName(), "set", e);
-        }*/
     }
 }

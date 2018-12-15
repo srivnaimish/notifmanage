@@ -2,14 +2,9 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 
 import android.app.Notification;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Looper;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.RemoteInput;
-
-import org.json.JSONArray;
 
 import javax.inject.Inject;
 
@@ -17,7 +12,6 @@ import dagger.android.AndroidInjection;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.entity.NotificationEntity;
-import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 
@@ -43,37 +37,29 @@ public class NotificationService extends NotificationListenerService {
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
 
-        if (sbn.getPackageName().equalsIgnoreCase(getPackageName())) {      //Own app notification
-            return;
-        }
-
-        if (Constants.blackList.contains(sbn.getPackageName())) {   //Blacklisted app notification
-            return;
-        }
-
-        if (!Utilities.isInstalledPackage(this, sbn.getPackageName())) {    //Not a drawer app
-            return;
-        }
-
         Notification notification = sbn.getNotification();
 
-        String title = notification.extras.getString(Notification.EXTRA_TITLE);
-        String text = notification.extras.getString(Notification.EXTRA_TEXT);
-        int icon = notification.extras.getInt(Notification.EXTRA_LARGE_ICON, 0);
 
-        if (Utilities.isEmpty(title) || Utilities.isEmpty(text)) {
+        if (!shouldSaveNotification(sbn)) {
             return;
         }
 
-        title = title.trim();
+        String notificationTitle = getNotificationTitle(notification);
+        String notificationText = getNotificationText(notification);
+
+        String category = notification.extras.getString(Notification.EXTRA_TEMPLATE);
+
+        if (Utilities.isEmpty(notificationTitle) || Utilities.isEmpty(notificationText)) {
+            return;
+        }
 
         NotificationEntity notificationEntity = new NotificationEntity();
         notificationEntity.setNotificationId(sbn.getId());
         notificationEntity.setAppPackage(sbn.getPackageName());
-        notificationEntity.setTitle(title);
-        notificationEntity.setText(text);
+        notificationEntity.setTitle(notificationTitle.trim());
+        notificationEntity.setText(notificationText.trim());
         notificationEntity.setTime(sbn.getPostTime());
-        notificationEntity.setIcon(icon);
+        notificationEntity.setCategory(category);
 
         if (Looper.myLooper() == Looper.getMainLooper()) {
             AsyncTask.execute(() -> {
@@ -87,40 +73,36 @@ public class NotificationService extends NotificationListenerService {
         AppNotifications.publishNewNotification(this, notificationDao);
     }
 
-    @Override
-    public void onNotificationRemoved(StatusBarNotification sbn) {
-        super.onNotificationRemoved(sbn);
-    }
+    private String getNotificationText(Notification notification) {
 
-    public static NotificationCompat.Action getQuickReplyAction(Notification n, String packageName) {
-        NotificationCompat.Action action = null;
-        if (Build.VERSION.SDK_INT >= 24)
-            return getQuickReplyAction(n);
-
-        return getWearReplyAction(n);
-    }
-
-    private static NotificationCompat.Action getWearReplyAction(Notification n) {
-        NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.WearableExtender(n);
-        for (NotificationCompat.Action action : wearableExtender.getActions()) {
-            for (int x = 0; x < action.getRemoteInputs().length; x++) {
-                RemoteInput remoteInput = action.getRemoteInputs()[x];
-                if (remoteInput.getResultKey().toLowerCase().contains("reply"))
-                    return action;
-            }
+        String text = notification.extras.getString(Notification.EXTRA_TEXT);
+        String subText = notification.extras.getString(Notification.EXTRA_SUB_TEXT);
+        if (!Utilities.isEmpty(subText)) {
+            text = text + "\n" + subText;
         }
-        return null;
+
+        if (!Utilities.isEmpty(text) && text.matches("[0-9] new messages")) {
+            return null;
+        }
+
+        return text;
     }
 
-    private static NotificationCompat.Action getQuickReplyAction(Notification n) {
-        for (int i = 0; i < NotificationCompat.getActionCount(n); i++) {
-            NotificationCompat.Action action = NotificationCompat.getAction(n, i);
-            for (int x = 0; x < action.getRemoteInputs().length; x++) {
-                RemoteInput remoteInput = action.getRemoteInputs()[x];
-                if (remoteInput.getResultKey().toLowerCase().contains("reply"))
-                    return action;
-            }
+    private String getNotificationTitle(Notification notification) {
+        String title = notification.extras.getString(Notification.EXTRA_TITLE);
+        CharSequence convoTitle = notification.extras.getCharSequence(Notification.EXTRA_CONVERSATION_TITLE);
+        if (!Utilities.isEmpty(convoTitle)) {
+            return convoTitle.toString();
         }
-        return null;
+        return title;
+    }
+
+    private boolean shouldSaveNotification(StatusBarNotification sbn) {
+        if (sbn.isOngoing()) return false;
+        if (sbn.getPackageName().equalsIgnoreCase(getPackageName()))
+            return false;    //Own app notification
+        if (Utilities.isBlackListed(sbn.getPackageName())) return false;  //Blacklisted app
+        if (!Utilities.isInstalledPackage(this, sbn.getPackageName())) return false;
+        return true;
     }
 }

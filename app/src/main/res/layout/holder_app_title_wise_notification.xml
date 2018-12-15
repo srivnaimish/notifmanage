@@ -14,17 +14,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="8dp"
-        android:paddingEnd="8dp"
         android:paddingTop="16dp"
+        android:paddingEnd="8dp"
         android:paddingBottom="16dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/notification_icon"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:src="#bdbdbd"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@mipmap/ic_launcher" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/notification_icon"
+            app:layout_constraintEnd_toEndOf="@id/notification_icon"
+            app:layout_constraintStart_toStartOf="@id/notification_icon"
+            app:layout_constraintTop_toTopOf="@id/notification_icon"
+            app:srcCompat="@drawable/ic_person" />
 
         <TextView
             android:id="@+id/title"

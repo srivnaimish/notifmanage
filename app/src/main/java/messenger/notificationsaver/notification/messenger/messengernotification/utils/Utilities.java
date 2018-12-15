@@ -8,6 +8,7 @@ import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
 
@@ -26,6 +27,15 @@ import java.util.Map;
 public class Utilities {
 
     private static final String TAG = "Utilities";
+
+    public static boolean isBlackListed(String packageName) {
+        for (String s : Constants.blackList) {
+            if (packageName.equalsIgnoreCase(s)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public void openPlayStoreToRate() {
         final String appPackageName;
@@ -127,5 +137,10 @@ public class Utilities {
         Glide.with(context)
                 .load(url)
                 .into(imageView);
+    }
+
+    public static int dpToPx(Context context, int dp) {
+        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
 }
