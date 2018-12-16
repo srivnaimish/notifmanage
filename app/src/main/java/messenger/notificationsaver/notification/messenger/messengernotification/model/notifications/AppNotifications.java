@@ -29,7 +29,7 @@ public class AppNotifications {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Notifications")
                 .setContentText(notificationDao.getUnreadNotificationsCount() + " unread Notifications")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(false)
                 .setVibrate(new long[]{0})
@@ -55,7 +55,7 @@ public class AppNotifications {
         NotificationChannel androidChannel = null;
         if (Utilities.isOreoOrHigher()) {
             androidChannel = new NotificationChannel(channel_id,
-                    channel_id, NotificationManager.IMPORTANCE_HIGH);
+                    channel_id, NotificationManager.IMPORTANCE_LOW);
             androidChannel.enableLights(true);
             androidChannel.enableVibration(false);
             androidChannel.setLightColor(Color.RED);
