@@ -10,6 +10,7 @@ import android.provider.Settings;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash.SplashActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseActivity;
 
@@ -64,5 +65,9 @@ public class IntentFactory {
         intent.putExtra(Constants.PACKAGE_NAME, appPackage);
         intent.putExtra(Constants.NOTIFICATION_TITLE, title);
         return intent;
+    }
+
+    public static Intent getSearchActivity(Context context) {
+        return new Intent(context, SearchActivity.class);
     }
 }

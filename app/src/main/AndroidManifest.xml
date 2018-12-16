@@ -46,6 +46,7 @@
             android:name=".view.activity.titleWiseNotifications.TitleWiseActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.activity.notificationTexts.NotificationTextActivity" />
+        <activity android:name=".view.activity.settings.SearchActivity" />
 
         <service
             android:name=".services.NotificationService"

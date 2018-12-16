@@ -45,11 +45,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:ellipsize="end"
-        android:maxLines="1"
         android:textColor="#636363"
         android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/time"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/app_icon"
         app:layout_constraintTop_toBottomOf="@+id/app_icon"
         tools:text="Albert Austin" />
@@ -60,39 +58,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:layout_marginEnd="8dp"
-        android:ellipsize="end"
         android:fontFamily="sans-serif-thin"
-        android:maxLines="1"
         android:textColor="#212121"
         android:textSize="13sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/time"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/title"
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="Hii, How are you ?" />
-
-    <TextView
-        android:id="@+id/unread_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:drawableEnd="@drawable/ic_right_arrow"
-        android:gravity="center"
-        android:textColor="@color/colorAccent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text"
-        tools:text="2 more notifications" />
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:fontFamily="sans-serif-light"
-        android:textColor="#636363"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/title"
-        tools:text="09:30 pm" />
 
 </android.support.constraint.ConstraintLayout>

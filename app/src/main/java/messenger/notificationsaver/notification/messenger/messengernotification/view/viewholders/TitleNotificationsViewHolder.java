@@ -30,7 +30,7 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 public class TitleNotificationsViewHolder extends BaseViewHolder<BaseRow> {
 
     private ImageView notification_icon, person_icon;
-    private TextView title, text, unreadCount;
+    private TextView title, text, time, unreadCount;
 
     private Context context;
 
@@ -40,6 +40,7 @@ public class TitleNotificationsViewHolder extends BaseViewHolder<BaseRow> {
         notification_icon = itemView.findViewById(R.id.notification_icon);
         title = itemView.findViewById(R.id.title);
         text = itemView.findViewById(R.id.text);
+        time = itemView.findViewById(R.id.time);
         unreadCount = itemView.findViewById(R.id.unread);
         this.context = context;
     }
@@ -66,11 +67,7 @@ public class TitleNotificationsViewHolder extends BaseViewHolder<BaseRow> {
             person_icon.setVisibility(View.VISIBLE);
         }
 
-        if (Pattern.matches("(.*?) \\(\\d+ messages\\)", notificationRow.getTitle())) {
-            String tt = notificationRow.getTitle();
-            tt = notificationRow.getTitle().substring(0, tt.lastIndexOf(" ("));
-            Toast.makeText(context, tt, Toast.LENGTH_SHORT).show();
-        }
+        time.setText(DateTimeUtils.getMaterialUpdatedTimeString(context, notificationRow.getTime()));
 
     }
 }

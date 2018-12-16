@@ -18,6 +18,7 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityView;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchActivity;
 
 /**
  * Created by naimish on 07/12/2018
@@ -40,6 +41,8 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         super.onCreate(savedInstanceState);
         viewPager = findViewById(R.id.viewpager);
         toolbar = findViewById(R.id.toolbar);
+        toolbar.inflateMenu(R.menu.main_menu);
+        toolbar.setOnMenuItemClickListener(presenter);
 
         landingPagerAdapter = new LandingPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(landingPagerAdapter);
@@ -158,5 +161,11 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         presenter.updateNotification();
         presenter.saveLastSession();
         super.onDestroy();
+    }
+
+    @Override
+    public void openSearchActivity() {
+        startActivity(IntentFactory.getSearchActivity(this));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

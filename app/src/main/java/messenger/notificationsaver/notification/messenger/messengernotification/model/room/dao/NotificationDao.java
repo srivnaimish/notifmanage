@@ -9,6 +9,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.SearchRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.entity.NotificationEntity;
 
 /**
@@ -35,8 +36,8 @@ public interface NotificationDao {
     @Query("Select app_package,notification_time,notification_category,notification_title,notification_text,0 as unread from NotificationEntity WHERE app_package= :appPackage AND notification_title= :title ORDER BY notification_time")
     DataSource.Factory<Integer, NotificationRow> getNotificationsTexts(String appPackage, String title);
 
-    @Query("UPDATE NotificationEntity SET notification_read_status =1 where app_package = :packageName")
-    void readNotificationsOfPackage(String packageName);
+    @Query("UPDATE NotificationEntity SET notification_read_status =1 where app_package = :packageName AND notification_title=:title")
+    void readNotificationsOfPackage(String packageName, String title);
 
     @Query("Delete from NotificationEntity where notification_time-:currentTime>:deleteTimeSpan")
     void deleteNotifications(long deleteTimeSpan, long currentTime);
@@ -46,4 +47,10 @@ public interface NotificationDao {
 
     @Query("Select app_package,notification_time,notification_category,notification_title,notification_text,COUNT(*) AS unread from NotificationEntity WHERE notification_time>:time GROUP BY app_package ORDER BY notification_time DESC")
     DataSource.Factory<Integer, NotificationRow> getNotificationsSinceLastOpen(long time);
+
+    @Query("Select app_package,notification_title,notification_text from NotificationEntity" +
+            " WHERE app_name like :query" +
+            " OR notification_title like :query" +
+            " OR notification_text like :query ORDER BY notification_time DESC")
+    DataSource.Factory<Integer, SearchRow> getSearchQuery(String query);
 }

@@ -18,7 +18,7 @@ public class OnBoardingAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -35,19 +35,14 @@ public class OnBoardingAdapter extends PagerAdapter {
         TextView subheading = view.findViewById(R.id.subheading);
         switch (position) {
             case 0:
-               /* displayImage.setImageResource(R.drawable.onboarding_1);
+                displayImage.setImageResource(R.mipmap.ic_launcher_round);
                 heading.setText(R.string.onboarding_heading_1);
-                subheading.setText(R.string.onboarding_subheading_1);*/
+                subheading.setText(R.string.onboarding_subheading_1);
                 break;
             case 1:
-                /*displayImage.setImageResource(R.drawable.onboarding_2);
+                displayImage.setImageResource(R.mipmap.ic_launcher_round);
                 heading.setText(R.string.onboarding_heading_2);
-                subheading.setText(R.string.onboarding_subheading_2);*/
-                break;
-            case 2:
-               /* displayImage.setImageResource(R.drawable.onboarding_3);
-                heading.setText(R.string.onboarding_heading_3);
-                subheading.setText(R.string.onboarding_subheading_3);*/
+                subheading.setText(R.string.onboarding_subheading_2);
                 break;
         }
         container.addView(view);

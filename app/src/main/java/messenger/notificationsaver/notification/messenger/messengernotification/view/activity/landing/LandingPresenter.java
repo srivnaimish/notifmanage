@@ -3,11 +3,13 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.v4.app.NotificationManagerCompat;
+import android.view.MenuItem;
 
 import java.util.Set;
 
 import javax.inject.Inject;
 
+import messenger.notificationsaver.notification.messenger.messengernotification.R;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
@@ -89,5 +91,17 @@ public class LandingPresenter extends BaseActivityPresenter<LandingContract.View
     public void saveLastSession() {
 
         sharedPrefUtil.setLastSessionTime(System.currentTimeMillis());
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.search:
+                view.openSearchActivity();
+                break;
+            case R.id.settings:
+                break;
+        }
+        return false;
     }
 }

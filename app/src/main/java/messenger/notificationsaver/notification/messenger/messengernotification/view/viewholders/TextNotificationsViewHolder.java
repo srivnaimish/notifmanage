@@ -43,6 +43,6 @@ public class TextNotificationsViewHolder extends BaseViewHolder<BaseRow> {
         NotificationRow notificationRow = (NotificationRow) baseRow;
 
         text.setText(notificationRow.getText());
-        time.setText(DateTimeUtils.getTimeStampAsDate(notificationRow.getTime()));
+        time.setText(DateTimeUtils.getTimeStampAsTime(notificationRow.getTime()));
     }
 }

@@ -38,7 +38,7 @@ public class NewNotificationsFragment extends BaseFragment implements ClickListe
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_all_notifications;
+        return R.layout.fragment_new_notifications;
     }
 
     @Override

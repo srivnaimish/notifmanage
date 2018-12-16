@@ -158,8 +158,8 @@ public class DateTimeUtils {
         return sdf.format(netDate);
     }
 
-    public static String getTimeStampAsTimeDate(long timeStamp) {
-        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a   dd/MM/yyyy", Locale.getDefault());
+    public static String getTimeStampAsTime(long timeStamp) {
+        SimpleDateFormat sdf = new SimpleDateFormat("h:mm a dd/MM/yyyy", Locale.getDefault());
         Date netDate = (new Date(timeStamp));
         return sdf.format(netDate);
     }

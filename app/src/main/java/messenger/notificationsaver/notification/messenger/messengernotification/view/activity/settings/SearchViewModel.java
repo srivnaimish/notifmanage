@@ -1,26 +1,25 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.paging.DataSource;
 import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
-import android.os.AsyncTask;
 
 import javax.inject.Inject;
 
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.SearchRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 
 /**
  * Created by naimish on 10/12/2018
  */
-public class TitleWiseViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
 
     private NotificationDao notificationDao;
 
     @Inject
-    TitleWiseViewModel(NotificationDao dao) {
+    SearchViewModel(NotificationDao dao) {
         this.notificationDao = dao;
     }
 
@@ -30,16 +29,12 @@ public class TitleWiseViewModel extends ViewModel {
                     .setPageSize(20)
                     .build();
 
-    public LiveData<PagedList<NotificationRow>> getAppWiseNotifications(String appPackage) {
+    public LiveData<PagedList<SearchRow>> getSearchResults(String query) {
         if (notificationDao == null) {
             return null;
         }
-        DataSource.Factory<Integer, NotificationRow> dataSourceFactory = notificationDao.getTitleWiseNotifications(appPackage);
+        DataSource.Factory<Integer, SearchRow> dataSourceFactory = notificationDao.getSearchQuery(query);
         return new LivePagedListBuilder<>(dataSourceFactory, pagedListConfig)
                 .build();
-    }
-
-    public void markAppNotificationsRead(String appPackage, String title) {
-        AsyncTask.execute(() -> notificationDao.readNotificationsOfPackage(appPackage, title));
     }
 }

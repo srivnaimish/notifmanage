@@ -1,6 +1,7 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing;
 
 import android.content.Context;
+import android.support.v7.widget.Toolbar;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityContract;
 
@@ -14,9 +15,11 @@ public interface LandingContract {
         void requestAutoStartPermission();
 
         void requestDisableBatteryOptimization();
+
+        void openSearchActivity();
     }
 
-    interface Presenter extends BaseActivityContract.Presenter {
+    interface Presenter extends BaseActivityContract.Presenter, Toolbar.OnMenuItemClickListener {
         boolean hasNotificationAccess(Context context);
 
         boolean isAutoStartEnabled();

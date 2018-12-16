@@ -34,6 +34,10 @@ public class NotificationEntity {
     @NonNull
     String appPackage;
 
+    @ColumnInfo(name = "app_name")
+    @NonNull
+    String appName;
+
     @ColumnInfo(name = "notification_read_status")
     boolean read;
 
@@ -106,4 +110,14 @@ public class NotificationEntity {
     public void setId(long id) {
         this.id = id;
     }
+
+    @NonNull
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(@NonNull String appName) {
+        this.appName = appName;
+    }
 }
+

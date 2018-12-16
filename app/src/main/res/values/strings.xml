@@ -4,4 +4,8 @@
     <string name="minutes_ago">%s minutes ago</string>
     <string name="hours_ago">%s hours ago</string>
     <string name="unread_count">%s more</string>
+    <string name="onboarding_heading_1">Save notifications</string>
+    <string name="onboarding_subheading_1">Save notifications by app for later viewing</string>
+    <string name="onboarding_heading_2">Filter results</string>
+    <string name="onboarding_subheading_2">Search notifications by title, text</string>
 </resources>

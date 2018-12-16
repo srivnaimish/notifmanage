@@ -57,6 +57,7 @@ public class NotificationService extends NotificationListenerService {
         NotificationEntity notificationEntity = new NotificationEntity();
         notificationEntity.setNotificationId(sbn.getId());
         notificationEntity.setAppPackage(sbn.getPackageName());
+        notificationEntity.setAppName(Utilities.getAppNameFromPackage(this, sbn.getPackageName()));
         notificationEntity.setTitle(notificationTitle.trim());
         notificationEntity.setText(notificationText.trim());
         notificationEntity.setTime(sbn.getPostTime());

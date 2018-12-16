@@ -10,6 +10,7 @@ import dagger.multibindings.IntoMap;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.ViewModelFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ViewModelKey;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextViewModel;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications.AllNotificationsViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.newNotifications.NewNotificationsViewModel;
@@ -45,6 +46,13 @@ public class ViewModelModule {
     @IntoMap
     @ViewModelKey(NotificationTextViewModel.class)
     ViewModel bindNotificationTextViewModel(NotificationTextViewModel viewModel) {
+        return viewModel;
+    }
+
+    @Provides
+    @IntoMap
+    @ViewModelKey(SearchViewModel.class)
+    ViewModel bindSearchViewModel(SearchViewModel viewModel) {
         return viewModel;
     }
 
