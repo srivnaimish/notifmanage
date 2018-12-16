@@ -64,7 +64,7 @@ public class TitleWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewH
     public BaseViewHolder<BaseRow> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == Constants.AD_ROW) {
-            return new NativeAdViewHolder(inflater.inflate(R.layout.native_ad, parent, false));
+            return new NativeAdViewHolder(context, inflater.inflate(R.layout.holder_ad, parent, false));
         }
         return new TitleNotificationsViewHolder(inflater.inflate(R.layout.holder_app_title_wise_notification, parent, false), context);
     }

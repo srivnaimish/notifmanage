@@ -7,12 +7,15 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.google.ads.mediation.admob.AdMobAdapter;
+import com.google.android.gms.ads.AdRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,6 +38,16 @@ public class Utilities {
             }
         }
         return false;
+    }
+
+    public static AdRequest getAdRequest() {
+        Bundle extras = new Bundle();
+
+        AdRequest.Builder builder = new AdRequest.Builder();
+
+        builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
+
+        return builder.build();
     }
 
     public void openPlayStoreToRate() {

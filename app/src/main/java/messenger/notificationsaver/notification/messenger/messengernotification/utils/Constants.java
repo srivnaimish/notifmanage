@@ -44,4 +44,11 @@ public class Constants {
     public static final String DEFAULT_CHAT_VALUE = "com.snapchat.android;com.google.android.talk;com.google.android.apps.fireball;com.Slack;com.yahoo.mobile.client.android.im;com.viber.voip;com.whatsapp;com.facebook.mlite;com.facebook.orca;org.telegram.messenger;jp.naver.line.android;com.linecorp.linelite;com.kakao.talk;com.tencent.mm";
 
     public static final String LAST_SESSION = "last_session";
+
+    public static final String ADMOB_ACCOUNT = "ca-app-pub-3940256099942544~3347511713";
+    public static final String ADMOB_BANNER = "ca-app-pub-3463246254277621/7281189803";
+    public static final String ADMOB_INTERSTITIAL = "ca-app-pub-3463246254277621/7252327690";
+    public static final String ADMOB_REWARDS = "ca-app-pub-3463246254277621/4734917514";
+    public static final String ADMOB_NATIVE = "ca-app-pub-3940256099942544/2247696110";
+
 }

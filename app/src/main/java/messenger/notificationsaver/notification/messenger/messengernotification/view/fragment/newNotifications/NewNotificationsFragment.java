@@ -27,8 +27,11 @@ public class NewNotificationsFragment extends BaseFragment implements ClickListe
     @Inject
     SharedPrefUtil sharedPrefUtil;
     RecyclerView recyclerView;
+
+    @Inject
     AllNotificationsAdapter rvAdapter;
     View emptyView;
+
     @Inject
     NewNotificationsViewModel viewModel;
 
@@ -45,7 +48,6 @@ public class NewNotificationsFragment extends BaseFragment implements ClickListe
     protected void onBindView(View rootView, Bundle savedInstanceState) {
         recyclerView = rootView.findViewById(R.id.notifications_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvAdapter = new AllNotificationsAdapter();
         recyclerView.setAdapter(rvAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, this));
         emptyView = findViewById(R.id.empty_view);

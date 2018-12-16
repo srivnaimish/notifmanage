@@ -1,13 +1,17 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications;
 
 import android.arch.paging.PagedList;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.BaseRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
@@ -22,8 +26,12 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
  */
 public class AllNotificationsAdapter extends BasePageAdapter<NotificationRow, BaseViewHolder<BaseRow>> {
 
-    public AllNotificationsAdapter() {
+    Context context;
+
+    @Inject
+    public AllNotificationsAdapter(@ApplicationContext Context context) {
         super(DIFF_CALLBACK);
+        this.context = context;
     }
 
     public static DiffUtil.ItemCallback<NotificationRow> DIFF_CALLBACK = new DiffUtil.ItemCallback<NotificationRow>() {
@@ -59,7 +67,7 @@ public class AllNotificationsAdapter extends BasePageAdapter<NotificationRow, Ba
     public BaseViewHolder<BaseRow> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == Constants.AD_ROW) {
-            return new NativeAdViewHolder(inflater.inflate(R.layout.native_ad, parent, false));
+            return new NativeAdViewHolder(context, inflater.inflate(R.layout.holder_ad, parent, false));
         }
         return new AllNotificationsViewHolder(inflater.inflate(R.layout.holder_appwise_notification, parent, false));
     }

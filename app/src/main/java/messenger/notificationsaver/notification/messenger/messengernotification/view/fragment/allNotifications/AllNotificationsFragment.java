@@ -22,6 +22,8 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 public class AllNotificationsFragment extends BaseFragment implements ClickListener {
 
     RecyclerView recyclerView;
+
+    @Inject
     AllNotificationsAdapter rvAdapter;
     View emptyView;
     @Inject
@@ -40,7 +42,6 @@ public class AllNotificationsFragment extends BaseFragment implements ClickListe
     protected void onBindView(View rootView, Bundle savedInstanceState) {
         recyclerView = rootView.findViewById(R.id.notifications_rv);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvAdapter = new AllNotificationsAdapter();
         recyclerView.setAdapter(rvAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, this));
 

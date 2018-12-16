@@ -11,11 +11,14 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.android.gms.ads.MobileAds;
+
 import javax.inject.Inject;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityView;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchActivity;
@@ -50,6 +53,9 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
 
         bottomNavigationView = findViewById(R.id.landing_tabs);
         setUpBottomNavigation();
+
+
+        MobileAds.initialize(this, Constants.ADMOB_ACCOUNT);
     }
 
     private void setUpBottomNavigation() {
