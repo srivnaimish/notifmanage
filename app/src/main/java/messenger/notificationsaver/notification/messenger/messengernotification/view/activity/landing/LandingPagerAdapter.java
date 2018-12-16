@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications.AllNotificationsFragment;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.newNotifications.NewNotificationsFragment;
 
 /**
  * Created by naimish on 10/12/2018
@@ -18,14 +19,14 @@ public class LandingPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return AllNotificationsFragment.newInstance();
+                return NewNotificationsFragment.newInstance();
             default:
-                return null;
+                return AllNotificationsFragment.newInstance();
         }
     }
 
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }

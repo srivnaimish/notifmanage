@@ -85,4 +85,12 @@ public class SharedPrefUtil {
     public void setBatteryOptimizationDisabled() {
         putBoolean(Constants.BATTERY_OPTIMIZATION, true);
     }
+
+    public long getLastSessionTime() {
+        return getLong(Constants.LAST_SESSION, 0L);
+    }
+
+    public void setLastSessionTime(long time) {
+        putLong(Constants.LAST_SESSION, time);
+    }
 }

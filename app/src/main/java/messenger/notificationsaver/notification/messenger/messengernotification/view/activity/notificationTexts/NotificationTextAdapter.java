@@ -26,7 +26,7 @@ public class NotificationTextAdapter extends BasePageAdapter<NotificationRow, Ba
     public static DiffUtil.ItemCallback<NotificationRow> DIFF_CALLBACK = new DiffUtil.ItemCallback<NotificationRow>() {
         @Override
         public boolean areItemsTheSame(@NonNull NotificationRow oldItem, @NonNull NotificationRow newItem) {
-            return oldItem.getText().equals(newItem.getText());
+            return oldItem.getTime() == newItem.getTime();
         }
 
         @Override
@@ -49,7 +49,7 @@ public class NotificationTextAdapter extends BasePageAdapter<NotificationRow, Ba
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<BaseRow> holder, int position) {
-        holder.set(getItem(getRealPosition(position)));
+        holder.set(getItem(position));
     }
 
     @Override

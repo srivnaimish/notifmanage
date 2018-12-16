@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 import android.os.Looper;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.widget.Toast;
+
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -39,15 +42,13 @@ public class NotificationService extends NotificationListenerService {
 
         Notification notification = sbn.getNotification();
 
-
         if (!shouldSaveNotification(sbn)) {
             return;
         }
 
-        String notificationTitle = getNotificationTitle(notification);
-        String notificationText = getNotificationText(notification);
-
         String category = notification.extras.getString(Notification.EXTRA_TEMPLATE);
+        String notificationTitle = getNotificationTitle(sbn, notification);
+        String notificationText = getNotificationText(category, notification);
 
         if (Utilities.isEmpty(notificationTitle) || Utilities.isEmpty(notificationText)) {
             return;
@@ -67,33 +68,46 @@ public class NotificationService extends NotificationListenerService {
                 AppNotifications.publishNewNotification(this, notificationDao);
             });
             return;
+        } else {
+            notificationDao.insertNewNotification(notificationEntity);
+            AppNotifications.publishNewNotification(this, notificationDao);
         }
 
         notificationDao.insertNewNotification(notificationEntity);
         AppNotifications.publishNewNotification(this, notificationDao);
     }
 
-    private String getNotificationText(Notification notification) {
-
+    private String getNotificationText(String category, Notification notification) {
         String text = notification.extras.getString(Notification.EXTRA_TEXT);
-        String subText = notification.extras.getString(Notification.EXTRA_SUB_TEXT);
-        if (!Utilities.isEmpty(subText)) {
-            text = text + "\n" + subText;
+
+        if (category.equalsIgnoreCase("android.app.Notification$BigTextStyle")) {
+            text = notification.extras.getString(Notification.EXTRA_BIG_TEXT);
         }
 
-        if (!Utilities.isEmpty(text) && text.matches("[0-9] new messages")) {
+        if (text != null && text.matches("\\d+ new messages")) {
             return null;
         }
 
         return text;
     }
 
-    private String getNotificationTitle(Notification notification) {
+    private String getNotificationTitle(StatusBarNotification sbn, Notification notification) {
         String title = notification.extras.getString(Notification.EXTRA_TITLE);
         CharSequence convoTitle = notification.extras.getCharSequence(Notification.EXTRA_CONVERSATION_TITLE);
         if (!Utilities.isEmpty(convoTitle)) {
-            return convoTitle.toString();
+            title = convoTitle.toString();
         }
+
+        String appName = Utilities.getAppNameFromPackage(this, sbn.getPackageName());
+
+        if (title == null ||
+                title.equalsIgnoreCase(appName) ||
+                title.matches("\\d+ new messages")) return null;
+
+        if (Pattern.matches("(.*?) \\(\\d+ messages\\)", title)) {
+            title = title.substring(0, title.lastIndexOf(" ("));
+        }
+
         return title;
     }
 

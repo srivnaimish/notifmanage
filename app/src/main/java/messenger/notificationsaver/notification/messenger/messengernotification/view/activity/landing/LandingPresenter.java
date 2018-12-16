@@ -84,4 +84,10 @@ public class LandingPresenter extends BaseActivityPresenter<LandingContract.View
     public void updateNotification() {
         AsyncTask.execute(() -> AppNotifications.publishNewNotification(context, notificationDao));
     }
+
+    @Override
+    public void saveLastSession() {
+
+        sharedPrefUtil.setLastSessionTime(System.currentTimeMillis());
+    }
 }

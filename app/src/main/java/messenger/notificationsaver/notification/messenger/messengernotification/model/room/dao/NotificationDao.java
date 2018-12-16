@@ -37,4 +37,13 @@ public interface NotificationDao {
 
     @Query("UPDATE NotificationEntity SET notification_read_status =1 where app_package = :packageName")
     void readNotificationsOfPackage(String packageName);
+
+    @Query("Delete from NotificationEntity where notification_time-:currentTime>:deleteTimeSpan")
+    void deleteNotifications(long deleteTimeSpan, long currentTime);
+
+    @Query("Delete from NotificationEntity where app_package=:packageName")
+    void deleteNotifications(String packageName);
+
+    @Query("Select app_package,notification_time,notification_category,notification_title,notification_text,COUNT(*) AS unread from NotificationEntity WHERE notification_time>:time GROUP BY app_package ORDER BY notification_time DESC")
+    DataSource.Factory<Integer, NotificationRow> getNotificationsSinceLastOpen(long time);
 }

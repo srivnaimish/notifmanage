@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -24,7 +25,7 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
  */
 public class NotificationTextActivity extends BaseActivity implements ClickListener {
 
-    EmptyRecyclerView recyclerView;
+    RecyclerView recyclerView;
     NotificationTextAdapter rvAdapter;
 
     Toolbar toolbar;
@@ -42,7 +43,6 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         recyclerView = findViewById(R.id.notifications_rv);
-        recyclerView.setEmptyView(findViewById(R.id.empty_view));
         rvAdapter = new NotificationTextAdapter();
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, this));
         recyclerView.setAdapter(rvAdapter);
@@ -59,7 +59,11 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
     }
 
     private void observeViewModel() {
-        viewModel.getNotificationsTexts(appPackage, title).observe(this, rvAdapter::submitList);
+        viewModel.getNotificationsTexts(appPackage, title).observe(this, list -> {
+            rvAdapter.submitList(list);
+            if (!Utilities.isEmpty(list))
+                recyclerView.scrollToPosition(list.size());
+        });
     }
 
     @Override

@@ -39,10 +39,10 @@ public class AllNotificationsViewHolder extends BaseViewHolder<BaseRow> {
         text.setText(allNotificationRow.getText());
         time.setText(DateTimeUtils.getMaterialUpdatedTimeString(time.getContext(), allNotificationRow.getTime()));
 
-        if (allNotificationRow.getUnread() == 0) {
+        if (allNotificationRow.getUnread() == 1) {
             unreadCount.setVisibility(View.GONE);
         } else {
-            unreadCount.setText(unreadCount.getContext().getString(R.string.unread_count, String.valueOf(allNotificationRow.getUnread())));
+            unreadCount.setText(unreadCount.getContext().getString(R.string.unread_count, String.valueOf(allNotificationRow.getUnread() - 1)));
             unreadCount.setVisibility(View.VISIBLE);
         }
     }

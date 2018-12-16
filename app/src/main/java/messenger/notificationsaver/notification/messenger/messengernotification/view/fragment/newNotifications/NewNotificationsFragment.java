@@ -1,4 +1,4 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.newNotifications;
 
 import android.arch.paging.PagedList;
 import android.os.Bundle;
@@ -11,24 +11,29 @@ import javax.inject.Inject;
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.ClickListener;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.RecyclerTouchListener;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications.AllNotificationsAdapter;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications.AllNotificationsViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragment;
 
 /**
  * Created by naimish on 10/12/2018
  */
-public class AllNotificationsFragment extends BaseFragment implements ClickListener {
+public class NewNotificationsFragment extends BaseFragment implements ClickListener {
 
+    @Inject
+    SharedPrefUtil sharedPrefUtil;
     RecyclerView recyclerView;
     AllNotificationsAdapter rvAdapter;
     View emptyView;
     @Inject
-    AllNotificationsViewModel viewModel;
+    NewNotificationsViewModel viewModel;
 
-    public static AllNotificationsFragment newInstance() {
-        return new AllNotificationsFragment();
+    public static NewNotificationsFragment newInstance() {
+        return new NewNotificationsFragment();
     }
 
     @Override
@@ -43,7 +48,6 @@ public class AllNotificationsFragment extends BaseFragment implements ClickListe
         rvAdapter = new AllNotificationsAdapter();
         recyclerView.setAdapter(rvAdapter);
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerView, this));
-
         emptyView = findViewById(R.id.empty_view);
         observeViewModel();
     }
@@ -52,7 +56,12 @@ public class AllNotificationsFragment extends BaseFragment implements ClickListe
         if (getActivity() == null) {
             return;
         }
-        viewModel.getAppsWithNotifications().observe(getActivity(), list -> {
+        long time = sharedPrefUtil.getLastSessionTime();
+        if (time == 0) {
+            emptyView.setVisibility(View.VISIBLE);
+            return;
+        }
+        viewModel.getNewNotificationApps(time).observe(getActivity(), list -> {
             if (Utilities.isEmpty(list)) {
                 emptyView.setVisibility(View.VISIBLE);
             } else {

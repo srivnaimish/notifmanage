@@ -12,6 +12,7 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications.AllNotificationsViewModel;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.newNotifications.NewNotificationsViewModel;
 
 /**
  * Created by naimish on 15/11/2018
@@ -23,6 +24,13 @@ public class ViewModelModule {
     @IntoMap
     @ViewModelKey(AllNotificationsViewModel.class)
     ViewModel bindAllNotificationsViewModel(AllNotificationsViewModel viewModel) {
+        return viewModel;
+    }
+
+    @Provides
+    @IntoMap
+    @ViewModelKey(NewNotificationsViewModel.class)
+    ViewModel bindNewNotificationsViewModel(NewNotificationsViewModel viewModel) {
         return viewModel;
     }
 

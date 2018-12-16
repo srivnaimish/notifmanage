@@ -2,12 +2,18 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "7b3f9b4261e5a36f915572cf599bcba9",
+    "identityHash": "ea1b860d92bd8db44a587b3f846b7087",
     "entities": [
       {
         "tableName": "NotificationEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`notification_id` INTEGER NOT NULL, `notification_title` TEXT NOT NULL, `notification_text` TEXT NOT NULL, `notification_category` TEXT, `app_package` TEXT NOT NULL, `notification_read_status` INTEGER NOT NULL, `notification_time` INTEGER NOT NULL, PRIMARY KEY(`notification_id`, `notification_title`, `notification_text`, `app_package`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `notification_id` INTEGER NOT NULL, `notification_title` TEXT NOT NULL, `notification_text` TEXT NOT NULL, `notification_category` TEXT, `app_package` TEXT NOT NULL, `notification_read_status` INTEGER NOT NULL, `notification_time` INTEGER NOT NULL)",
         "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
           {
             "fieldPath": "notificationId",
             "columnName": "notification_id",
@@ -53,12 +59,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "notification_id",
-            "notification_title",
-            "notification_text",
-            "app_package"
+            "id"
           ],
-          "autoGenerate": false
+          "autoGenerate": true
         },
         "indices": [],
         "foreignKeys": []
@@ -66,7 +69,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7b3f9b4261e5a36f915572cf599bcba9\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ea1b860d92bd8db44a587b3f846b7087\")"
     ]
   }
 }

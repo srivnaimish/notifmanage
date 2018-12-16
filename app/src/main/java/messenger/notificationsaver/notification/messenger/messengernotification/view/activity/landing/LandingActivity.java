@@ -53,8 +53,11 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 item -> {
                     switch (item.getItemId()) {
-                        case R.id.all:
+                        case R.id.newNoti:
                             openPage(0);
+                            break;
+                        case R.id.all:
+                            openPage(1);
                             break;
                     }
                     return false;
@@ -65,7 +68,7 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         if (pos == viewPager.getCurrentItem()) {
             return;
         }
-        viewPager.setCurrentItem(pos, true);
+        viewPager.setCurrentItem(pos);
     }
 
     @Override
@@ -148,5 +151,12 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
     @Override
     public void onPageScrollStateChanged(int i) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        presenter.updateNotification();
+        presenter.saveLastSession();
+        super.onDestroy();
     }
 }

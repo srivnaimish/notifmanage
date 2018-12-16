@@ -11,6 +11,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
@@ -26,13 +29,14 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
  */
 public class TitleNotificationsViewHolder extends BaseViewHolder<BaseRow> {
 
-    private ImageView notification_icon;
+    private ImageView notification_icon, person_icon;
     private TextView title, text, unreadCount;
 
     private Context context;
 
     public TitleNotificationsViewHolder(@NonNull View itemView, Context context) {
         super(itemView);
+        person_icon = itemView.findViewById(R.id.person_icon);
         notification_icon = itemView.findViewById(R.id.notification_icon);
         title = itemView.findViewById(R.id.title);
         text = itemView.findViewById(R.id.text);
@@ -56,8 +60,16 @@ public class TitleNotificationsViewHolder extends BaseViewHolder<BaseRow> {
 
         if (Utilities.isEmpty(notificationRow.getCategory()) || !notificationRow.getCategory().equalsIgnoreCase("android.app.Notification$MessagingStyle")) {
             notification_icon.setImageDrawable(Utilities.getAppIconFromPackage(context, notificationRow.getAppPackage()));
+            person_icon.setVisibility(View.GONE);
         } else {
             notification_icon.setImageResource(R.color.grey);
+            person_icon.setVisibility(View.VISIBLE);
+        }
+
+        if (Pattern.matches("(.*?) \\(\\d+ messages\\)", notificationRow.getTitle())) {
+            String tt = notificationRow.getTitle();
+            tt = notificationRow.getTitle().substring(0, tt.lastIndexOf(" ("));
+            Toast.makeText(context, tt, Toast.LENGTH_SHORT).show();
         }
 
     }

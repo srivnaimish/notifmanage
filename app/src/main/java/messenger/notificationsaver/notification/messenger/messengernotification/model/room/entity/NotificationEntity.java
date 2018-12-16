@@ -2,13 +2,18 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
 /**
  * Created by naimish on 07/12/2018
  */
-@Entity(primaryKeys = {"notification_id", "notification_title", "notification_text", "app_package"})
+@Entity
 public class NotificationEntity {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    long id;
 
     @ColumnInfo(name = "notification_id")
     @NonNull
@@ -92,5 +97,13 @@ public class NotificationEntity {
 
     public String getCategory() {
         return category;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

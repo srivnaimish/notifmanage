@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/newNoti"
+        android:icon="@drawable/ic_new"
+        android:orderInCategory="2"
+        android:title="New" />
+    <item
         android:id="@+id/all"
         android:icon="@drawable/ic_notifications"
         android:orderInCategory="2"
-        android:title="All Notifications" />
+        android:title="All" />
 </menu>

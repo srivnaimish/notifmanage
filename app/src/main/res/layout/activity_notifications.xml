@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#eeeeee">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -13,8 +14,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_arrow_back"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:navigationIcon="@drawable/ic_arrow_back" />
     </android.support.design.widget.AppBarLayout>
 
     <android.support.constraint.ConstraintLayout
@@ -23,7 +24,7 @@
         android:background="#eeeeee"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <messenger.notificationsaver.notification.messenger.messengernotification.view.widgets.EmptyRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/notifications_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"

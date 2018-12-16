@@ -24,5 +24,7 @@ public interface LandingContract {
         boolean isBatterySaverDisabled();
 
         void updateNotification();
+
+        void saveLastSession();
     }
 }
