@@ -59,12 +59,12 @@ public class NativeAdViewHolder extends BaseViewHolder<BaseRow> {
 
         // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
         // check before trying to display them.
-        List<NativeAd.Image> images = nativeAd.getImages();
+        /*List<NativeAd.Image> images = nativeAd.getImages();
         if (images == null || images.size() == 0) {
             adView.getImageView().setVisibility(View.GONE);
         } else {
             ((ImageView) adView.getImageView()).setImageDrawable(images.get(0).getDrawable());
-        }
+        }*/
 
         if (nativeAd.getIcon() != null) {
             try {

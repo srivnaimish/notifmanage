@@ -14,7 +14,7 @@ public class Constants {
     /*Notification ids*/
     public static final int MAIN_NOTIFICATION_ID = 9514;
 
-    public static final int AD_REPEAT_POSITION = 3;
+    public static final int AD_REPEAT_POSITION = 5;
     public static final int AD_ROW = 1;
 
     public static final long ONE_SECOND_MILLIS = 1000;

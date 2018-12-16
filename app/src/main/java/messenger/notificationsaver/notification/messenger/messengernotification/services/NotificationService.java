@@ -1,11 +1,13 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.services;
 
 import android.app.Notification;
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Looper;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.widget.Toast;
 
 import java.util.regex.Pattern;
 
@@ -68,14 +70,16 @@ public class NotificationService extends NotificationListenerService {
                 notificationDao.insertNewNotification(notificationEntity);
                 AppNotifications.publishNewNotification(this, notificationDao);
             });
-            return;
         } else {
             notificationDao.insertNewNotification(notificationEntity);
             AppNotifications.publishNewNotification(this, notificationDao);
         }
 
-        notificationDao.insertNewNotification(notificationEntity);
-        AppNotifications.publishNewNotification(this, notificationDao);
+        ReplyIntentSender r = sendReply(sbn, notificationTitle);
+        if (r != null) {
+            //r.sendNativeIntent(this, "Generated mssg");
+        }
+
     }
 
     private String getNotificationText(String category, Notification notification) {
@@ -118,6 +122,50 @@ public class NotificationService extends NotificationListenerService {
             return false;    //Own app notification
         if (Utilities.isBlackListed(sbn.getPackageName())) return false;  //Blacklisted app
         if (!Utilities.isInstalledPackage(this, sbn.getPackageName())) return false;
+        if (System.currentTimeMillis() - sbn.getNotification().when > 2000) return false;
+
         return true;
+    }
+
+    public static ReplyIntentSender sendReply(StatusBarNotification statusBarNotification, String name) {
+
+        Notification.Action actions[] = statusBarNotification.getNotification().actions;
+
+        for (Notification.Action act : actions) {
+            if (act != null && act.getRemoteInputs() != null) {
+                if (act.title.toString().contains("Reply")) {
+                    if (act.getRemoteInputs() != null)
+                        return new ReplyIntentSender(act);
+                }
+            }
+        }
+        return null;
+    }
+
+
+    public static class ReplyIntentSender {
+
+        public final Notification.Action action;
+
+        public ReplyIntentSender(Notification.Action extractedAction) {
+            action = extractedAction;
+        }
+
+        private boolean sendNativeIntent(Context context, String message) {
+            for (android.app.RemoteInput rem : action.getRemoteInputs()) {
+                Intent intent = new Intent();
+                Bundle bundle = new Bundle();
+                bundle.putCharSequence(rem.getResultKey(), message);
+                android.app.RemoteInput.addResultsToIntent(action.getRemoteInputs(), intent, bundle);
+                try {
+                    action.actionIntent.send(context, 0, intent);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return true;
+            }
+            return false;
+        }
     }
 }
