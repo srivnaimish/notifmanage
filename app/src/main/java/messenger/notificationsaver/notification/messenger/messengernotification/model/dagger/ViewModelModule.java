@@ -9,9 +9,9 @@ import dagger.Provides;
 import dagger.multibindings.IntoMap;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.ViewModelFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ViewModelKey;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextViewModel;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchViewModel;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseViewModel;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.textWise.NotificationTextViewModel;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.search.SearchViewModel;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWise.TitleWiseViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.allNotifications.AllNotificationsViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.newNotifications.NewNotificationsViewModel;
 

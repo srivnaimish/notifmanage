@@ -3,7 +3,6 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -13,15 +12,10 @@ import android.view.MenuItem;
 
 import com.google.android.gms.ads.MobileAds;
 
-import javax.inject.Inject;
-
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
-import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
-import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityView;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchActivity;
 
 /**
  * Created by naimish on 07/12/2018

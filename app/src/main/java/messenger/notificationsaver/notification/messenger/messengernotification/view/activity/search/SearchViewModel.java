@@ -1,26 +1,25 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.search;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.paging.DataSource;
 import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
-import android.os.AsyncTask;
 
 import javax.inject.Inject;
 
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.SearchRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 
 /**
  * Created by naimish on 10/12/2018
  */
-public class NotificationTextViewModel extends ViewModel {
+public class SearchViewModel extends ViewModel {
 
     private NotificationDao notificationDao;
 
     @Inject
-    NotificationTextViewModel(NotificationDao dao) {
+    SearchViewModel(NotificationDao dao) {
         this.notificationDao = dao;
     }
 
@@ -30,11 +29,11 @@ public class NotificationTextViewModel extends ViewModel {
                     .setPageSize(20)
                     .build();
 
-    public LiveData<PagedList<NotificationRow>> getNotificationsTexts(String appPackage, String title) {
+    public LiveData<PagedList<SearchRow>> getSearchResults(String query) {
         if (notificationDao == null) {
             return null;
         }
-        DataSource.Factory<Integer, NotificationRow> dataSourceFactory = notificationDao.getNotificationsTexts(appPackage, title);
+        DataSource.Factory<Integer, SearchRow> dataSourceFactory = notificationDao.getSearchQuery(query);
         return new LivePagedListBuilder<>(dataSourceFactory, pagedListConfig)
                 .build();
     }

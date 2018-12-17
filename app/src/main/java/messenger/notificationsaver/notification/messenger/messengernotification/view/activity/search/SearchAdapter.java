@@ -1,36 +1,42 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.search;
 
-import android.arch.paging.PagedList;
+import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.BaseRow;
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.SearchRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.adapters.BasePageAdapter;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.BaseViewHolder;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.TextNotificationsViewHolder;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.SearchViewHolder;
 
 /**
  * Created by naimish on 10/12/2018
  */
-public class NotificationTextAdapter extends BasePageAdapter<NotificationRow, BaseViewHolder<BaseRow>> {
+public class SearchAdapter extends BasePageAdapter<SearchRow, BaseViewHolder<BaseRow>> {
 
-    public NotificationTextAdapter() {
+    Context context;
+
+    @Inject
+    public SearchAdapter(@ApplicationContext Context context) {
         super(DIFF_CALLBACK);
+        this.context = context;
     }
 
-    public static DiffUtil.ItemCallback<NotificationRow> DIFF_CALLBACK = new DiffUtil.ItemCallback<NotificationRow>() {
+    public static DiffUtil.ItemCallback<SearchRow> DIFF_CALLBACK = new DiffUtil.ItemCallback<SearchRow>() {
         @Override
-        public boolean areItemsTheSame(@NonNull NotificationRow oldItem, @NonNull NotificationRow newItem) {
-            return oldItem.getTime() == newItem.getTime();
+        public boolean areItemsTheSame(@NonNull SearchRow oldItem, @NonNull SearchRow newItem) {
+            return oldItem.getText().equals(newItem.getText());
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull NotificationRow oldItem, @NonNull NotificationRow newItem) {
+        public boolean areContentsTheSame(@NonNull SearchRow oldItem, @NonNull SearchRow newItem) {
             return oldItem.equals(newItem);
         }
     };
@@ -44,7 +50,7 @@ public class NotificationTextAdapter extends BasePageAdapter<NotificationRow, Ba
     @Override
     public BaseViewHolder<BaseRow> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return new TextNotificationsViewHolder(inflater.inflate(R.layout.holder_received_text, parent, false));
+        return new SearchViewHolder(context, inflater.inflate(R.layout.holder_search_notification, parent, false));
     }
 
     @Override

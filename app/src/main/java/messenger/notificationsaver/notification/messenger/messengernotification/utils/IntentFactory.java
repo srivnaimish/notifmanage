@@ -4,15 +4,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.PowerManager;
-import android.provider.Settings;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.textWise.NotificationTextActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash.SplashActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.search.SearchActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWise.TitleWiseActivity;
 
 /**
  * Created by naimish on 07/12/2018

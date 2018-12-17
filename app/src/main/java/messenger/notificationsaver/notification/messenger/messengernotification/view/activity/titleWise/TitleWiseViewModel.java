@@ -1,4 +1,4 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWise;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;

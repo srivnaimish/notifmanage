@@ -43,10 +43,10 @@
             android:name=".view.activity.landing.LandingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.titleWiseNotifications.TitleWiseActivity"
+            android:name=".view.activity.titleWise.TitleWiseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.notificationTexts.NotificationTextActivity" />
-        <activity android:name=".view.activity.settings.SearchActivity" />
+        <activity android:name=".view.activity.textWise.NotificationTextActivity" />
+        <activity android:name=".view.activity.search.SearchActivity" />
 
         <service
             android:name=".services.NotificationService"

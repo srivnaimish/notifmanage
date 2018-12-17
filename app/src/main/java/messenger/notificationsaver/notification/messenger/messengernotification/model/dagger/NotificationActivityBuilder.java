@@ -3,21 +3,19 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.inject.PerActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.inject.PerApplication;
-import messenger.notificationsaver.notification.messenger.messengernotification.receivers.AppInstallUninstallReceiver;
 import messenger.notificationsaver.notification.messenger.messengernotification.services.NotificationService;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivityModule;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextModule;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.textWise.NotificationTextActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.textWise.NotificationTextModule;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivityModule;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SearchModule;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.search.SearchActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.search.SearchModule;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash.SplashActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.splash.SplashActivityModule;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWiseNotifications.TitleWiseModule;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWise.TitleWiseActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWise.TitleWiseModule;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.fragment.base.BaseFragmentProvider;
 
 /**

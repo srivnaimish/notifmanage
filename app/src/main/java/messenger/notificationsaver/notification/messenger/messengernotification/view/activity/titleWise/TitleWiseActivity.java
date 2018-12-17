@@ -1,49 +1,42 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.titleWise;
 
 import android.arch.paging.PagedList;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import javax.inject.Inject;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.SearchRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.IntentFactory;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivity;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextAdapter;
-import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.notificationTexts.NotificationTextViewModel;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.ClickListener;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.callbacks.RecyclerTouchListener;
 
 /**
  * Created by naimish on 11/12/2018
  */
-public class SearchActivity extends BaseActivity implements ClickListener, SearchView.OnQueryTextListener {
+public class TitleWiseActivity extends BaseActivity implements ClickListener {
 
     RecyclerView recyclerView;
 
-    ImageButton search;
     @Inject
-    SearchAdapter rvAdapter;
+    TitleWiseAdapter rvAdapter;
 
     @Inject
-    SearchViewModel viewModel;
-
-    SearchView searchView;
+    TitleWiseViewModel viewModel;
+    private String appPackage;
+    private Toolbar toolbar;
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_search;
+        return R.layout.activity_title_notifications;
     }
 
     @Override
@@ -54,32 +47,33 @@ public class SearchActivity extends BaseActivity implements ClickListener, Searc
         recyclerView.setAdapter(rvAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        searchView = findViewById(R.id.search_view);
-        search = findViewById(R.id.search);
-        bindClick(R.id.search, v -> onQueryTextSubmit(searchView.getQuery().toString()));
-        searchView.setOnQueryTextListener(this);
-        searchView.requestFocus();
+        appPackage = getIntent().getStringExtra(Constants.PACKAGE_NAME);
+
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(Utilities.getAppNameFromPackage(this, appPackage));
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
+        observeViewModel();
     }
 
-    private void observeViewModel(String query) {
-        viewModel.getSearchResults(query).observe(this, list -> {
+    private void observeViewModel() {
+        viewModel.getAppWiseNotifications(appPackage).observe(this, list -> {
             rvAdapter.submitList(list);
-            if (Utilities.isEmpty(list)) {
-                showSnackBar("Nothing Found");
-            }
         });
     }
 
     @Override
     public void onClick(View view, int position) {
-        PagedList<SearchRow> allSearchRows = rvAdapter.getCurrentList();
-        if (Utilities.isEmpty(allSearchRows)) {
+        PagedList<NotificationRow> allNotificationRows = rvAdapter.getCurrentList();
+        if (Utilities.isEmpty(allNotificationRows)) {
             return;
         }
 
-        SearchRow row = allSearchRows.get(rvAdapter.getRealPosition(position));
+        NotificationRow row = allNotificationRows.get(rvAdapter.getRealPosition(position));
         if (row == null)
             return;
+
+        viewModel.markAppNotificationsRead(row.getAppPackage(), row.getTitle());
 
         startActivity(IntentFactory.getNotificationTextActivity(this, row.getAppPackage(), row.getTitle()));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
@@ -91,18 +85,7 @@ public class SearchActivity extends BaseActivity implements ClickListener, Searc
     }
 
     @Override
-    public boolean onQueryTextSubmit(String query) {
-        query = query.trim();
-        if (query.length() > 3) {
-            query = "%" + query + "%";
-            observeViewModel(query);
-            searchView.clearFocus();
-        }
-        return true;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        return false;
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

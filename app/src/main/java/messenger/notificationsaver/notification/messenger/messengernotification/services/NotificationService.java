@@ -83,12 +83,10 @@ public class NotificationService extends NotificationListenerService {
             notificationDao.insertNewNotification(notificationEntity);
             AppNotifications.publishNewNotification(this, notificationDao);
         }
-        /*RemoteInput[] r = sendReply(sbn);
-        String s = new Gson().toJson(r);
-        List<RemoteInput> r1 = new Gson().fromJson(s, new TypeToken<List<RemoteInput>>() {}.getType());
-        if (r1 != null) {
-            //r.sendNativeIntent(this, "Generated mssg");
-        }*/
+
+        if (sendReply(sbn) != null) {
+            //sendReply(sbn).sendNativeIntent(this, "HEY");
+        }
 
     }
 
@@ -132,12 +130,13 @@ public class NotificationService extends NotificationListenerService {
             return false;    //Own app notification
         if (Utilities.isBlackListed(sbn.getPackageName())) return false;  //Blacklisted app
         if (!Utilities.isInstalledPackage(this, sbn.getPackageName())) return false;
-        if (System.currentTimeMillis() - sbn.getNotification().when > 2000) return false;
+        if (sbn.getNotification().when != 0 && System.currentTimeMillis() - sbn.getNotification().when > 3000)
+            return false;
 
         return true;
     }
 
-    public RemoteInput[] sendReply(StatusBarNotification statusBarNotification) {
+    public ReplyIntentSender sendReply(StatusBarNotification statusBarNotification) {
 
         Notification.Action actions[] = statusBarNotification.getNotification().actions;
 
@@ -145,7 +144,7 @@ public class NotificationService extends NotificationListenerService {
             if (act != null && act.getRemoteInputs() != null) {
                 if (act.title.toString().contains("Reply")) {
                     if (act.getRemoteInputs() != null) {
-                        return act.getRemoteInputs();
+                        return new ReplyIntentSender(act);
                     }
                 }
             }

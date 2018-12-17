@@ -1,4 +1,4 @@
-package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings;
+package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.textWise;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
@@ -8,18 +8,18 @@ import android.arch.paging.PagedList;
 
 import javax.inject.Inject;
 
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.SearchRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 
 /**
  * Created by naimish on 10/12/2018
  */
-public class SearchViewModel extends ViewModel {
+public class NotificationTextViewModel extends ViewModel {
 
     private NotificationDao notificationDao;
 
     @Inject
-    SearchViewModel(NotificationDao dao) {
+    NotificationTextViewModel(NotificationDao dao) {
         this.notificationDao = dao;
     }
 
@@ -29,11 +29,11 @@ public class SearchViewModel extends ViewModel {
                     .setPageSize(20)
                     .build();
 
-    public LiveData<PagedList<SearchRow>> getSearchResults(String query) {
+    public LiveData<PagedList<NotificationRow>> getNotificationsTexts(String appPackage, String title) {
         if (notificationDao == null) {
             return null;
         }
-        DataSource.Factory<Integer, SearchRow> dataSourceFactory = notificationDao.getSearchQuery(query);
+        DataSource.Factory<Integer, NotificationRow> dataSourceFactory = notificationDao.getNotificationsTexts(appPackage, title);
         return new LivePagedListBuilder<>(dataSourceFactory, pagedListConfig)
                 .build();
     }
