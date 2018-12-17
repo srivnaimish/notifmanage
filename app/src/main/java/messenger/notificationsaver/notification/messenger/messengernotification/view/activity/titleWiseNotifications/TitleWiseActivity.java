@@ -4,6 +4,7 @@ import android.arch.paging.PagedList;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -38,7 +39,7 @@ public class TitleWiseActivity extends BaseActivity implements ClickListener {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_notifications;
+        return R.layout.activity_title_notifications;
     }
 
     @Override

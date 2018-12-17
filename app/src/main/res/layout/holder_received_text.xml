@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="2dp"
     android:orientation="horizontal">
 
     <LinearLayout
         android:id="@+id/received_card"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/incoming_notification"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"
         android:orientation="vertical"
-        android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -25,14 +25,15 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:autoLink="all"
-            android:background="@drawable/incoming_notification"
             android:clickable="true"
             android:focusable="true"
             android:lineSpacingMultiplier="1.2"
             android:maxWidth="200dp"
-            android:padding="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -59,20 +60,20 @@
                 tools:src="@color/black" />
         </android.support.v7.widget.CardView>
 
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="#636363"
+            android:textSize="11sp"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintStart_toStartOf="@+id/received_card"
+            app:layout_constraintTop_toBottomOf="@id/received_card"
+            tools:text="18h:30m:45s" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="#636363"
-        android:textSize="11sp"
-        app:layout_constraintStart_toStartOf="@+id/received_card"
-        app:layout_constraintTop_toBottomOf="@id/received_card"
-        tools:text="18h:30m:45s" />
 
 
 </LinearLayout>

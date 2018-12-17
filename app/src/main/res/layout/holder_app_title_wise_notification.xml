@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="4dp"
-    android:layout_marginTop="3dp"
-    android:layout_marginEnd="4dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:layout_marginBottom="2dp"
     android:foreground="?selectableItemBackground"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="1dp"
     app:cardElevation="1dp"
+    android:layout_marginTop="2dp"
     app:cardPreventCornerOverlap="true">
 
     <android.support.constraint.ConstraintLayout
@@ -23,20 +23,21 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/notification_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="#bdbdbd"
+            app:layout_constraintBottom_toBottomOf="@+id/text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/title" />
 
         <ImageView
             android:id="@+id/person_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/notification_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/text"
             app:layout_constraintEnd_toEndOf="@id/notification_icon"
             app:layout_constraintStart_toStartOf="@id/notification_icon"
-            app:layout_constraintTop_toTopOf="@id/notification_icon"
+            app:layout_constraintTop_toTopOf="@+id/title"
             app:srcCompat="@drawable/ic_person" />
 
         <TextView
@@ -53,7 +54,7 @@
             android:textSize="13sp"
             app:layout_constraintEnd_toStartOf="@+id/unread"
             app:layout_constraintStart_toEndOf="@+id/notification_icon"
-            app:layout_constraintTop_toTopOf="@id/notification_icon"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="Naimish" />
 
         <TextView
@@ -95,9 +96,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
+            android:fontFamily="sans-serif-light"
             android:text="12:05"
             android:textSize="12sp"
-            android:fontFamily="sans-serif-light"
             app:layout_constraintBottom_toBottomOf="@+id/text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text" />

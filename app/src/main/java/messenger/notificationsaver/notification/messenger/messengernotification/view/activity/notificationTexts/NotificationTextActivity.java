@@ -36,7 +36,7 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_notifications;
+        return R.layout.activity_detailed_notifications;
     }
 
     @Override

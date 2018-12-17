@@ -1,6 +1,8 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.services;
 
 import android.app.Notification;
+import android.app.PendingIntent;
+import android.app.RemoteInput;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,13 +10,20 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
+import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Method;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.ReplyIntentSender;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.entity.NotificationEntity;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
@@ -74,11 +83,12 @@ public class NotificationService extends NotificationListenerService {
             notificationDao.insertNewNotification(notificationEntity);
             AppNotifications.publishNewNotification(this, notificationDao);
         }
-
-        ReplyIntentSender r = sendReply(sbn, notificationTitle);
-        if (r != null) {
+        /*RemoteInput[] r = sendReply(sbn);
+        String s = new Gson().toJson(r);
+        List<RemoteInput> r1 = new Gson().fromJson(s, new TypeToken<List<RemoteInput>>() {}.getType());
+        if (r1 != null) {
             //r.sendNativeIntent(this, "Generated mssg");
-        }
+        }*/
 
     }
 
@@ -127,45 +137,20 @@ public class NotificationService extends NotificationListenerService {
         return true;
     }
 
-    public static ReplyIntentSender sendReply(StatusBarNotification statusBarNotification, String name) {
+    public RemoteInput[] sendReply(StatusBarNotification statusBarNotification) {
 
         Notification.Action actions[] = statusBarNotification.getNotification().actions;
 
         for (Notification.Action act : actions) {
             if (act != null && act.getRemoteInputs() != null) {
                 if (act.title.toString().contains("Reply")) {
-                    if (act.getRemoteInputs() != null)
-                        return new ReplyIntentSender(act);
+                    if (act.getRemoteInputs() != null) {
+                        return act.getRemoteInputs();
+                    }
                 }
             }
         }
         return null;
     }
 
-
-    public static class ReplyIntentSender {
-
-        public final Notification.Action action;
-
-        public ReplyIntentSender(Notification.Action extractedAction) {
-            action = extractedAction;
-        }
-
-        private boolean sendNativeIntent(Context context, String message) {
-            for (android.app.RemoteInput rem : action.getRemoteInputs()) {
-                Intent intent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putCharSequence(rem.getResultKey(), message);
-                android.app.RemoteInput.addResultsToIntent(action.getRemoteInputs(), intent, bundle);
-                try {
-                    action.actionIntent.send(context, 0, intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    return false;
-                }
-                return true;
-            }
-            return false;
-        }
-    }
 }
