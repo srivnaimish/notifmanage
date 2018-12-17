@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SettingsActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.textWise.NotificationTextActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.search.SearchActivity;
@@ -66,5 +67,9 @@ public class IntentFactory {
 
     public static Intent getSearchActivity(Context context) {
         return new Intent(context, SearchActivity.class);
+    }
+
+    public static Intent getSettingsActivity(Context context) {
+        return new Intent(context, SettingsActivity.class);
     }
 }

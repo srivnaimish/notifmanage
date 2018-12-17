@@ -6,6 +6,8 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 import messenger.notificationsaver.notification.messenger.messengernotification.services.NotificationService;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing.LandingActivityModule;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SettingsActivity;
+import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.settings.SettingsModule;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.textWise.NotificationTextActivity;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.textWise.NotificationTextModule;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.onboarding.OnBoardingActivity;
@@ -47,6 +49,10 @@ public abstract class NotificationActivityBuilder {
     @PerActivity
     @ContributesAndroidInjector(modules = {SearchModule.class})
     abstract SearchActivity bindSearchActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = {SettingsModule.class})
+    abstract SettingsActivity bindSettingActivity();
 
     @PerActivity
     @ContributesAndroidInjector()

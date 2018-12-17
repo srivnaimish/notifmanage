@@ -51,4 +51,5 @@ public class Constants {
     public static final String ADMOB_REWARDS = "ca-app-pub-3463246254277621/4734917514";
     public static final String ADMOB_NATIVE = "ca-app-pub-3940256099942544/2247696110";
 
+    public static final String SHOW_NOTIFICATION = "show_notification";
 }

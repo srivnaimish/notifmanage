@@ -168,4 +168,10 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         startActivity(IntentFactory.getSearchActivity(this));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
+
+    @Override
+    public void openSettingsActivity() {
+        startActivity(IntentFactory.getSettingsActivity(this));
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
 }

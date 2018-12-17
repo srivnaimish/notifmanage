@@ -17,6 +17,8 @@ public interface LandingContract {
         void requestDisableBatteryOptimization();
 
         void openSearchActivity();
+
+        void openSettingsActivity();
     }
 
     interface Presenter extends BaseActivityContract.Presenter, Toolbar.OnMenuItemClickListener {

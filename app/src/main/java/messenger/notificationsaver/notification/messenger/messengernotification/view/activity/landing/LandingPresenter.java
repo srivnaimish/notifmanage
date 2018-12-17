@@ -13,6 +13,7 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 import messenger.notificationsaver.notification.messenger.messengernotification.model.dagger.qualifiers.ApplicationContext;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.activity.base.BaseActivityPresenter;
@@ -100,6 +101,7 @@ public class LandingPresenter extends BaseActivityPresenter<LandingContract.View
                 view.openSearchActivity();
                 break;
             case R.id.settings:
+                view.openSettingsActivity();
                 break;
         }
         return false;

@@ -74,15 +74,11 @@ public class NotificationService extends NotificationListenerService {
         notificationEntity.setTime(sbn.getPostTime());
         notificationEntity.setCategory(category);
 
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            AsyncTask.execute(() -> {
-                notificationDao.insertNewNotification(notificationEntity);
-                AppNotifications.publishNewNotification(this, notificationDao);
-            });
-        } else {
+
+        AsyncTask.execute(() -> {
             notificationDao.insertNewNotification(notificationEntity);
             AppNotifications.publishNewNotification(this, notificationDao);
-        }
+        });
 
         if (sendReply(sbn) != null) {
             //sendReply(sbn).sendNativeIntent(this, "HEY");
@@ -93,7 +89,7 @@ public class NotificationService extends NotificationListenerService {
     private String getNotificationText(String category, Notification notification) {
         String text = notification.extras.getString(Notification.EXTRA_TEXT);
 
-        if (category.equalsIgnoreCase("android.app.Notification$BigTextStyle")) {
+        if (!Utilities.isEmpty(category) && category.equalsIgnoreCase("android.app.Notification$BigTextStyle")) {
             text = notification.extras.getString(Notification.EXTRA_BIG_TEXT);
         }
 
