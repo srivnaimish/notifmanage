@@ -2,17 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="General">
 
-        <ListPreference
+        <Preference
             android:defaultValue="0"
             android:dialogTitle="Keep notifications"
-            android:entries="@array/pref_save_entries"
-            android:entryValues="@array/pref_save_values"
-            android:key="keep_notifications"
-            android:title="Keep notifications" />
+            android:key="delete_notifications"
+            android:summary="Clear all saved Notifications"
+            android:title="Delete Notifications" />
 
-    </PreferenceCategory>
-
-    <PreferenceCategory android:title="App Notifications">
 
         <SwitchPreference
             android:defaultValue="true"
@@ -21,11 +17,10 @@
             android:title="Unread notifications" />
 
     </PreferenceCategory>
-
     <PreferenceCategory android:title="About">
 
         <Preference
-            android:summary="3.5"
+            android:summary="1.0"
             android:title="Version" />
 
         <Preference

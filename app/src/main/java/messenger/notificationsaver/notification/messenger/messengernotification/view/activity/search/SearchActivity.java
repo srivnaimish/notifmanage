@@ -99,4 +99,12 @@ public class SearchActivity extends BaseActivity implements ClickListener, Searc
     public boolean onQueryTextChange(String s) {
         return false;
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(
+                android.R.anim.fade_in,
+                android.R.anim.fade_out);
+    }
 }
