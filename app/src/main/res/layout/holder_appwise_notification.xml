@@ -75,12 +75,12 @@
         android:id="@+id/unread_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:drawableEnd="@drawable/ic_right_arrow"
         android:gravity="center"
-        android:textColor="@color/colorAccent"
+        android:textColor="#2196f3"
+        app:layout_constraintBottom_toBottomOf="@+id/app_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text"
+        app:layout_constraintTop_toTopOf="@+id/app_icon"
         tools:text="2 more notifications" />
 
     <TextView

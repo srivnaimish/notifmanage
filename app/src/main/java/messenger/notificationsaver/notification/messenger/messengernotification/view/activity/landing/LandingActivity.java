@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -20,13 +21,12 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
 /**
  * Created by naimish on 07/12/2018
  */
-public class LandingActivity extends BaseActivityView<LandingContract.Presenter> implements LandingContract.View, ViewPager.OnPageChangeListener {
+public class LandingActivity extends BaseActivityView<LandingContract.Presenter> implements LandingContract.View {
 
     private ViewPager viewPager;
     private Toolbar toolbar;
     private LandingPagerAdapter landingPagerAdapter;
-    private BottomNavigationView bottomNavigationView;
-    private MenuItem prevMenuItem;
+    private TabLayout tabLayout;
 
     @Override
     protected int getLayoutId() {
@@ -43,35 +43,12 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
 
         landingPagerAdapter = new LandingPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(landingPagerAdapter);
-        viewPager.addOnPageChangeListener(this);
 
-        bottomNavigationView = findViewById(R.id.landing_tabs);
-        setUpBottomNavigation();
+        tabLayout = findViewById(R.id.landing_tabs);
+        tabLayout.setupWithViewPager(viewPager);
 
 
         MobileAds.initialize(this, Constants.ADMOB_ACCOUNT);
-    }
-
-    private void setUpBottomNavigation() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                item -> {
-                    switch (item.getItemId()) {
-                        case R.id.newNoti:
-                            openPage(0);
-                            break;
-                        case R.id.all:
-                            openPage(1);
-                            break;
-                    }
-                    return false;
-                });
-    }
-
-    private void openPage(int pos) {
-        if (pos == viewPager.getCurrentItem()) {
-            return;
-        }
-        viewPager.setCurrentItem(pos);
     }
 
     @Override
@@ -133,27 +110,6 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
                     startActivity(IntentFactory.getBatteryOptimizationIntent(LandingActivity.this));
                 })
                 .show();
-    }
-
-    @Override
-    public void onPageScrolled(int i, float v, int i1) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        if (prevMenuItem != null) {
-            prevMenuItem.setChecked(false);
-        } else {
-            bottomNavigationView.getMenu().getItem(0).setChecked(false);
-        }
-        bottomNavigationView.getMenu().getItem(position).setChecked(true);
-        prevMenuItem = bottomNavigationView.getMenu().getItem(position);
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int i) {
-
     }
 
     @Override

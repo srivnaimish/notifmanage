@@ -38,8 +38,4 @@ public class TitleWiseViewModel extends ViewModel {
         return new LivePagedListBuilder<>(dataSourceFactory, pagedListConfig)
                 .build();
     }
-
-    public void markAppNotificationsRead(String appPackage, String title) {
-        AsyncTask.execute(() -> notificationDao.readNotificationsOfPackage(appPackage, title));
-    }
 }

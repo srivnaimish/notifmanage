@@ -73,8 +73,6 @@ public class TitleWiseActivity extends BaseActivity implements ClickListener {
         if (row == null)
             return;
 
-        viewModel.markAppNotificationsRead(row.getAppPackage(), row.getTitle());
-
         startActivity(IntentFactory.getNotificationTextActivity(this, row.getAppPackage(), row.getTitle()));
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

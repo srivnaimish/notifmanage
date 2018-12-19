@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import javax.inject.Inject;
 
@@ -45,7 +46,10 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
         rvAdapter = new NotificationTextAdapter();
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, this));
         recyclerView.setAdapter(rvAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.scrollToPosition(0);
+        recyclerView.setLayoutManager(layoutManager);
 
         appPackage = getIntent().getStringExtra(Constants.PACKAGE_NAME);
         title = getIntent().getStringExtra(Constants.NOTIFICATION_TITLE);
@@ -54,15 +58,20 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
         toolbar.setTitle(title);
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
+        rvAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
+            @Override
+            public void onItemRangeInserted(int positionStart, int itemCount) {
+                if (positionStart == 0) {
+                    layoutManager.scrollToPosition(0);
+                }
+            }
+        });
+
         observeViewModel();
     }
 
     private void observeViewModel() {
-        viewModel.getNotificationsTexts(appPackage, title).observe(this, list -> {
-            rvAdapter.submitList(list);
-            if (!Utilities.isEmpty(list))
-                recyclerView.scrollToPosition(list.size());
-        });
+        viewModel.getNotificationsTexts(appPackage, title).observe(this, list -> rvAdapter.submitList(list));
     }
 
     @Override
@@ -84,5 +93,11 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
     @Override
     public void onLongClick(View view, int position) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        viewModel.updateStatus(appPackage, title);
+        super.onDestroy();
     }
 }

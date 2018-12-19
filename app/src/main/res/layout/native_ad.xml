@@ -73,7 +73,7 @@
                 android:id="@+id/ad_call_to_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="#2196f3"
                 android:fontFamily="sans-serif-light"
                 android:gravity="center"
                 android:paddingStart="12dp"

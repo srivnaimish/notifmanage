@@ -33,7 +33,7 @@ public interface NotificationDao {
     @Query("Select app_package,notification_time,notification_category,notification_title,notification_text,COUNT(CASE WHEN notification_read_status = 0 THEN 1 END) AS unread from NotificationEntity WHERE app_package= :appPackage GROUP BY notification_title ORDER BY notification_time DESC")
     DataSource.Factory<Integer, NotificationRow> getTitleWiseNotifications(String appPackage);
 
-    @Query("Select app_package,notification_time,notification_category,notification_title,notification_text,0 as unread from NotificationEntity WHERE app_package= :appPackage AND notification_title= :title ORDER BY notification_time")
+    @Query("Select app_package,notification_time,notification_category,notification_title,notification_text,0 as unread from NotificationEntity WHERE app_package= :appPackage AND notification_title= :title ORDER BY notification_time DESC")
     DataSource.Factory<Integer, NotificationRow> getNotificationsTexts(String appPackage, String title);
 
     @Query("UPDATE NotificationEntity SET notification_read_status =1 where app_package = :packageName AND notification_title=:title")

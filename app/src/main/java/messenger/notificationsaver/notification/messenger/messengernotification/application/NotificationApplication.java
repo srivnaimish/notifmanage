@@ -3,13 +3,11 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import com.crashlytics.android.Crashlytics;
 import com.facebook.stetho.Stetho;
 import com.google.firebase.FirebaseApp;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
-import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by naimish on 07/12/2018

@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.paging.DataSource;
 import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
+import android.os.AsyncTask;
 
 import javax.inject.Inject;
 
@@ -36,5 +37,9 @@ public class NotificationTextViewModel extends ViewModel {
         DataSource.Factory<Integer, NotificationRow> dataSourceFactory = notificationDao.getNotificationsTexts(appPackage, title);
         return new LivePagedListBuilder<>(dataSourceFactory, pagedListConfig)
                 .build();
+    }
+
+    public void updateStatus(String appPackage, String title) {
+        AsyncTask.execute(() -> notificationDao.readNotificationsOfPackage(appPackage, title));
     }
 }

@@ -1,5 +1,6 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.view.activity.landing;
 
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -11,6 +12,9 @@ import messenger.notificationsaver.notification.messenger.messengernotification.
  * Created by naimish on 10/12/2018
  */
 public class LandingPagerAdapter extends FragmentPagerAdapter {
+
+    String[] title = {"New","All"};
+
     public LandingPagerAdapter(FragmentManager fm) {
         super(fm);
     }
@@ -28,5 +32,11 @@ public class LandingPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 2;
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return title[position];
     }
 }

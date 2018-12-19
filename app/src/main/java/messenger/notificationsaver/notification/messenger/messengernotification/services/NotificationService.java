@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Looper;
+import android.os.Parcel;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
 import android.util.Log;
@@ -39,8 +40,11 @@ public class NotificationService extends NotificationListenerService {
     @Inject
     NotificationDao notificationDao;
 
+    private String mPreviousTag;
+
     @Inject
     SharedPrefUtil sharedPrefUtil;
+    private String mPreviousTitle, mPreviousText;
 
     @Override
     public void onCreate() {
@@ -65,6 +69,10 @@ public class NotificationService extends NotificationListenerService {
             return;
         }
 
+        if (notificationTitle.equalsIgnoreCase(mPreviousTitle) && notificationTitle.equalsIgnoreCase(mPreviousText)) {
+            return;
+        }
+
         NotificationEntity notificationEntity = new NotificationEntity();
         notificationEntity.setNotificationId(sbn.getId());
         notificationEntity.setAppPackage(sbn.getPackageName());
@@ -80,9 +88,23 @@ public class NotificationService extends NotificationListenerService {
             AppNotifications.publishNewNotification(this, notificationDao);
         });
 
-        if (sendReply(sbn) != null) {
+        mPreviousTitle = notificationTitle;
+        mPreviousText = notificationText;
+
+        /*if (sendReply(sbn) != null) {
             //sendReply(sbn).sendNativeIntent(this, "HEY");
+        }*/
+
+        /*try {
+            Bundle bundle = new Bundle();
+            PendingIntent pendingIntent = notification.contentIntent;
+            bundle.putParcelable("pi", pendingIntent);
+            PendingIntent pi = bundle.getParcelable("pi");
+            pi.send();
+        } catch (Exception e) {
+            Log.e(getClass().getSimpleName(), "GENERATED ERROR", e);
         }
+*/
 
     }
 
@@ -107,10 +129,7 @@ public class NotificationService extends NotificationListenerService {
             title = convoTitle.toString();
         }
 
-        String appName = Utilities.getAppNameFromPackage(this, sbn.getPackageName());
-
         if (title == null ||
-                title.equalsIgnoreCase(appName) ||
                 title.matches("\\d+ new messages")) return null;
 
         if (Pattern.matches("(.*?) \\(\\d+ messages\\)", title)) {
@@ -126,8 +145,6 @@ public class NotificationService extends NotificationListenerService {
             return false;    //Own app notification
         if (Utilities.isBlackListed(sbn.getPackageName())) return false;  //Blacklisted app
         if (!Utilities.isInstalledPackage(this, sbn.getPackageName())) return false;
-        if (sbn.getNotification().when != 0 && System.currentTimeMillis() - sbn.getNotification().when > 3000)
-            return false;
 
         return true;
     }
