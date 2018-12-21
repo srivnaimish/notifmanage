@@ -109,13 +109,18 @@ public class NotificationService extends NotificationListenerService {
     }
 
     private String getNotificationText(String category, Notification notification) {
-        String text = notification.extras.getString(Notification.EXTRA_TEXT);
-
+        CharSequence contentText = notification.extras.getCharSequence(Notification.EXTRA_TEXT);
         if (!Utilities.isEmpty(category) && category.equalsIgnoreCase("android.app.Notification$BigTextStyle")) {
-            text = notification.extras.getString(Notification.EXTRA_BIG_TEXT);
+            contentText = notification.extras.getCharSequence(Notification.EXTRA_BIG_TEXT);
         }
 
-        if (text != null && text.matches("\\d+ new messages")) {
+        if (Utilities.isEmpty(contentText)) {
+            return null;
+        }
+
+        String text = contentText.toString();
+
+        if (text.matches("\\d+ new messages")) {
             return null;
         }
 
