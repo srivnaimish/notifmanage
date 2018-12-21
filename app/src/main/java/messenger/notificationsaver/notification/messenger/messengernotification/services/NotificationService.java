@@ -120,7 +120,7 @@ public class NotificationService extends NotificationListenerService {
 
         String text = contentText.toString();
 
-        if (text.matches("\\d+ new messages")) {
+        if (text.matches("\\d+ new messages") || text.matches("\\d+ messages from +\\d+ chats")) {
             return null;
         }
 
