@@ -53,6 +53,7 @@ dependencies {
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     implementation 'com.google.firebase:firebase-ads:17.1.2'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation 'android.arch.paging:runtime:1.0.1'

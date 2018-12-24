@@ -58,10 +58,11 @@ public class IntentFactory {
         return intent;
     }
 
-    public static Intent getNotificationTextActivity(Context context, String appPackage, String title) {
+    public static Intent getNotificationTextActivity(Context context, String appPackage, String title, String tag) {
         Intent intent = new Intent(context, NotificationTextActivity.class);
         intent.putExtra(Constants.PACKAGE_NAME, appPackage);
         intent.putExtra(Constants.NOTIFICATION_TITLE, title);
+        intent.putExtra(Constants.NOTIFICATION_TAG, tag);
         return intent;
     }
 

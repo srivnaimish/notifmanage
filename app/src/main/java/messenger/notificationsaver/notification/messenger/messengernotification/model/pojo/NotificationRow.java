@@ -8,6 +8,9 @@ import android.arch.persistence.room.Ignore;
  */
 public class NotificationRow extends BaseRow {
 
+    @ColumnInfo(name = "recipient")
+    int recipient;
+
     @ColumnInfo(name = "notification_title")
     String title;
 
@@ -22,6 +25,9 @@ public class NotificationRow extends BaseRow {
 
     @ColumnInfo(name = "notification_time")
     long time;
+
+    @ColumnInfo(name = "notification_tag")
+    String tag;
 
     @ColumnInfo(name = "unread")
     int unread;
@@ -74,4 +80,19 @@ public class NotificationRow extends BaseRow {
         return time;
     }
 
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
+
+    public int getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(int recipient) {
+        this.recipient = recipient;
+    }
 }

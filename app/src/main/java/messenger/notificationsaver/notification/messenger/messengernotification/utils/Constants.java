@@ -38,6 +38,7 @@ public class Constants {
     public static final String blackList[] = {"com.android.vending"};
     public static final String PACKAGE_NAME = "package_name";
     public static final String NOTIFICATION_TITLE = "title";
+    public static final String NOTIFICATION_TAG = "tag";
 
     public static final String DEFAULT_CHAT_KEY = "default_chat_key";
     public static final String DEFAULT_CHAT_KEY_VALUE = "com.google.android.apps.fireball,reply;com.google.android.talk,android.intent.extra.TEXT;com.skype.raider,key_text_reply;com.viber.voip,remote_text_input;jp.naver.line.android,line.text;org.telegram.messenger,extra_voice_reply;com.instagram.android,DirectNotificationConstants.DirectReply;com.twitter.android,dm_text;com.facebook.orca,voice_reply;com.kakao.talk,extra_voice_reply,extra_direct_reply;com.whatsapp,android_wear_voice_input;com.Slack,key_reply_text;com.samsung.android.messaging,key_reply_text";
@@ -52,4 +53,9 @@ public class Constants {
     public static final String ADMOB_NATIVE = "ca-app-pub-3940256099942544/2247696110";
 
     public static final String SHOW_NOTIFICATION = "show_notification";
+    public static final String SERVICE_REQUEST_ACTION = "service_request";
+
+    public static final int RECEIVED_MESSAGE_TYPE = 0;
+    public static final int SENT_MESSAGE_TYPE = 1;
+
 }

@@ -14,6 +14,9 @@ public class SearchRow extends BaseRow {
     @ColumnInfo(name = "notification_text")
     String text;
 
+    @ColumnInfo(name = "notification_tag")
+    String tag;
+
     @ColumnInfo(name = "app_package")
     String appPackage;
 
@@ -41,5 +44,11 @@ public class SearchRow extends BaseRow {
         return appPackage;
     }
 
+    public String getTag() {
+        return tag;
+    }
 
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 }

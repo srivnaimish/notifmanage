@@ -2,6 +2,7 @@ package messenger.notificationsaver.notification.messenger.messengernotification
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -15,9 +16,9 @@ public class NotificationEntity {
     @ColumnInfo(name = "id")
     long id;
 
-    @ColumnInfo(name = "notification_id")
+    @ColumnInfo(name = "recipient")
     @NonNull
-    int notificationId;
+    int recipient;
 
     @ColumnInfo(name = "notification_title")
     @NonNull
@@ -40,6 +41,9 @@ public class NotificationEntity {
 
     @ColumnInfo(name = "notification_read_status")
     boolean read;
+
+    @ColumnInfo(name = "notification_tag")
+    String tag;
 
     @ColumnInfo(name = "notification_time")
     long time;
@@ -87,12 +91,12 @@ public class NotificationEntity {
         return time;
     }
 
-    public int getNotificationId() {
-        return notificationId;
+    public int getRecipient() {
+        return recipient;
     }
 
-    public void setNotificationId(int notificationId) {
-        this.notificationId = notificationId;
+    public void setRecipient(int recipient) {
+        this.recipient = recipient;
     }
 
     public void setCategory(String category) {
@@ -118,6 +122,14 @@ public class NotificationEntity {
 
     public void setAppName(@NonNull String appName) {
         this.appName = appName;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }
 

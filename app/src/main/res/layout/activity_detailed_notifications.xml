@@ -70,6 +70,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/bottom_card"
-            tools:listitem="@layout/holder_received_text" />
+            tools:listitem="@layout/holder_received_text"/>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

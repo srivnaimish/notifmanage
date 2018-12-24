@@ -1,32 +1,28 @@
 package messenger.notificationsaver.notification.messenger.messengernotification.services;
 
 import android.app.Notification;
-import android.app.PendingIntent;
-import android.app.RemoteInput;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.os.Looper;
-import android.os.Parcel;
 import android.service.notification.NotificationListenerService;
 import android.service.notification.StatusBarNotification;
-import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import org.greenrobot.eventbus.EventBus;
 
-import java.lang.reflect.Method;
-import java.util.List;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.notifications.AppNotifications;
-import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.ReplyIntentSender;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.entity.NotificationEntity;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.ReplyMap;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.SharedPrefUtil;
 import messenger.notificationsaver.notification.messenger.messengernotification.utils.Utilities;
 
@@ -40,7 +36,8 @@ public class NotificationService extends NotificationListenerService {
     @Inject
     NotificationDao notificationDao;
 
-    private String mPreviousTag;
+
+    private ReplyMap replyMap;
 
     @Inject
     SharedPrefUtil sharedPrefUtil;
@@ -62,26 +59,26 @@ public class NotificationService extends NotificationListenerService {
         }
 
         String category = notification.extras.getString(Notification.EXTRA_TEMPLATE);
-        String notificationTitle = getNotificationTitle(sbn, notification);
+        String notificationTitle = getNotificationTitle(notification);
         String notificationText = getNotificationText(category, notification);
 
         if (Utilities.isEmpty(notificationTitle) || Utilities.isEmpty(notificationText)) {
             return;
         }
 
-        if (notificationTitle.equalsIgnoreCase(mPreviousTitle) && notificationTitle.equalsIgnoreCase(mPreviousText)) {
+        if (notificationTitle.equals(mPreviousTitle) && notificationText.equals(mPreviousText)) {
             return;
         }
 
         NotificationEntity notificationEntity = new NotificationEntity();
-        notificationEntity.setNotificationId(sbn.getId());
+        notificationEntity.setRecipient(0);    //indicates 0 ->Received,1 ->Sent
         notificationEntity.setAppPackage(sbn.getPackageName());
         notificationEntity.setAppName(Utilities.getAppNameFromPackage(this, sbn.getPackageName()));
         notificationEntity.setTitle(notificationTitle.trim());
         notificationEntity.setText(notificationText.trim());
         notificationEntity.setTime(sbn.getPostTime());
         notificationEntity.setCategory(category);
-
+        notificationEntity.setTag(sbn.getTag());
 
         AsyncTask.execute(() -> {
             notificationDao.insertNewNotification(notificationEntity);
@@ -91,20 +88,7 @@ public class NotificationService extends NotificationListenerService {
         mPreviousTitle = notificationTitle;
         mPreviousText = notificationText;
 
-        /*if (sendReply(sbn) != null) {
-            //sendReply(sbn).sendNativeIntent(this, "HEY");
-        }*/
-
-        /*try {
-            Bundle bundle = new Bundle();
-            PendingIntent pendingIntent = notification.contentIntent;
-            bundle.putParcelable("pi", pendingIntent);
-            PendingIntent pi = bundle.getParcelable("pi");
-            pi.send();
-        } catch (Exception e) {
-            Log.e(getClass().getSimpleName(), "GENERATED ERROR", e);
-        }
-*/
+        updateReplyMap(sbn);
 
     }
 
@@ -127,7 +111,7 @@ public class NotificationService extends NotificationListenerService {
         return text;
     }
 
-    private String getNotificationTitle(StatusBarNotification sbn, Notification notification) {
+    private String getNotificationTitle(Notification notification) {
         String title = notification.extras.getString(Notification.EXTRA_TITLE);
         CharSequence convoTitle = notification.extras.getCharSequence(Notification.EXTRA_CONVERSATION_TITLE);
         if (!Utilities.isEmpty(convoTitle)) {
@@ -154,20 +138,55 @@ public class NotificationService extends NotificationListenerService {
         return true;
     }
 
-    public ReplyIntentSender sendReply(StatusBarNotification statusBarNotification) {
+    private void updateReplyMap(StatusBarNotification sbn) {
+        Notification.Action actions[] = sbn.getNotification().actions;
 
-        Notification.Action actions[] = statusBarNotification.getNotification().actions;
+        if (Utilities.isEmpty(actions)) {
+            return;
+        }
 
         for (Notification.Action act : actions) {
             if (act != null && act.getRemoteInputs() != null) {
                 if (act.title.toString().contains("Reply")) {
                     if (act.getRemoteInputs() != null) {
-                        return new ReplyIntentSender(act);
+                        replyMap.put(sbn.getTag(), act);
                     }
                 }
             }
         }
-        return null;
     }
+
+    @Override
+    public void onListenerConnected() {
+        super.onListenerConnected();
+        replyMap = new ReplyMap(50);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.SERVICE_REQUEST_ACTION);
+        registerReceiver(receiver, filter);
+    }
+
+    @Override
+    public void onListenerDisconnected() {
+        super.onListenerDisconnected();
+        unregisterReceiver(receiver);
+        replyMap.clear();
+    }
+
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (!intent.getAction().equals(Constants.SERVICE_REQUEST_ACTION)) {
+                return;
+            }
+
+            if (Utilities.isEmpty(replyMap)) {
+                return;
+            }
+
+            String tag = intent.getStringExtra(Constants.NOTIFICATION_TAG);
+            EventBus.getDefault().post(replyMap.get(tag));
+        }
+    };
 
 }

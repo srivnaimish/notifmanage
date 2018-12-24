@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "eeee6f7590ea196ebc650f7da8bc3e9f",
+    "identityHash": "ffeede6754b913e84aa7d5c2baee227b",
     "entities": [
       {
         "tableName": "NotificationEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `notification_id` INTEGER NOT NULL, `notification_title` TEXT NOT NULL, `notification_text` TEXT NOT NULL, `notification_category` TEXT, `app_package` TEXT NOT NULL, `app_name` TEXT NOT NULL, `notification_read_status` INTEGER NOT NULL, `notification_time` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `recipient` INTEGER NOT NULL, `notification_title` TEXT NOT NULL, `notification_text` TEXT NOT NULL, `notification_category` TEXT, `app_package` TEXT NOT NULL, `app_name` TEXT NOT NULL, `notification_read_status` INTEGER NOT NULL, `notification_tag` TEXT, `notification_time` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,8 +15,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "notificationId",
-            "columnName": "notification_id",
+            "fieldPath": "recipient",
+            "columnName": "recipient",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -57,6 +57,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "tag",
+            "columnName": "notification_tag",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "time",
             "columnName": "notification_time",
             "affinity": "INTEGER",
@@ -75,7 +81,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"eeee6f7590ea196ebc650f7da8bc3e9f\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ffeede6754b913e84aa7d5c2baee227b\")"
     ]
   }
 }

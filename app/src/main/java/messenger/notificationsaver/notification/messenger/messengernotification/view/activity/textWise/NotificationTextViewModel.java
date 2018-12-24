@@ -11,6 +11,7 @@ import javax.inject.Inject;
 
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.room.dao.NotificationDao;
+import messenger.notificationsaver.notification.messenger.messengernotification.model.room.entity.NotificationEntity;
 
 /**
  * Created by naimish on 10/12/2018
@@ -41,5 +42,19 @@ public class NotificationTextViewModel extends ViewModel {
 
     public void updateStatus(String appPackage, String title) {
         AsyncTask.execute(() -> notificationDao.readNotificationsOfPackage(appPackage, title));
+    }
+
+    public void saveSentMessage(String packageName, String appName, String title, String message, String tag) {
+        NotificationEntity notificationEntity = new NotificationEntity();
+        notificationEntity.setRecipient(1);
+        notificationEntity.setAppPackage(packageName);
+        notificationEntity.setAppName(appName);
+        notificationEntity.setTitle(title);
+        notificationEntity.setText(message);
+        notificationEntity.setTime(System.currentTimeMillis());
+        notificationEntity.setCategory("android.app.Notification$MessagingStyle");
+        notificationEntity.setTag(tag);
+        notificationEntity.setRead(true);
+        AsyncTask.execute(() -> notificationDao.insertNewNotification(notificationEntity));
     }
 }

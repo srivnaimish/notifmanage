@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import messenger.notificationsaver.notification.messenger.messengernotification.R;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.BaseRow;
 import messenger.notificationsaver.notification.messenger.messengernotification.model.pojo.NotificationRow;
+import messenger.notificationsaver.notification.messenger.messengernotification.utils.Constants;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.adapters.BasePageAdapter;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.BaseViewHolder;
 import messenger.notificationsaver.notification.messenger.messengernotification.view.viewholders.TextNotificationsViewHolder;
@@ -35,13 +36,24 @@ public class NotificationTextAdapter extends BasePageAdapter<NotificationRow, Ba
 
     @Override
     public int getItemViewType(int position) {
-        return super.getItemViewType(position);
+        if (getCurrentList() == null) {
+            return super.getItemViewType(position);
+        }
+
+        if (getCurrentList().get(position).getRecipient() == 0) {
+            return Constants.RECEIVED_MESSAGE_TYPE;
+        } else {
+            return Constants.SENT_MESSAGE_TYPE;
+        }
     }
 
     @NonNull
     @Override
     public BaseViewHolder<BaseRow> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if (viewType == Constants.SENT_MESSAGE_TYPE) {
+            return new TextNotificationsViewHolder(inflater.inflate(R.layout.holder_sent_text, parent, false));
+        }
         return new TextNotificationsViewHolder(inflater.inflate(R.layout.holder_received_text, parent, false));
     }
 
