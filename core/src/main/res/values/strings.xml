@@ -4,10 +4,12 @@
     <string name="minutes_ago">%s minutes ago</string>
     <string name="hours_ago">%s hours ago</string>
     <string name="unread_count">%s more</string>
-    <string name="onboarding_heading_1">Save notifications</string>
+    <string name="onboarding_heading_1">All Notifications in one place</string>
     <string name="onboarding_subheading_1">Save notifications by app for later viewing</string>
-    <string name="onboarding_heading_2">Filter results</string>
-    <string name="onboarding_subheading_2">Search notifications by title, text</string>
+    <string name="onboarding_heading_2">Reply Within the App</string>
+    <string name="onboarding_subheading_2">Reply to Chat Notifications within App</string>
+    <string name="onboarding_heading_3">Go Through your Older Notifications</string>
+    <string name="onboarding_subheading_3">Fusce vehicula dolor arcu, sit amet blandit dolor mollis nec.</string>
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>

@@ -4,23 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.notification.core.view.activity.onboarding.OnBoardingActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomView"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/bottomView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/b1"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:background="@drawable/onboarding_button" />
+
+        <Button
+            android:id="@+id/b2"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/onboarding_button" />
+
+        <Button
+            android:id="@+id/b3"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="12dp"
+            android:background="@drawable/onboarding_button" />
+
+    </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/bottomView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/top_elevated_view"
-        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -37,29 +69,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/b1"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:background="@drawable/onboarding_button" />
-
-            <Button
-                android:id="@+id/b2"
-                android:layout_width="8dp"
-                android:layout_height="8dp"
-                android:layout_marginStart="12dp"
-                android:background="@drawable/onboarding_button" />
-
-        </LinearLayout>
 
         <Button
             android:id="@+id/next"

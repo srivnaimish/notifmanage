@@ -22,10 +22,10 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
-            tools:src="@mipmap/ic_launcher" />
+            tools:src="@drawable/onboarding_1" />
 
         <TextView
             android:id="@+id/heading"
@@ -33,10 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
-            android:textAllCaps="true"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="bold"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
             tools:text="Send reminders to others" />
 
         <TextView
@@ -47,6 +46,7 @@
             android:layout_margin="16dp"
             android:lineSpacingMultiplier="1.2"
             android:textAlignment="center"
+            android:textColor="#555555"
             tools:text="You can send reminders to other people by simply selecting a reminder time,date and reminder note." />
     </LinearLayout>
 

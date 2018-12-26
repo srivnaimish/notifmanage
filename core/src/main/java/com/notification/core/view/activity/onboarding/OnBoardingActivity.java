@@ -10,7 +10,7 @@ import com.notification.core.view.activity.base.BaseActivityView;
 
 public class OnBoardingActivity extends BaseActivityView<OnBoardingContract.Presenter> implements OnBoardingContract.View, ViewPager.OnPageChangeListener {
 
-    private int[] pageIndicators = {R.id.b1, R.id.b2};
+    private int[] pageIndicators = {R.id.b1, R.id.b2, R.id.b3};
     private ViewPager viewPager;
 
     @Override
