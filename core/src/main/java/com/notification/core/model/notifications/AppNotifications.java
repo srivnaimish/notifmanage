@@ -41,6 +41,7 @@ public class AppNotifications {
                 .setContentText(notificationDao.getUnreadNotificationsCount() + " unread Notifications")
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .setContentIntent(pendingIntent)
+                .setSmallIcon(R.drawable.ic_notification)
                 .setAutoCancel(false)
                 .setVibrate(new long[]{0})
                 .setOngoing(true);
