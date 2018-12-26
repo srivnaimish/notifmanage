@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="messenger.notificationsaver.notification.messenger.messengernotification">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <application
         android:name=".application.NotificationApplication"
         android:allowBackup="true"
@@ -17,12 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <activity
-            android:name=".view.activity.splash.SplashActivity"
+            android:name="com.notification.core.view.activity.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -31,39 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.activity.onboarding.OnBoardingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activity.landing.LandingActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activity.titleWise.TitleWiseActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.textWise.NotificationTextActivity" />
-        <activity android:name=".view.activity.search.SearchActivity" />
 
-        <service
-            android:name=".services.NotificationService"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
-
-        <receiver android:name=".receivers.AppInstallUninstallReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-
-        <activity android:name=".view.activity.settings.SettingsActivity"
-            android:theme="@style/AppThemeAction"
-            android:label="Settings"/>
     </application>
 
 </manifest>

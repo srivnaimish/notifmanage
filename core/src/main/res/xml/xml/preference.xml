@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="General">
+
+        <Preference
+            android:defaultValue="0"
+            android:dialogTitle="Keep notifications"
+            android:key="delete_notifications"
+            android:summary="Clear all saved Notifications"
+            android:title="Delete Notifications" />
+
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="show_notification"
+            android:summary="Show notification for unread notifications count"
+            android:title="Unread notifications" />
+
+    </PreferenceCategory>
+    <PreferenceCategory android:title="About">
+
+        <Preference
+            android:summary="1.0"
+            android:title="Version" />
+
+        <Preference
+            android:key="rate"
+            android:summary="Rate app on Play Store"
+            android:title="Rate" />
+
+        <!-- preference opens url in browser -->
+
+        <Preference android:title="Privacy Policy">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_privacy" />
+        </Preference>
+
+        <Preference android:title="Terms and Conditions">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="@string/url_terms" />
+        </Preference>
+    </PreferenceCategory>
+</PreferenceScreen>
