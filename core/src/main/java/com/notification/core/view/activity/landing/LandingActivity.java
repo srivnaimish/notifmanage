@@ -45,8 +45,8 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         tabLayout = findViewById(R.id.landing_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-
         MobileAds.initialize(this, Constants.ADMOB_ACCOUNT);
+        loadInterstitial();
     }
 
     @Override
@@ -63,7 +63,6 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         if (!presenter.isAutoStartEnabled()) {  //For mi,oppo,etc devices
             return;
         }
-
     }
 
     @Override
@@ -126,6 +125,5 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
     @Override
     public void openSettingsActivity() {
         startActivity(IntentFactory.getSettingsActivity(this));
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

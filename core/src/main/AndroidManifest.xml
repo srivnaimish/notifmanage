@@ -16,7 +16,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-7899176240468148~1758445242" />
 
         <activity
             android:name=".view.activity.splash.SplashActivity"
@@ -51,8 +51,7 @@
 
         <activity
             android:name=".view.activity.settings.SettingsActivity"
-            android:label="Settings"
-            android:theme="@style/AppThemeAction" />
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

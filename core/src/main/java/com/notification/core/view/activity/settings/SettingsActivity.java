@@ -4,11 +4,15 @@ import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import javax.inject.Inject;
 
+import com.notification.core.R;
 import com.notification.core.model.room.dao.NotificationDao;
+import com.notification.core.utils.Constants;
 import com.notification.core.view.activity.base.BaseActivity;
 
 public class SettingsActivity extends BaseActivity {
@@ -18,34 +22,26 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return 0;
+        return R.layout.activity_settings;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getFragmentManager().beginTransaction().replace(android.R.id.content, new MainPreferenceFragment()).commit();
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        getFragmentManager().beginTransaction().replace(R.id.fragmentView, new MainPreferenceFragment()).commit();
+
+        loadBannerAd();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-        }
-        return super.onOptionsItemSelected(item);
+    protected String getBannerId() {
+        return Constants.BANNER_SETTINGS;
     }
 
     public void deleteAllNotifications() {
         AsyncTask.execute(() -> notificationDao.deleteNotifications());
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(
-                android.R.anim.fade_in,
-                android.R.anim.fade_out);
     }
 }

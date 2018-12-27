@@ -11,9 +11,15 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Inject;
@@ -21,6 +27,9 @@ import javax.inject.Inject;
 import dagger.android.support.DaggerAppCompatActivity;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+
+import com.notification.core.R;
+import com.notification.core.utils.Constants;
 import com.notification.core.utils.SharedPrefUtil;
 import com.notification.core.view.callbacks.IHasPermission;
 import com.notification.core.view.fragment.base.BaseFragment;
@@ -140,6 +149,41 @@ public abstract class BaseActivity extends DaggerAppCompatActivity {
     public void goActivityFullScreen(Boolean bool) {
         getWindow().clearFlags(bool ? WindowManager.LayoutParams.FLAG_FULLSCREEN : WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().addFlags(bool ? WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN : WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+    protected void loadInterstitial() {
+
+        InterstitialAd mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getInterstitialId());
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            mInterstitialAd.setAdListener(new AdListener() {
+                @Override
+                public void onAdLoaded() {
+                    mInterstitialAd.show();
+                }
+            });
+        }
+    }
+
+    protected void loadBannerAd() {
+        AdView adView = new AdView(this);
+        adView.setAdSize(AdSize.BANNER);
+        adView.setAdUnitId(getBannerId());
+
+        ViewGroup v = findViewById(R.id.bottom_container);
+        v.addView(adView);
+        adView.loadAd(new AdRequest.Builder().build());
+    }
+
+    protected String getInterstitialId() {
+        return Constants.INTERSTITIAL_APP_OPEN;
+    }
+
+    protected String getBannerId() {
+        return Constants.BANNER_TITLE;
     }
 }
 

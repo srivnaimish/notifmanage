@@ -16,7 +16,6 @@ import com.notification.core.utils.Constants;
 import com.notification.core.utils.Utilities;
 import com.notification.core.view.adapters.BasePageAdapter;
 import com.notification.core.view.viewholders.BaseViewHolder;
-import com.notification.core.view.viewholders.NativeAdViewHolder;
 import com.notification.core.view.viewholders.TitleNotificationsViewHolder;
 
 /**
@@ -44,7 +43,7 @@ public class TitleWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewH
         }
     };
 
-    @Override
+    /*@Override
     public int getItemCount() {
         if (Utilities.isEmpty(getCurrentList())) return 0;
         int listSize = getCurrentList().size();
@@ -57,25 +56,26 @@ public class TitleWiseAdapter extends BasePageAdapter<NotificationRow, BaseViewH
             return Constants.AD_ROW;
         }
         return super.getItemViewType(position);
-    }
+    }*/
 
     @NonNull
     @Override
     public BaseViewHolder<BaseRow> onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        if (viewType == Constants.AD_ROW) {
+        /*if (viewType == Constants.AD_ROW) {
             return new NativeAdViewHolder(context, inflater.inflate(R.layout.holder_ad, parent, false));
-        }
+        }*/
         return new TitleNotificationsViewHolder(inflater.inflate(R.layout.holder_app_title_wise_notification, parent, false), context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder<BaseRow> holder, int position) {
-        if (holder instanceof TitleNotificationsViewHolder) {
+        /*if (holder instanceof TitleNotificationsViewHolder) {
             holder.set(getItem(getRealPosition(position)));
         } else {
             holder.set(null);
-        }
+        }*/
+        holder.set(getItem(position));
     }
 
     @Override

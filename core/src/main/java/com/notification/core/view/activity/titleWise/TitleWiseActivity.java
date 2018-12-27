@@ -57,6 +57,8 @@ public class TitleWiseActivity extends BaseActivity implements ClickListener {
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         observeViewModel();
+
+        loadBannerAd();
     }
 
     private void observeViewModel() {
@@ -77,7 +79,6 @@ public class TitleWiseActivity extends BaseActivity implements ClickListener {
             return;
 
         startActivity(IntentFactory.getNotificationTextActivity(this, row.getAppPackage(), row.getTitle(), row.getTag()));
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class TitleWiseActivity extends BaseActivity implements ClickListener {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected String getBannerId() {
+        return Constants.BANNER_TITLE;
     }
 }

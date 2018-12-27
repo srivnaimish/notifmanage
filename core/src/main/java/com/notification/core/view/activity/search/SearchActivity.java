@@ -76,7 +76,6 @@ public class SearchActivity extends BaseActivity implements ClickListener, Searc
             return;
 
         startActivity(IntentFactory.getNotificationTextActivity(this, row.getAppPackage(), row.getTitle(), row.getTag()));
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     @Override

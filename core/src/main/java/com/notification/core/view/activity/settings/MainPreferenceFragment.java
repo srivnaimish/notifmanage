@@ -1,6 +1,8 @@
 package com.notification.core.view.activity.settings;
 
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
@@ -22,8 +24,7 @@ public class MainPreferenceFragment extends PreferenceFragment {
 
         //bindPreferenceSummaryToValue(findPreference("keep_notifications"));
 
-        Preference preference = findPreference("delete_notifications");
-        preference.setOnPreferenceClickListener(preference12 -> {
+        findPreference("delete_notifications").setOnPreferenceClickListener(preference12 -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
                     .setTitle("Are you sure?")
                     .setMessage("This operation cannot be undone")
@@ -44,6 +45,28 @@ public class MainPreferenceFragment extends PreferenceFragment {
                 AppNotifications.removeNotification(getActivity());
             }
             return true;
+        });
+
+        findPreference("share").setOnPreferenceClickListener(preference12 -> {
+            String message = "Manage all your notifications in a single place. Download Notikeep at " + Constants.APP_URL;
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, message);
+            startActivity(Intent.createChooser(shareIntent, "Invite via.."));
+            return false;
+        });
+
+        findPreference("rate").setOnPreferenceClickListener(preference12 -> {
+            final String appPackageName = getActivity().getPackageName();
+            Intent intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=" + appPackageName));
+            if (intent.resolveActivity(getActivity().getPackageManager()) == null) {
+                intent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://play.google.com/store/apps/details?id="
+                                + appPackageName));
+            }
+            startActivity(intent);
+            return false;
         });
     }
 

@@ -24,6 +24,11 @@
             android:title="Version" />
 
         <Preference
+            android:key="share"
+            android:summary="Invite your friends"
+            android:title="Share" />
+
+        <Preference
             android:key="rate"
             android:summary="Rate app on Play Store"
             android:title="Rate" />

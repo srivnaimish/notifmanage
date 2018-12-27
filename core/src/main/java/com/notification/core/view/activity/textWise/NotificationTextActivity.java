@@ -90,6 +90,8 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
         observeViewModel();
 
         bindClick(R.id.send, v -> sendMessage());
+
+        loadBannerAd();
     }
 
     private void observeViewModel() {
@@ -167,5 +169,10 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
         ReplyIntentSender re = new ReplyIntentSender(replyAction);
         re.sendNativeIntent(this, message);
         messageText.getText().clear();
+    }
+
+    @Override
+    protected String getBannerId() {
+        return Constants.BANNER_TEXT;
     }
 }
