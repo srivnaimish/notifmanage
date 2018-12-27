@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/sent_mssg"
+        android:background="@drawable/shadow_sent"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackgroundBorderless"

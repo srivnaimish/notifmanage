@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.notification.core">
@@ -5,7 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +19,7 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <activity
-            android:name="com.notification.core.view.activity.splash.SplashActivity"
+            android:name=".view.activity.splash.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -29,19 +29,19 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.notification.core.view.activity.onboarding.OnBoardingActivity"
+            android:name=".view.activity.onboarding.OnBoardingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.notification.core.view.activity.landing.LandingActivity"
+            android:name=".view.activity.landing.LandingActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.notification.core.view.activity.titleWise.TitleWiseActivity"
+            android:name=".view.activity.titleWise.TitleWiseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.notification.core.view.activity.textWise.NotificationTextActivity" />
-        <activity android:name="com.notification.core.view.activity.search.SearchActivity" />
+        <activity android:name=".view.activity.textWise.NotificationTextActivity" />
+        <activity android:name=".view.activity.search.SearchActivity" />
 
         <service
-            android:name="com.notification.core.services.NotificationService"
+            android:name=".services.NotificationService"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
@@ -49,8 +49,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name="com.notification.core.view.activity.settings.SettingsActivity"
-            android:theme="@style/AppThemeAction"
-            android:label="Settings"/>
+        <activity
+            android:name=".view.activity.settings.SettingsActivity"
+            android:label="Settings"
+            android:theme="@style/AppThemeAction" />
     </application>
+
 </manifest>

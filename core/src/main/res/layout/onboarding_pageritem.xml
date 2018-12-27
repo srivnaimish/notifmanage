@@ -47,6 +47,7 @@
             android:lineSpacingMultiplier="1.2"
             android:textAlignment="center"
             android:textColor="#555555"
+            android:textSize="12sp"
             tools:text="You can send reminders to other people by simply selecting a reminder time,date and reminder note." />
     </LinearLayout>
 

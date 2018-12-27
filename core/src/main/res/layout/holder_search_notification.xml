@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="0dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp"
     android:background="@drawable/shadow_card"
     android:foreground="?selectableItemBackground"
     android:paddingStart="8dp"
-    android:paddingTop="12dp"
-    android:paddingEnd="12dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="8dp"
     android:paddingBottom="24dp">
 
     <de.hdodenhof.circleimageview.CircleImageView

@@ -51,6 +51,10 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        appPackage = getIntent().getStringExtra(Constants.PACKAGE_NAME);
+        title = getIntent().getStringExtra(Constants.NOTIFICATION_TITLE);
+        tag = getIntent().getStringExtra(Constants.NOTIFICATION_TAG);
+
         recyclerView = findViewById(R.id.notifications_rv);
         messageText = findViewById(R.id.message_text);
         chatView = findViewById(R.id.bottom_card);
@@ -59,14 +63,14 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, this));
         recyclerView.setAdapter(rvAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setReverseLayout(true);
-        layoutManager.scrollToPosition(0);
+
+        if (Constants.DEFAULT_CHAT_VALUE.contains(appPackage)) {
+            layoutManager.setReverseLayout(true);
+            layoutManager.scrollToPosition(0);
+        }
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(null);
-
-        appPackage = getIntent().getStringExtra(Constants.PACKAGE_NAME);
-        title = getIntent().getStringExtra(Constants.NOTIFICATION_TITLE);
-        tag = getIntent().getStringExtra(Constants.NOTIFICATION_TAG);
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(title);
@@ -81,9 +85,9 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
             }
         });
 
-        observeViewModel();
-
         checkViewType();
+
+        observeViewModel();
 
         bindClick(R.id.send, v -> sendMessage());
     }
@@ -120,14 +124,15 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         EventBus.getDefault().register(this);
+
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         EventBus.getDefault().unregister(this);
     }
 

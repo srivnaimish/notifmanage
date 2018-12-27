@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+
 import com.notification.core.model.notifications.AppNotifications;
 import com.notification.core.model.room.dao.NotificationDao;
 import com.notification.core.model.room.entity.NotificationEntity;
@@ -174,6 +175,10 @@ public class NotificationService extends NotificationListenerService {
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            if (intent == null || intent.getAction() == null) {
+                return;
+            }
+
             if (!intent.getAction().equals(Constants.SERVICE_REQUEST_ACTION)) {
                 return;
             }
@@ -183,6 +188,11 @@ public class NotificationService extends NotificationListenerService {
             }
 
             String tag = intent.getStringExtra(Constants.NOTIFICATION_TAG);
+
+            if (Utilities.isEmpty(tag) || replyMap.get(tag) == null) {
+                return;
+            }
+
             EventBus.getDefault().post(replyMap.get(tag));
         }
     };

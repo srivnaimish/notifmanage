@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#eeeeee">
+    android:background="#fafafa">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/transparent"
+            android:background="#f6f6f6"
             android:padding="4dp"
             android:visibility="gone">
 
@@ -36,13 +36,14 @@
                 android:id="@+id/message_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/send_edit"
-                android:hint="Send message"
+                android:hint="Enter Reply ..."
                 android:imeOptions="actionSend|flagNoEnterAction"
                 android:inputType="textMultiLine"
                 android:maxLines="3"
-                android:minHeight="50dp"
+                android:minHeight="44dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="8dp"
                 android:textColor="@color/black"
@@ -70,6 +71,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@id/bottom_card"
-            tools:listitem="@layout/holder_received_text"/>
+            tools:listitem="@layout/holder_received_text" />
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

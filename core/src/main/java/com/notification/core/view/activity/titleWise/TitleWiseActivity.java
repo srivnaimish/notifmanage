@@ -3,6 +3,7 @@ package com.notification.core.view.activity.titleWise;
 import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import com.notification.core.R;
 import com.notification.core.model.pojo.NotificationRow;
 import com.notification.core.utils.Constants;
+import com.notification.core.utils.DividerItemDecorator;
 import com.notification.core.utils.IntentFactory;
 import com.notification.core.utils.Utilities;
 import com.notification.core.view.activity.base.BaseActivity;
@@ -46,7 +48,8 @@ public class TitleWiseActivity extends BaseActivity implements ClickListener {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, this));
         recyclerView.setAdapter(rvAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        recyclerView.setItemAnimator(null);
+        recyclerView.addItemDecoration(new DividerItemDecorator(ContextCompat.getDrawable(context, R.drawable.divider)));
         appPackage = getIntent().getStringExtra(Constants.PACKAGE_NAME);
 
         toolbar = findViewById(R.id.toolbar);

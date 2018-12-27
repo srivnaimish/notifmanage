@@ -5,11 +5,11 @@
     <string name="hours_ago">%s hours ago</string>
     <string name="unread_count">%s more</string>
     <string name="onboarding_heading_1">All Notifications in one place</string>
-    <string name="onboarding_subheading_1">Save notifications by app for later viewing</string>
-    <string name="onboarding_heading_2">Reply Within the App</string>
-    <string name="onboarding_subheading_2">Reply to Chat Notifications within App</string>
-    <string name="onboarding_heading_3">Go Through your Older Notifications</string>
-    <string name="onboarding_subheading_3">Fusce vehicula dolor arcu, sit amet blandit dolor mollis nec.</string>
+    <string name="onboarding_subheading_1">See notifications from all your apps at a glance in one place</string>
+    <string name="onboarding_heading_2">Instant reply</string>
+    <string name="onboarding_subheading_2">Respond to all app notifications from within the NotiKeep from a single window and save time</string>
+    <string name="onboarding_heading_3">View older notifications</string>
+    <string name="onboarding_subheading_3">NotiKeep stores your older notifications for you to go through later so you never miss any updates</string>
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_settings">Settings</string>
@@ -17,8 +17,7 @@
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
 
-    <string name="url_privacy">https://www.androidhive.info/privacy-policy/</string>
-    <string name="url_terms">https://www.androidhive.info/terms-of-service/</string>
+    <string name="url_privacy">https://bit.ly/2RooTbg</string>
     <string-array name="pref_save_entries">
         <item>Always</item>
         <item>1 week</item>

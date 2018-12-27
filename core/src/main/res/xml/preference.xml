@@ -35,11 +35,5 @@
                 android:action="android.intent.action.VIEW"
                 android:data="@string/url_privacy" />
         </Preference>
-
-        <Preference android:title="Terms and Conditions">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="@string/url_terms" />
-        </Preference>
     </PreferenceCategory>
 </PreferenceScreen>
