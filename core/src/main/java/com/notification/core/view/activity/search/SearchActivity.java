@@ -71,7 +71,7 @@ public class SearchActivity extends BaseActivity implements ClickListener, Searc
             return;
         }
 
-        SearchRow row = allSearchRows.get(rvAdapter.getRealPosition(position));
+        SearchRow row = allSearchRows.get(position);
         if (row == null)
             return;
 

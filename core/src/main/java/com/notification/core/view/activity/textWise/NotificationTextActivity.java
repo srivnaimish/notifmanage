@@ -105,7 +105,7 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
             return;
         }
 
-        NotificationRow row = allNotificationRows.get(rvAdapter.getRealPosition(position));
+        NotificationRow row = allNotificationRows.get(position);
         if (row == null)
             return;
 
