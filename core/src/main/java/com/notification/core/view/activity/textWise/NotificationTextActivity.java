@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,6 +35,7 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
     NotificationTextAdapter rvAdapter;
 
     Toolbar toolbar;
+    ImageView appIcon;
     Notification.Action replyAction;
 
     @Inject
@@ -58,6 +60,7 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
         recyclerView = findViewById(R.id.notifications_rv);
         messageText = findViewById(R.id.message_text);
         chatView = findViewById(R.id.bottom_card);
+        appIcon = findViewById(R.id.app_icon);
 
         rvAdapter = new NotificationTextAdapter();
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, this));
@@ -74,6 +77,8 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(title);
+        appIcon.setImageDrawable(Utilities.getAppIconFromPackage(context, appPackage));
+
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         rvAdapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
