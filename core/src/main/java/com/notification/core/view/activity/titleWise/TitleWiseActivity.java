@@ -74,7 +74,7 @@ public class TitleWiseActivity extends BaseActivity implements ClickListener {
             return;
         }
 
-        NotificationRow row = allNotificationRows.get(position);
+        NotificationRow row = allNotificationRows.get(rvAdapter.getRealPosition(position));
         if (row == null)
             return;
 

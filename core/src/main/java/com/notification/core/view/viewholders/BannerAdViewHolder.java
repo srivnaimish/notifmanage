@@ -4,13 +4,18 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdLoader;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.formats.NativeAdOptions;
 import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.formats.UnifiedNativeAdView;
@@ -24,20 +29,39 @@ import com.notification.core.utils.Utilities;
  * Created by anuragdalia on 26/08/18.
  */
 
-public class NativeAdViewHolder extends BaseViewHolder<BaseRow> {
+public class BannerAdViewHolder extends BaseViewHolder<BaseRow> {
 
+    private final AdView adView;
     Context context;
-    private FrameLayout adPlaceHolder;
+    private LinearLayout adPlaceHolder;
 
-    public NativeAdViewHolder(Context context, @NonNull View itemView) {
+    public BannerAdViewHolder(Context context, @NonNull View itemView) {
         super(itemView);
         this.context = context;
         adPlaceHolder = itemView.findViewById(R.id.ad_holder);
+        adView = new AdView(context);
+        adView.setAdSize(AdSize.SMART_BANNER);
+        adView.setAdUnitId(getAdUnitId());
+    }
+
+    protected String getAdUnitId() {
+        return Constants.BANNER_APP_LIST;
     }
 
     @Override
     public void set(BaseRow baseRow) {
-        refreshAd();
+        //refreshAd();
+        if (adPlaceHolder.getChildCount() > 0) {
+            adPlaceHolder.removeAllViews();
+        }
+
+        adView.loadAd(new AdRequest.Builder().build());
+        adView.setAdListener(new AdListener(){
+            @Override
+            public void onAdLoaded() {
+                adPlaceHolder.addView(adView);
+            }
+        });
     }
 
     private void populateUnifiedNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView) {

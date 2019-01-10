@@ -18,7 +18,7 @@ public class Constants {
     /*Notification ids*/
     public static final int MAIN_NOTIFICATION_ID = 9514;
 
-    public static final int AD_REPEAT_POSITION = 3;
+    public static final int AD_REPEAT_POSITION = 4;
     public static final int AD_ROW = 1;
 
     public static final long ONE_SECOND_MILLIS = 1000;
@@ -58,6 +58,9 @@ public class Constants {
     public static final String BANNER_TITLE = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/7862541362";
     public static final String BANNER_TEXT = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/2773866217";
     public static final String BANNER_SETTINGS = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/7331347885";
+    public static final String BANNER_APP_LIST = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/3485112382";
+    public static final String BANNER_TITLE_LIST = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/1535759989";
+
 
     public static final String SHOW_NOTIFICATION = "show_notification";
     public static final String SERVICE_REQUEST_ACTION = "service_request";

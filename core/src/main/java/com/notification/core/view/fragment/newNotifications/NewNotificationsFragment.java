@@ -79,7 +79,7 @@ public class NewNotificationsFragment extends BaseFragment implements ClickListe
             return;
         }
 
-        NotificationRow row = allNotificationRows.get(position);
+        NotificationRow row = allNotificationRows.get(rvAdapter.getRealPosition(position));
         if (row == null)
             return;
 

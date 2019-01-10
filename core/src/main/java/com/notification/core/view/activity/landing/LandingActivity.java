@@ -46,6 +46,11 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         tabLayout.setupWithViewPager(viewPager);
 
         MobileAds.initialize(this, Constants.ADMOB_ACCOUNT);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         loadInterstitial();
     }
 
