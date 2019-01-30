@@ -11,17 +11,20 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdSize;
+import com.facebook.ads.AdView;
+import com.facebook.ads.InterstitialAd;
+import com.facebook.ads.InterstitialAdListener;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Inject;
@@ -42,6 +45,7 @@ import com.notification.core.view.fragment.base.BaseFragment;
 
 public abstract class BaseActivityView<T extends BaseActivityContract.Presenter> extends DaggerAppCompatActivity implements BaseActivityContract.View {
 
+    private static final String TAG = "BaseActivityView";
     protected Context context;
 
     @Inject
@@ -61,6 +65,8 @@ public abstract class BaseActivityView<T extends BaseActivityContract.Presenter>
 
     private SparseArray<IHasPermission> permsListenerList = new SparseArray<>();
     private ProgressDialog progressDialog;
+    private InterstitialAd mInterstitialAd;
+    private AdView adView;
 
     public SparseArray<IHasPermission> getPermsListenerList() {
         return permsListenerList;
@@ -165,6 +171,9 @@ public abstract class BaseActivityView<T extends BaseActivityContract.Presenter>
     @Override
     public void onDestroy() {
         presenter.kill();
+        if (adView != null) {
+            adView.destroy();
+        }
         super.onDestroy();
     }
 
@@ -210,33 +219,62 @@ public abstract class BaseActivityView<T extends BaseActivityContract.Presenter>
 
     protected void loadInterstitial() {
 
-        InterstitialAd mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getInterstitialId());
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-        } else {
-            mInterstitialAd.setAdListener(new AdListener() {
-                @Override
-                public void onAdLoaded() {
-                    mInterstitialAd.show();
+        mInterstitialAd = new InterstitialAd(this, getInterstitialId());
+        mInterstitialAd.setAdListener(new InterstitialAdListener() {
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+                // Interstitial ad displayed callback
+                Log.e(TAG, "Interstitial ad displayed.");
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+                // Interstitial dismissed callback
+                Log.e(TAG, "Interstitial ad dismissed.");
+            }
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                // Ad error callback
+                Log.e(TAG, "Interstitial ad failed to load: " + adError.getErrorMessage());
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                // Interstitial ad is loaded and ready to be displayed
+                Log.d(TAG, "Interstitial ad is loaded and ready to be displayed!");
+                // Show the ad
+                if (mInterstitialAd.isAdInvalidated()) {
+                    return;
                 }
-            });
-        }
+                mInterstitialAd.show();
+                //showInterstitial = false;
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                // Ad clicked callback
+                Log.d(TAG, "Interstitial ad clicked!");
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                // Ad impression logged callback
+                Log.d(TAG, "Interstitial ad impression logged!");
+            }
+        });
+        mInterstitialAd.loadAd();
     }
 
     protected void loadBannerAd() {
-        AdView adView = new AdView(this);
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getBannerId());
-
-        ViewGroup v = findViewById(R.id.bottom_container);
-        v.addView(adView);
-        adView.loadAd(new AdRequest.Builder().build());
+        adView = new AdView(this, getBannerId(), AdSize.BANNER_HEIGHT_50);
+        LinearLayout adContainer = findViewById(R.id.bottom_container);
+        adContainer.addView(adView);
+        adView.loadAd();
     }
 
     protected String getInterstitialId() {
-        return Constants.INTERSTITIAL_APP_OPEN;
+        return Constants.INTERSTITIAL_HOME;
     }
 
     protected String getBannerId() {

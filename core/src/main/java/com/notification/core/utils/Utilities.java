@@ -15,8 +15,6 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.google.ads.mediation.admob.AdMobAdapter;
-import com.google.android.gms.ads.AdRequest;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -41,7 +39,7 @@ public class Utilities {
         return false;
     }
 
-    public static AdRequest getAdRequest() {
+   /* public static AdRequest getAdRequest() {
         Bundle extras = new Bundle();
 
         AdRequest.Builder builder = new AdRequest.Builder();
@@ -49,7 +47,7 @@ public class Utilities {
         builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
 
         return builder.build();
-    }
+    }*/
 
     public void openPlayStoreToRate() {
         final String appPackageName;

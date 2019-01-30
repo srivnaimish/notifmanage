@@ -69,10 +69,16 @@ public class NotificationService extends NotificationListenerService {
             return;
         }
 
+        String appName = Utilities.getAppNameFromPackage(this, sbn.getPackageName());
+
+        if (Utilities.isEmpty(appName)) {
+            return;
+        }
+
         NotificationEntity notificationEntity = new NotificationEntity();
         notificationEntity.setRecipient(0);    //indicates 0 ->Received,1 ->Sent
         notificationEntity.setAppPackage(sbn.getPackageName());
-        notificationEntity.setAppName(Utilities.getAppNameFromPackage(this, sbn.getPackageName()));
+        notificationEntity.setAppName(appName);
         notificationEntity.setTitle(notificationTitle.trim());
         notificationEntity.setText(notificationText.trim());
         notificationEntity.setTime(sbn.getPostTime());

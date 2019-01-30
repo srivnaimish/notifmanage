@@ -6,21 +6,26 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
-import com.google.android.gms.ads.MobileAds;
-
+import com.facebook.ads.AdSettings;
+import com.notification.core.BuildConfig;
 import com.notification.core.R;
 import com.notification.core.utils.Constants;
 import com.notification.core.utils.IntentFactory;
 import com.notification.core.view.activity.base.BaseActivityView;
+
+import java.util.Set;
 
 /**
  * Created by naimish on 07/12/2018
  */
 public class LandingActivity extends BaseActivityView<LandingContract.Presenter> implements LandingContract.View {
 
+    private static final String TAG = "AllNotifications";
     private ViewPager viewPager;
     private Toolbar toolbar;
     private LandingPagerAdapter landingPagerAdapter;
@@ -45,13 +50,22 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
         tabLayout = findViewById(R.id.landing_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        MobileAds.initialize(this, Constants.ADMOB_ACCOUNT);
+        if (BuildConfig.DEBUG) {
+            AdSettings.addTestDevice("830a6024-52ff-423f-ad8b-3d61e85079a2");
+        }
+
+        if (shouldLoadInterstitial()) {
+            loadInterstitial();
+        }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        loadInterstitial();
+    public boolean shouldLoadInterstitial() {
+        Set<String> enabledPackages = NotificationManagerCompat.getEnabledListenerPackages(context);
+        if (!enabledPackages.contains(context.getPackageName())) {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -80,6 +94,9 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
                     startActivity(IntentFactory.getNotificationAccessSetting());
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 })
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                    dialog.dismiss();
+                })
                 .show();
     }
 
@@ -92,8 +109,15 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
                         .setMessage("Enable Auto Start to access notifications in background")
                         .setPositiveButton("Settings", (dialog, which) -> {
                             sharedPrefUtil.setAutoStartEnabled();
-                            startActivity(intent);
-                            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            try {
+                                startActivity(intent);
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                            } catch (Exception e) {
+                                Log.e(TAG, "onAutoStartClick", e);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                            dialog.dismiss();
                         })
                         .show();
                 return;
@@ -110,6 +134,9 @@ public class LandingActivity extends BaseActivityView<LandingContract.Presenter>
                 .setPositiveButton("Turn off", (dialog, which) -> {
                     sharedPrefUtil.setBatteryOptimizationDisabled();
                     startActivity(IntentFactory.getBatteryOptimizationIntent(LandingActivity.this));
+                })
+                .setNegativeButton(android.R.string.cancel, (dialog, which) -> {
+                    dialog.dismiss();
                 })
                 .show();
     }

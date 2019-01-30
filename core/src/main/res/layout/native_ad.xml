@@ -1,99 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.gms.ads.formats.UnifiedNativeAdView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginTop="4dp"
+    android:background="@drawable/shadow_card"
+    android:orientation="vertical"
+    android:paddingStart="8dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="24dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="#FFFFFF"
-        android:minHeight="50dp"
-        android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp">
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/ad_image"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="centerCrop"
-            tools:src="@color/colorAccent"
-            android:visibility="gone"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/ad_app_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:adjustViewBounds="true"
-                android:visibility="gone"
-                tools:src="@mipmap/ic_launcher" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/ad_headline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    tools:text="V9  Mirror Covers" />
-
-                <TextView
-                    android:id="@+id/ad_advertiser"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="4dp"
-                    android:gravity="bottom"
-                    android:textColor="#59000000"
-                    android:textSize="12sp"
-                    android:visibility="gone"
-                    tools:text="From Anonymous" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/ad_call_to_action"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#2196f3"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:paddingStart="12dp"
-                android:paddingTop="4dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="4dp"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                tools:text="Install" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/ad_body"
+        <RelativeLayout
+            android:id="@+id/ad_choices_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="sans-serif-light"
-            android:textColor="@color/black"
-            android:textSize="12sp"
-            tools:text="Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo Lelo " />
+            android:padding="2dp" />
 
+        <TextView
+            android:id="@+id/native_ad_sponsored_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-light"
+            android:lines="1"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"
+            tools:text="Sponsored" />
     </LinearLayout>
-</com.google.android.gms.ads.formats.UnifiedNativeAdView>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:id="@+id/text_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_toStartOf="@id/native_ad_call_to_action"
+            android:layout_toEndOf="@id/native_icon_view"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toStartOf="@id/native_ad_call_to_action"
+            app:layout_constraintStart_toEndOf="@id/native_icon_view"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/native_ad_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-medium"
+                android:lines="1"
+                android:textColor="@android:color/black"
+                android:textSize="14sp"
+                tools:text="Title" />
+
+            <TextView
+                android:id="@+id/native_ad_social_context"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textSize="12sp"
+                tools:text="Content" />
+        </LinearLayout>
+
+        <com.facebook.ads.AdIconView
+            android:id="@+id/native_icon_view"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="@id/text_container"
+            app:layout_constraintBottom_toBottomOf="@id/text_container"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/native_ad_call_to_action"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Install Now"
+            tools:visibility="visible" />
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

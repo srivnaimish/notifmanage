@@ -20,7 +20,7 @@
     <PreferenceCategory android:title="About">
 
         <Preference
-            android:summary="1.0"
+            android:summary="1.0.5"
             android:title="Version" />
 
         <Preference

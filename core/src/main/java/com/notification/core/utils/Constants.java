@@ -48,20 +48,6 @@ public class Constants {
 
     public static final String LAST_SESSION = "last_session";
 
-    public static final String ADMOB_ACCOUNT = "ca-app-pub-7899176240468148~1758445242";
-    public static final String DEBUG_BANNER = "ca-app-pub-3940256099942544/6300978111";
-    public static final String DEBUG_INTERSTITIAL = "ca-app-pub-3940256099942544/1033173712";
-    public static final String ADMOB_REWARDS = "ca-app-pub-3463246254277621/4734917514";
-    public static final String ADMOB_NATIVE = "ca-app-pub-3940256099942544/2247696110";
-
-    public static final String INTERSTITIAL_APP_OPEN = BuildConfig.DEBUG ? DEBUG_INTERSTITIAL : "ca-app-pub-7899176240468148/9485069634";
-    public static final String BANNER_TITLE = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/7862541362";
-    public static final String BANNER_TEXT = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/2773866217";
-    public static final String BANNER_SETTINGS = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/7331347885";
-    public static final String BANNER_APP_LIST = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/3485112382";
-    public static final String BANNER_TITLE_LIST = BuildConfig.DEBUG ? DEBUG_BANNER : "ca-app-pub-7899176240468148/1535759989";
-
-
     public static final String SHOW_NOTIFICATION = "show_notification";
     public static final String SERVICE_REQUEST_ACTION = "service_request";
 
@@ -69,4 +55,11 @@ public class Constants {
     public static final int SENT_MESSAGE_TYPE = 1;
 
     public static final String APP_URL = "https://play.google.com/store/apps/details?id=messenger.notificationsaver.notification.messenger.messengernotification";
+
+    public static String INTERSTITIAL_HOME = BuildConfig.DEBUG ? "YOUR_PLACEMENT_ID" : "1060491034146212_1060501154145200";
+    public static String BANNER_TITLE = BuildConfig.DEBUG ? "YOUR_PLACEMENT_ID" : "1060491034146212_1060492830812699";
+    public static String BANNER_TEXT = BuildConfig.DEBUG ? "YOUR_PLACEMENT_ID" : "1060491034146212_1060503484144967";
+    public static String BANNER_SETTINGS = BuildConfig.DEBUG ? "YOUR_PLACEMENT_ID" : "1060491034146212_1060503860811596";
+    public static String NATIVE_APPS = BuildConfig.DEBUG ? "YOUR_PLACEMENT_ID" : "1060491034146212_1060531607475488";
+
 }

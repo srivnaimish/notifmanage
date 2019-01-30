@@ -2,12 +2,14 @@ package com.notification.core.view.activity.textWise;
 
 import android.app.Notification;
 import android.arch.paging.PagedList;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +33,7 @@ import com.notification.core.view.callbacks.RecyclerTouchListener;
  */
 public class NotificationTextActivity extends BaseActivity implements ClickListener {
 
+    private static final String TAG = "NotificationText";
     RecyclerView recyclerView;
     NotificationTextAdapter rvAdapter;
 
@@ -90,8 +93,6 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
             }
         });
 
-        checkViewType();
-
         observeViewModel();
 
         bindClick(R.id.send, v -> sendMessage());
@@ -114,8 +115,13 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
         if (row == null)
             return;
 
-        Intent launchIntent = getPackageManager().getLaunchIntentForPackage(appPackage);
-        startActivity(launchIntent);
+        try {
+            Intent launchIntent = getPackageManager().getLaunchIntentForPackage(appPackage);
+            startActivity(launchIntent);
+        }
+        catch (ActivityNotFoundException | NullPointerException e) {
+            Log.e(TAG, e.getMessage());
+        }
 
     }
 
@@ -134,7 +140,7 @@ public class NotificationTextActivity extends BaseActivity implements ClickListe
     protected void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
-
+        checkViewType();
     }
 
     @Override

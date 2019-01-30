@@ -2,28 +2,32 @@ package com.notification.core.view.viewholders;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdLoader;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.formats.NativeAdOptions;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
-import com.google.android.gms.ads.formats.UnifiedNativeAdView;
 
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.AdIconView;
+import com.facebook.ads.AdOptionsView;
+import com.facebook.ads.NativeAdLayout;
+import com.facebook.ads.NativeAdListener;
+import com.facebook.ads.NativeBannerAd;
 import com.notification.core.R;
 import com.notification.core.model.pojo.BaseRow;
 import com.notification.core.utils.Constants;
 import com.notification.core.utils.Utilities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by anuragdalia on 26/08/18.
@@ -31,7 +35,9 @@ import com.notification.core.utils.Utilities;
 
 public class BannerAdViewHolder extends BaseViewHolder<BaseRow> {
 
-    private final AdView adView;
+    private static final String TAG = "BannerAdViewHolder";
+    private final NativeBannerAd nativeBannerAd;
+    //private final AdView adView;
     Context context;
     private LinearLayout adPlaceHolder;
 
@@ -39,103 +45,97 @@ public class BannerAdViewHolder extends BaseViewHolder<BaseRow> {
         super(itemView);
         this.context = context;
         adPlaceHolder = itemView.findViewById(R.id.ad_holder);
-        adView = new AdView(context);
-        adView.setAdSize(AdSize.SMART_BANNER);
-        adView.setAdUnitId(getAdUnitId());
+
+        nativeBannerAd = new NativeBannerAd(context, Constants.NATIVE_APPS);
+        nativeBannerAd.setAdListener(new NativeAdListener() {
+            @Override
+            public void onMediaDownloaded(Ad ad) {
+                // Native ad finished downloading all assets
+                Log.e(TAG, "Native ad finished downloading all assets.");
+            }
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+                // Native ad failed to load
+                Log.e(TAG, "Native ad failed to load: " + adError.getErrorMessage());
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+                // Native ad is loaded and ready to be displayed
+                //adPlaceHolder.addView(nativeBannerAd);
+                inflateAd();
+                Log.d(TAG, "Native ad is loaded and ready to be displayed!");
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+                // Native ad clicked
+                Log.d(TAG, "Native ad clicked!");
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+                // Native ad impression
+                Log.d(TAG, "Native ad impression logged!");
+            }
+        });
+
+        nativeBannerAd.loadAd();
+    }
+
+    private void inflateAd() {
+        // Unregister last ad
+        nativeBannerAd.unregisterView();
+
+        // Add the Ad view into the ad container.
+        NativeAdLayout nativeAdLayout = itemView.findViewById(R.id.native_banner_ad_container);
+        LayoutInflater inflater = LayoutInflater.from(context);
+        // Inflate the Ad view.  The layout referenced is the one you created in the last step.
+        LinearLayout adView = (LinearLayout) inflater.inflate(R.layout.native_ad, nativeAdLayout, false);
+        nativeAdLayout.addView(adView);
+
+        // Add the AdChoices icon
+        RelativeLayout adChoicesContainer = adView.findViewById(R.id.ad_choices_container);
+        AdOptionsView adOptionsView = new AdOptionsView(context, nativeBannerAd, nativeAdLayout);
+        adChoicesContainer.removeAllViews();
+        adChoicesContainer.addView(adOptionsView, 0);
+
+        // Create native UI using the ad metadata.
+        TextView nativeAdTitle = adView.findViewById(R.id.native_ad_title);
+        TextView nativeAdSocialContext = adView.findViewById(R.id.native_ad_social_context);
+        TextView sponsoredLabel = adView.findViewById(R.id.native_ad_sponsored_label);
+        AdIconView nativeAdIconView = adView.findViewById(R.id.native_icon_view);
+        Button nativeAdCallToAction = adView.findViewById(R.id.native_ad_call_to_action);
+
+        // Set the Text.
+        nativeAdCallToAction.setText(nativeBannerAd.getAdCallToAction());
+        nativeAdCallToAction.setVisibility(
+                nativeBannerAd.hasCallToAction() ? View.VISIBLE : View.INVISIBLE);
+        nativeAdTitle.setText(nativeBannerAd.getAdvertiserName());
+        nativeAdSocialContext.setText(nativeBannerAd.getAdSocialContext());
+        sponsoredLabel.setText(nativeBannerAd.getSponsoredTranslation());
+
+        // Register the Title and CTA button to listen for clicks.
+        List<View> clickableViews = new ArrayList<>();
+        clickableViews.add(nativeAdTitle);
+        clickableViews.add(nativeAdCallToAction);
+        nativeBannerAd.registerViewForInteraction(adView, nativeAdIconView, clickableViews);
     }
 
     protected String getAdUnitId() {
-        return Constants.BANNER_APP_LIST;
+        return Constants.BANNER_TITLE;
     }
+    /**/
 
     @Override
     public void set(BaseRow baseRow) {
         //refreshAd();
-        if (adPlaceHolder.getChildCount() > 0) {
+        /*if (adPlaceHolder.getChildCount() > 0) {
             adPlaceHolder.removeAllViews();
-        }
-
-        adView.loadAd(new AdRequest.Builder().build());
-        adView.setAdListener(new AdListener(){
-            @Override
-            public void onAdLoaded() {
-                adPlaceHolder.addView(adView);
-            }
-        });
-    }
-
-    private void populateUnifiedNativeAdView(UnifiedNativeAd nativeAd, UnifiedNativeAdView adView) {
-        adView.setHeadlineView(adView.findViewById(R.id.ad_headline));
-        adView.setBodyView(adView.findViewById(R.id.ad_body));
-        adView.setImageView(adView.findViewById(R.id.ad_image));
-        adView.setCallToActionView(adView.findViewById(R.id.ad_call_to_action));
-        adView.setIconView(adView.findViewById(R.id.ad_app_icon));
-        adView.setAdvertiserView(adView.findViewById(R.id.ad_advertiser));
-
-        // Some assets are guaranteed to be in every UnifiedNativeAd.
-        ((TextView) adView.getHeadlineView()).setText(nativeAd.getHeadline());
-        ((TextView) adView.getBodyView()).setText(nativeAd.getBody());
-        ((TextView) adView.getCallToActionView()).setText(nativeAd.getCallToAction());
-
-        // These assets aren't guaranteed to be in every UnifiedNativeAd, so it's important to
-        // check before trying to display them.
-        /*List<NativeAd.Image> images = nativeAd.getImages();
-        if (images == null || images.size() == 0) {
-            adView.getImageView().setVisibility(View.GONE);
-        } else {
-            ((ImageView) adView.getImageView()).setImageDrawable(images.get(0).getDrawable());
         }*/
 
-        if (nativeAd.getIcon() != null) {
-            try {
-                Glide.with(adView.getIconView())
-                        .load(nativeAd.getIcon().getDrawable())
-                        .into((ImageView) adView.getIconView());
-                adView.getIconView().setVisibility(View.VISIBLE);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (nativeAd.getAdvertiser() == null) {
-            adView.getAdvertiserView().setVisibility(View.INVISIBLE);
-        } else {
-            ((TextView) adView.getAdvertiserView()).setText(nativeAd.getAdvertiser());
-            adView.getAdvertiserView().setVisibility(View.VISIBLE);
-        }
-
-        adView.setNativeAd(nativeAd);
     }
 
-    private void refreshAd() {
 
-        AdLoader.Builder builder = new AdLoader.Builder(context, Constants.ADMOB_NATIVE);
-
-        builder.forUnifiedNativeAd(unifiedNativeAd -> {
-
-            UnifiedNativeAdView adView = (UnifiedNativeAdView) LayoutInflater.from(context).inflate(R.layout.native_ad, null);
-            populateUnifiedNativeAdView(unifiedNativeAd, adView);
-            adPlaceHolder.removeAllViews();
-            adPlaceHolder.addView(adView);
-        });
-
-        NativeAdOptions adOptions = new NativeAdOptions.Builder().build();
-
-        builder.withNativeAdOptions(adOptions);
-
-        AdLoader adLoader = builder.withAdListener(new AdListener() {
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-
-            }
-
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                adPlaceHolder.setVisibility(View.VISIBLE);
-            }
-        }).build();
-
-        adLoader.loadAd(Utilities.getAdRequest());
-    }
 }
