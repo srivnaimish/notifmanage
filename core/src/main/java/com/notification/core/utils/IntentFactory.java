@@ -3,6 +3,8 @@ package com.notification.core.utils;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 
 import com.notification.core.view.activity.landing.LandingActivity;
@@ -73,5 +75,17 @@ public class IntentFactory {
 
     public static Intent getSettingsActivity(Context context) {
         return new Intent(context, SettingsActivity.class);
+    }
+
+    public static Intent getAppLaunchIntent(Context context, String packageName) {
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (intent == null) {
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + packageName));
+        }
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        return intent;
     }
 }

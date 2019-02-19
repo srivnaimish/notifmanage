@@ -46,6 +46,11 @@ public class NotificationService extends NotificationListenerService {
     public void onCreate() {
         super.onCreate();
         AndroidInjection.inject(this);
+        replyMap = new ReplyMap(50);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.SERVICE_REQUEST_ACTION);
+        registerReceiver(receiver, filter);
     }
 
     @Override
@@ -162,20 +167,10 @@ public class NotificationService extends NotificationListenerService {
     }
 
     @Override
-    public void onListenerConnected() {
-        super.onListenerConnected();
-        replyMap = new ReplyMap(50);
-
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.SERVICE_REQUEST_ACTION);
-        registerReceiver(receiver, filter);
-    }
-
-    @Override
-    public void onListenerDisconnected() {
-        super.onListenerDisconnected();
+    public void onDestroy() {
         unregisterReceiver(receiver);
         replyMap.clear();
+        super.onDestroy();
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {

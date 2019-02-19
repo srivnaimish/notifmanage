@@ -36,7 +36,6 @@ public class AppNotifications {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "New App Notifications")
-                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Notifications")
                 .setContentText(notificationDao.getUnreadNotificationsCount() + " unread Notifications")
                 .setPriority(NotificationCompat.PRIORITY_LOW)

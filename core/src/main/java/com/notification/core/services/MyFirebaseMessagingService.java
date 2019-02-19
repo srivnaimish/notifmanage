@@ -9,11 +9,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.text.TextUtils;
 
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.notification.core.R;
+import com.notification.core.model.NotificationType;
+import com.notification.core.utils.Constants;
+import com.notification.core.utils.IntentFactory;
 import com.notification.core.view.activity.WebActivity;
 
 /**
@@ -32,10 +36,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             return;
         }
 
-        Intent intent = new Intent(this, WebActivity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("title", title);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        String type = remoteMessage.getData().get("type");
+
+        if (TextUtils.isEmpty(type)) {
+            type = NotificationType.WEB_OPEN;
+        }
+
+        Intent intent = null;
+
+        switch (type) {
+            case NotificationType.WEB_OPEN: {
+                if (url == null) {
+                    return;
+                }
+                intent = new Intent(this, WebActivity.class);
+                intent.putExtra("url", url);
+                intent.putExtra("title", title);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                break;
+            }
+            case NotificationType.APP_OPEN: {
+                if (url == null) {
+                    return;
+                }
+
+                intent = IntentFactory.getAppLaunchIntent(this, url);
+                break;
+            }
+        }
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, "Push Notifications")
